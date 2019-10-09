@@ -1,7 +1,13 @@
+'use strict'
+
+require('dotenv').config();
 const Koa = require('koa');
+const Router = require('koa-router');
 
 const app = new Koa();
+const router = new Router();
 
-app.use(async ctx => ctx.body = 'Hello World!');
+router.get('/', ctx => ctx.body = `Testing .env!`)
 
-app.listen(8080, () => console.log('Running on 8080...'))
+app.use(router.routes());
+app.listen(process.env.SERVER_PORT, () => console.log(`Server running on ${process.env.SERVER_PORT}...`));
