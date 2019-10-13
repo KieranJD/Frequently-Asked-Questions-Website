@@ -3,8 +3,10 @@
 const Router = require('koa-router');
 const router = new Router();
 
+const UserController = require('./controllers/userController');
+
 router.get('/', async ctx => {
-    ctx.body = `Testing routes file`;
+    ctx.body = UserController.hello();
 });
 
 module.exports = router;
