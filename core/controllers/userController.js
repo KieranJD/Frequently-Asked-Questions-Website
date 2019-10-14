@@ -2,8 +2,8 @@
 
 const User = require('../models/user');
 
-module.exports = {
-    hello () {
+module.exports = class UserController {
+    static hello () {
         let user = new User();
         user.setName('Wallef');
         
