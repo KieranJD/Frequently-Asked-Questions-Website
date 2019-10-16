@@ -28,3 +28,6 @@ website.db
 
 # Env variables
 .env
+
+# Database
+*.db
