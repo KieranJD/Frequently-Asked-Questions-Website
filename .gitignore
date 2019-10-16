@@ -24,7 +24,6 @@ website.db
 # IDE setting files
 *.codio
 *.c9
-.vscode
 
 # Env variables
 .env
