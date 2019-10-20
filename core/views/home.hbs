@@ -1,9 +1,21 @@
 {{> header}}
 
-<main>
-    <section>
-        <h1>CONTENT WILL BE HERE</h1>
-    </section>
-</main>
+    <main>
+        <form action="#">
+            <input type="text" placeholder="Search..." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        {{#each mockData}}
+            <article>
+                {{#if solved}}
+                <p>Solved</p>
+                {{/if}}
+                <h2>{{ title }}</h2>
+                <small class="user">{{ user }}</small>
+                <small class="date">{{ date }}</small>
+            </article>
+        {{/each}}        
+    </main>
 
 {{> footer }}

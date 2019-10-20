@@ -2,7 +2,41 @@
 
 const Router = require('koa-router')
 const router = new Router()
+const mockQuestions = [
+	{
+		'title': 'SK Telecom T1 are accomplished eGamers associated with which game?',
+		'date': '10 Jan 2019',
+		'user': 'Wallef Borges',
+		'solved': false
+	  },
+	  {
+		'title': 'Which videogame holds the record for having the highest budget ever to produce?',
+		'date': '17 Sep 2019',
+		'user': 'Ben Townsend',
+		'solved': true
+	  },
+	  {
+		'title': 'SK Telecom T1 are accomplished eGamers associated with which game?',
+		'date': '10 Jan 2019',
+		'user': 'Kieran Dhir',
+		'solved': true
+	  },
+	  {
+		'title': 'Which videogame holds the record for having the highest budget ever to produce?',
+		'date': '17 Sep 2019',
+		'user': 'Avelino Tomas',
+		'solved': false
+	  },
+	  {
+		'title': 'Which videogame holds the record for having the highest budget ever to produce?',
+		'date': '17 Sep 2019',
+		'user': 'Mihai Ene',
+		'solved': false
+	  } ,
+]
 
-router.get('/', async ctx => await ctx.render('home', {title: 'Home'}))
+router.get('/', async ctx => {
+	await ctx.render('home', {title: 'Home', mockData: mockQuestions})
+})
 
 module.exports = router

@@ -3,6 +3,7 @@
 require('dotenv').config()
 const Koa = require('koa')
 const views = require('koa-views')
+const staticDirectory = require('koa-static')
 
 const Router = require('./core/routes')
 
@@ -21,6 +22,7 @@ app.use(views(`${__dirname}/core/views`,
 		map: { hbs: 'handlebars' }
 	}))
 
+app.use(staticDirectory('./public'))
 app.use(Router.routes())
 app.use(Router.allowedMethods())
 
