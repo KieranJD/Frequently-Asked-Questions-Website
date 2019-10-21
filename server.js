@@ -4,7 +4,7 @@ const Koa = require('koa')
 const views = require('koa-views')
 const staticDirectory = require('koa-static')
 
-const Router = require('./core/routes')
+const exampleRoutes = require('./core/routes/exampleRoutes')
 
 const app = new Koa()
 
@@ -21,7 +21,7 @@ app.use(views(`${__dirname}/core/views`,
 	}))
 
 app.use(staticDirectory('./public'))
-app.use(Router.routes())
-app.use(Router.allowedMethods())
+app.use(exampleRoutes.routes())
+app.use(exampleRoutes.allowedMethods())
 
 module.exports = app

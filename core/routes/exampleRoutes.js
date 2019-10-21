@@ -2,6 +2,7 @@
 
 const Router = require('koa-router')
 const router = new Router()
+
 const mockQuestions = [
 	{
 		'title': 'SK Telecom T1 are accomplished eGamers associated with which game?',
@@ -35,6 +36,12 @@ const mockQuestions = [
 	  } ,
 ]
 
+/**
+ * Example of a home page layout
+ *
+ * @name Home Page
+ * @route {GET} /
+ */
 router.get('/', async ctx => {
 	await ctx.render('home', {title: 'Home', mockData: mockQuestions})
 })
