@@ -2,16 +2,15 @@
 
 const Router = require('koa-router')
 const router = new Router()
-const fs = require('fs-extra')
-const mime = require('mime-types')
 const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const bcrypt = require('bcrypt-promise')
 const sqlite = require('sqlite-async')
-
-
+const User = require('./models/user')
 const saltRounds = 10
 
-router.get('/', async ctx => await ctx.render('home', {title: 'Home'}));
+let auth = false
+const user = new User()
+router.get('/', async ctx => await ctx.render('home', {title: 'Home'}))
 
 
 /**
@@ -36,22 +35,9 @@ router.get('/register', async ctx => {
 router.post('/register', koaBody, async ctx => {
 	try {
 		const body = ctx.request.body
-		console.log(body)
-		// PROCESSING FILE
-		const {path, type} = ctx.request.files.avatar
-		const fileExtension = mime.extension(type)
-		console.log(`path: ${path}`)
-		console.log(`type: ${type}`)
-		console.log(`fileExtension: ${fileExtension}`)
-		await fs.copy(path, 'public/avatars/avatar.png')
 		// ENCRYPTING PASSWORD AND BUILDING SQL
 		body.pass = await bcrypt.hash(body.pass, saltRounds)
-		const sql = `INSERT INTO users(user, pass) VALUES("${body.user}", "${body.pass}")`
-		console.log(sql)
-		// DATABASE COMMANDS
-		const db = await sqlite.open('./website.db')
-		await db.run(sql)
-		await db.close()
+		user.register(body.user,body.pass)
 		// REDIRECTING USER TO HOME PAGE
 		ctx.redirect(`/?msg=new user "${body.user}" added`)
 	} catch(err) {
@@ -60,31 +46,39 @@ router.post('/register', koaBody, async ctx => {
 })
 
 router.get('/login', async ctx => {
+	console.log(auth)
+	if(auth) {
+		ctx.redirect('/')
+	}
 	const data = {}
 	if(ctx.query.msg) data.msg = ctx.query.msg
 	if(ctx.query.user) data.user = ctx.query.user
-	await ctx.render('login', {title: 'Login'}, data)  
+	await ctx.render('login', {title: 'Login'}, data)
 })
 
-router.post('/login',  koaBody, async ctx => {
+router.post('/login', koaBody, async ctx => {
 	try {
 		const body = ctx.request.body
 		const db = await sqlite.open('./website.db')
 		// DOES THE USERNAME EXIST?
 		const records = await db.get(`SELECT count(id) AS count FROM users WHERE user="${body.user}";`)
-		console.log("here")
 		if(!records.count) return ctx.redirect('/login?msg=invalid%20username')
 		const record = await db.get(`SELECT pass FROM users WHERE user = "${body.user}";`)
 		await db.close()
 		// DOES THE PASSWORD MATCH?
 		const valid = await bcrypt.compare(body.pass, record.pass)
-		if(valid == false) return ctx.redirect(`/login?user=${body.user}&msg=invalid%20password`)
+		if(valid === false) return ctx.redirect(`/login?user=${body.user}&msg=invalid%20password`)
 		// WE HAVE A VALID USERNAME AND PASSWORD
-		ctx.session.authorised = true
+		auth = true
 		return ctx.redirect('/?msg=you are now logged in...')
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
+})
+
+router.get('/logout', async ctx => {
+	auth = false
+	ctx.redirect('/login')
 })
 
 module.exports = router
