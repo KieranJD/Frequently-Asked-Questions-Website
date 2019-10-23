@@ -43,7 +43,7 @@ const mockQuestions = [
  * @route {GET} /
  */
 router.get('/', async ctx => {
-	await ctx.render('home', {title: 'Home', mockData: mockQuestions})
+	await ctx.render('home', {title: 'Welcome to the GameHub', mockData: mockQuestions})
 })
 
 module.exports = router

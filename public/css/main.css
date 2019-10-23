@@ -49,7 +49,8 @@ header > h1 {
     letter-spacing: 2px;
     position: absolute;
     top: 200px;
-    left: 22%;
+    width: 94%;
+    text-align: center;
     color: #FFF;
 }
 
@@ -59,7 +60,7 @@ main {
     overflow: auto;
 }
 
-main > form > input {
+main > form > input.search {
     padding: 10px;
     font-size: 1rem;
     float: left;
@@ -84,7 +85,7 @@ main > form > button {
     cursor: pointer;
 }
 
-main > article {
+main > article.question {
     background: #FFF;
     width: 48%;
     margin: 1%;
@@ -95,18 +96,18 @@ main > article {
     position: relative;
 }
 
-main > article:hover {
+main > article:hover.question {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-main > article > h2 {
+main > article.question > h2 {
     padding: 0 20px;
     float: left;
     color: #001242;
     font-weight: 700;
 }
 
-main > article > p {
+main > article.question > p {
     margin: 0;
     padding: 5px;
     color: white;
@@ -115,14 +116,14 @@ main > article > p {
     border-radius: 10px 10px 0 0;
 }
 
-main > article > small.user {
+main > article.question > small.user {
     position: absolute;
     bottom: 20px;
     left: 20px;
     font-weight: 400;
 }
 
-main > article > small.date {
+main > article.question > small.date {
     position: absolute;
     bottom: 20px;
     right: 20px;

@@ -2,25 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>Game Hub | {{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ content }}">
     <meta name="author" content="Wallef Reis Borges">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{__dirname}}/css/main.css">
 </head>
 <body>
     <header>
         <figure>
             <a href="/">
-                <img src="images/gamehub-v2.png" alt="logo"/>
+                <img src="{{__dirname}}/images/gamehub-v2.png" alt="logo"/>
             </a>
         </figure>       
-        {{!-- <a href="/">
-            <i class="fas fa-gamepad"></i>&nbsp;<strong>Game</strong>Hub
-        </a> --}}
 
         <nav>
             <ul>
@@ -29,24 +26,24 @@
                 </li>
 
                 {{#if auth}}
-                    <li>
-                        <a href="#">Profile</a>
-                    </li>
+                <li>
+                    <a href="#">Profile</a>
+                </li>
 
-                    <li>
-                        <a href="#">Logout</a>
-                    </li>
+                <li>
+                    <a href="#">Logout</a>
+                </li>
                 {{else}}
-                    <li>
-                        <a href="#">Login</a>
-                    </li>
+                <li>
+                    <a href="#">Login</a>
+                </li>
 
-                    <li>
-                        <a href="#">Register</a>
-                    </li>
+                <li>
+                    <a href="#">Register</a>
+                </li>
                 {{/if}}
             </ul>
         </nav>
 
-        <h1>Welcome to the GameHub!</h1>
+        <h1>{{ title }}</h1>
     </header>
