@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }}</title>
+    <link href ="css/homepage.css" type ="text/css" rel = "stylesheet"/>
 </head>
+
 <body>
     <header>
         <h1>HEADER AND NAVIGATION WILL GO HERE</h1>
+
+        <nav>
+                <form action = "/"><input class = "toolbar floatLeft" type="submit" value="Home"></form>
+                <form action = "/createquestion"><input class = "toolbar floatLeft" type="submit" value="Add"></form>
+                <form action = "/"><input class = "toolbar floatRight" type="submit" value="Sign up"></form>
+                <form action = "/"><input class = "toolbar floatRight" type="submit" value="Login"></form>
+                <form action="/" method="get">
+                    <input id = "searchBox" type="text" name="search" placeholder="Search" value="{{query}}">
+                    <input id = "searchButton" type="submit" value="Search">
+                </form>
+	    </nav>
+
     </header>

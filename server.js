@@ -4,10 +4,20 @@ require('dotenv').config()
 const Koa = require('koa')
 const views = require('koa-views')
 
+//temp
+const stat = require('koa-static')
+const koaBody = require('koa-body')
+//
+
 const Router = require('./core/routes')
 
 const app = new Koa()
 const port = process.env.SERVER_PORT
+
+//temp
+app.use(stat('public'))
+app.use(koaBody())
+//
 
 app.use(views(`${__dirname}/core/views`,
 	{

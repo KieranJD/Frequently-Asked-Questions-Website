@@ -3,6 +3,21 @@
 <main>
     <section>
         <h1>CONTENT WILL BE HERE</h1>
+
+        <section>
+            <section class ="border" id ="topBorder">
+                <h1>All Questions</h1>
+                
+            </section>
+            {{#each Questions}}
+                <form action = "/question/{{id}}" class = "border"> 
+                    <button>TEST </button>
+                    <h2>{{this.title}}</h2>
+                    <p>{{this.question}}</p>	
+                </form>
+            {{/each}}
+	    </section>
+
     </section>
 </main>
 
