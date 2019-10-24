@@ -5,10 +5,6 @@ const Database = require('sqlite-async')
 const dbName = 'server.db'
 
 module.exports = class Question {
-	example() {
-		return 'this is an example'
-	}
-
 	async getAllQuestions(query) {
 		try {
 			let sql = 'SELECT id, title, question FROM Questions;'
@@ -27,5 +23,15 @@ module.exports = class Question {
 		}
 	}
 
-	
+	async insertQuestion(request) {
+		console.log(request.body)
+		const body = request.body
+		const sql = `INSERT INTO Questions(title, question) 
+			VALUES("${body.title}", "${body.question}");`
+		console.log(sql)
+		const db = await Database.open(dbName)
+		await db.run(sql)
+		await db.close()
+	}
+
 }

@@ -1,23 +1,20 @@
 'use strict'
 
-require('dotenv').config()
 const Koa = require('koa')
 const views = require('koa-views')
-
-//temp
-const stat = require('koa-static')
+const serve = require('koa-static')
 const koaBody = require('koa-body')
-//
 
-const Router = require('./core/routes')
+/*
+const exampleRoutes = require('./core/routes/exampleRoutes')
+const answerRoutes = require('./core/routes/answerRoutes')
+*/
+
+const questionRoutes = require('./core/routes/questionRoutes')
 
 const app = new Koa()
-const port = process.env.SERVER_PORT
 
-//temp
-app.use(stat('public'))
 app.use(koaBody())
-//
 
 app.use(views(`${__dirname}/core/views`,
 	{
@@ -31,7 +28,17 @@ app.use(views(`${__dirname}/core/views`,
 		map: { hbs: 'handlebars' }
 	}))
 
-app.use(Router.routes())
-app.use(Router.allowedMethods())
+app.use(serve('public'))
 
-app.listen(port, () => console.log(`Server running on ${port}...`))
+/*
+app.use(exampleRoutes.routes())
+app.use(exampleRoutes.allowedMethods())
+
+app.use(answerRoutes.routes())
+app.use(answerRoutes.allowedMethods())
+*/
+
+app.use(questionRoutes.routes())
+app.use(questionRoutes.allowedMethods())
+
+module.exports = app
