@@ -32,6 +32,7 @@ router.get('/register', async ctx => {
  * @name Register Script
  * @route {POST} /register
  */
+
 router.post('/register', koaBody, async ctx => {
 	try {
 		const body = ctx.request.body
