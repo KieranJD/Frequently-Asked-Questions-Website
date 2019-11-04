@@ -1,18 +1,12 @@
 'use strict'
-
 const Router = require('koa-router')
 const router = new Router()
 const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const bcrypt = require('bcrypt-promise')
-const sqlite = require('sqlite-async')
-const User = require('./models/user')
 const saltRounds = 10
-
-let auth = false
+const User = require('../models/user')
 const user = new User()
-router.get('/', async ctx => await ctx.render('home', {title: 'Home'}))
-
-
+const accounts = require('../models/account')
 /**
  * The user registration page.
  *
@@ -47,8 +41,8 @@ router.post('/register', koaBody, async ctx => {
 })
 
 router.get('/login', async ctx => {
-	console.log(auth)
-	if(auth) {
+	console.log(ctx.session.authorised)
+	if(ctx.session.authorised === true) {
 		ctx.redirect('/')
 	}
 	const data = {}
@@ -57,28 +51,20 @@ router.get('/login', async ctx => {
 	await ctx.render('login', {title: 'Login'}, data)
 })
 
-router.post('/login', koaBody, async ctx => {
-	try {
-		const body = ctx.request.body
-		const db = await sqlite.open('./website.db')
-		// DOES THE USERNAME EXIST?
-		const records = await db.get(`SELECT count(id) AS count FROM users WHERE user="${body.user}";`)
-		if(!records.count) return ctx.redirect('/login?msg=invalid%20username')
-		const record = await db.get(`SELECT pass FROM users WHERE user = "${body.user}";`)
-		await db.close()
-		// DOES THE PASSWORD MATCH?
-		const valid = await bcrypt.compare(body.pass, record.pass)
-		if(valid === false) return ctx.redirect(`/login?user=${body.user}&msg=invalid%20password`)
-		// WE HAVE A VALID USERNAME AND PASSWORD
-		auth = true
-		return ctx.redirect('/?msg=you are now logged in...')
-	} catch(err) {
-		await ctx.render('error', {message: err.message})
-	}
+router.post('/login', async ctx => { // 19 lines reduced to 10!
+ 	const body = ctx.request.body
+ 	try {
+ 		await accounts.checkCredentials(body.user, body.pass)
+ 		ctx.session.authorised = true
+ 		return ctx.redirect('/?msg=you are now logged in...')
+ 	} catch(err) {
+ 		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
+ 	}
 })
 
+
 router.get('/logout', async ctx => {
-	auth = false
+	ctx.session.authorised = false
 	ctx.redirect('/login')
 })
 

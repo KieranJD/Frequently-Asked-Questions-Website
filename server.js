@@ -1,18 +1,20 @@
 'use strict'
-
 require('dotenv').config()
 const Koa = require('koa')
 const views = require('koa-views')
-const Router = require('./core/routes')
+const serve = require('koa-static')
+const exampleRoutes = require('./core/routes/exampleRoutes')
+const answerRoutes = require('./core/routes/answerRoutes')
+const sqlite = require('sqlite-async')
+const userRoutes = require('./core/routes/userRoutes')
 
 /* USER STUFF */
 const staticDir = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-session')
-const sqlite = require('sqlite-async')
 const app = new Koa()
-const port = process.env.SERVER_PORT
 app.use(require('koa-static')('public'))
+
 app.use(views(`${__dirname}/core/views`,
 	{
 		extension: 'hbs',
@@ -25,18 +27,29 @@ app.use(views(`${__dirname}/core/views`,
 		map: { hbs: 'handlebars' }
 	}))
 
-app.use(Router.routes())
-app.use(Router.allowedMethods())
+app.use(serve('public'))
 
 /* Stuff to move for user */
 app.keys = ['darkSecret']
 app.use(staticDir('public'))
 app.use(bodyParser())
 app.use(session(app))
-module.exports = app.listen(port, async() => {
+
+module.exports = app.listen(async() => {
 	// MAKE SURE WE HAVE A DATABASE WITH THE CORRECT SCHEMA
 	const db = await sqlite.open('./website.db')
 	await db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, pass TEXT);')
 	await db.close()
-	console.log(`listening on port ${port}`)
 })
+
+app.use(exampleRoutes.routes())
+app.use(exampleRoutes.allowedMethods())
+
+app.use(answerRoutes.routes())
+app.use(answerRoutes.allowedMethods())
+
+app.use(userRoutes.routes())
+app.use(userRoutes.allowedMethods())
+
+module.exports = app
+

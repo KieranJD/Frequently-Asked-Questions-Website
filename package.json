@@ -2,12 +2,12 @@
   "name": "faq",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "12.x"
   },
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon index.js",
     "acceptance": "jest --coverage --detectOpenHandles",
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.conf",
     "linter": "node_modules/.bin/eslint .",
