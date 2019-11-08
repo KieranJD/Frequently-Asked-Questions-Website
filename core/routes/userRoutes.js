@@ -55,7 +55,9 @@ router.post('/login', async ctx => { // 19 lines reduced to 10!
  	const body = ctx.request.body
  	try {
  		await accounts.checkCredentials(body.user, body.pass)
- 		ctx.session.authorised = true
+		 ctx.session.authorised = true
+		 ctx.session.user = body.user
+		 console.log(ctx.session.user)
  		return ctx.redirect('/?msg=you are now logged in...')
  	} catch(err) {
  		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)

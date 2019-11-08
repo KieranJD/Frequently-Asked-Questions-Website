@@ -44,7 +44,7 @@ const mockQuestions = [
  */
 router.get('/', async ctx => {
 	console.log(ctx.session.authorised)
-	await ctx.render('home', {title: 'Welcome to the GameHub', mockData: mockQuestions})
+	await ctx.render('home', {title: 'Welcome to the GameHub', mockData: mockQuestions, loggedIn: ctx.session.authorised, userName: ctx.session.user})
 })
 
 module.exports = router

@@ -25,9 +25,9 @@
                     <a href="/">Home</a>
                 </li>
 
-                {{#if ctx.session.authorised}}
+                {{#if loggedIn}}
                 <li>
-                    <a href="#">Profile</a>
+                    <a href="#">{{ userName }}</a>
                 </li>
 
                 <li>
