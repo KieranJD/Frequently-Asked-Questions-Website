@@ -1,24 +1,22 @@
 {{> header}}
 
-<main>
-    <section>
-        <h1>CONTENT WILL BE HERE</h1>
+    <main>
+        <form action="#">
+            <input type="text" placeholder="Search..." name="search" class="search" value="{{query}}">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
 
-        <section>
-            <section class ="border" id ="topBorder">
-                <h1>All Questions</h1>
-                
-            </section>
-            {{#each Questions}}
-                <form action = "/question/{{id}}" class = "border"> 
-                    <button>TEST </button>
-                    <h2>{{this.title}}</h2>
-                    <p>{{this.question}}</p>	
-                </form>
-            {{/each}}
-	    </section>
-
-    </section>
-</main>
+        {{#each Questions}}
+        <article class="question">
+            {{#if solved}}
+            <p>Solved</p>
+            {{/if}}
+            <h2>{{ title }}</h2>
+            
+            <small class="user">{{ user }}</small>
+            <small class="date">{{ date }}</small>
+        </article>
+        {{/each}}        
+    </main>
 
 {{> footer }}

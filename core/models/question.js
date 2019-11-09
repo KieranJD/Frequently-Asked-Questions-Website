@@ -2,15 +2,15 @@
 
 const Database = require('sqlite-async')
 
-const dbName = 'server.db'
+const dbName = 'website.db'
 
 module.exports = class Question {
 	async getAllQuestions(query) {
 		try {
-			let sql = 'SELECT id, title, question FROM Questions;'
+			let sql = 'SELECT question_id, title, question FROM Questions;'
 			console.log(query.search)
 			if(query !== undefined && query.search !== undefined) {
-				sql = `SELECT id, title, question FROM Questions
+				sql = `SELECT question_id, title, question FROM Questions
 								WHERE upper(title) LIKE "%${query.search}%";`
 			}
 			const db = await Database.open(dbName)

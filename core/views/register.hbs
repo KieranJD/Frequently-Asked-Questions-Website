@@ -1,0 +1,22 @@
+{{> header}}
+
+  <link href="css/main.css" type="text/css" rel="stylesheet" />
+
+  <main>
+    <section id="box">
+      <h1>Sign Up</h1>
+      <form action="/register" enctype="multipart/form-data" method="post">
+        <p>Username:<br /><input type="text" name="user" placeholder="your preferred username (no spaces)" value=""></p>
+        <p>Password:<br /><input type="password" name="pass" placeholder="your chosen password" value=""></p>
+        <p>Nationality:<br /><select name="country">
+          {{#each countries}}
+          <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select></p>
+        <p>Profile Picture:<br /><input type="file" name="avatar"></p>
+        <p><input type="submit" value="Create"></p>
+      </form>
+    </section>
+  </main>
+
+{{> footer }}

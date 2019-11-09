@@ -2,25 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Game Hub | {{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ content }}">
+    <meta name="author" content="Wallef Reis Borges">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
-    <link href ="css/homepage.css" type ="text/css" rel = "stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="{{__dirname}}/css/main.css">
 </head>
 
 <body>
     <header>
-        <h1>HEADER AND NAVIGATION WILL GO HERE</h1>
+        <figure>
+            <a href="/">
+                <img src="{{__dirname}}/images/gamehub-v2.png" alt="logo"/>
+            </a>
+        </figure>       
 
         <nav>
-                <form action = "/"><input class = "toolbar floatLeft" type="submit" value="Home"></form>
-                <form action = "/createquestion"><input class = "toolbar floatLeft" type="submit" value="Add"></form>
-                <form action = "/"><input class = "toolbar floatRight" type="submit" value="Sign up"></form>
-                <form action = "/"><input class = "toolbar floatRight" type="submit" value="Login"></form>
-                <form action="/" method="get">
-                    <input id = "searchBox" type="text" name="search" placeholder="Search" value="{{query}}">
-                    <input id = "searchButton" type="submit" value="Search">
-                </form>
-	    </nav>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
 
+                {{#if loggedIn}}
+                <li>
+                    <a href="#">{{ userName }}</a>
+                </li>
+
+                <li>
+                    <a href="/insertquestion">Add</a>
+                </li>
+
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
+                {{else}}
+                <li>
+                    <a href="/login">Login</a>
+                </li>
+
+                <li>
+                    <a href="/register">Register</a>
+                </li>
+                {{/if}}
+            </ul>
+        </nav>
+
+        <h1>{{ title }}</h1>
     </header>
