@@ -1,4 +1,4 @@
-'use strict'
+/*'use strict'
 
 const Router = require('koa-router')
 const router = new Router()
@@ -42,9 +42,11 @@ const mockQuestions = [
  * @name Home Page
  * @route {GET} /
  */
+/*
 router.get('/', async ctx => {
 	console.log(ctx.session.authorised)
 	await ctx.render('home', {title: 'Welcome to the GameHub', mockData: mockQuestions, loggedIn: ctx.session.authorised, userName: ctx.session.user})
 })
 
 module.exports = router
+*/
