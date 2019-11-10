@@ -42,3 +42,12 @@ module.exports.checkCredentials = async(username, password) => {
 		throw err
 	}
 }
+
+module.exports.alreadyTaken = async(username) => {
+	try{
+		const records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`)
+		if(records.count) throw new Error('username already taken')
+	} catch(err) {
+		throw err
+	}
+}

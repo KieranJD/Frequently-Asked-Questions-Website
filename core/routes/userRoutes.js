@@ -17,7 +17,7 @@ router.get('/register', async ctx => {
 	const data = {}
 	if(ctx.query.msg) data.msg = ctx.query.msg
 	data.countries = ['UK', 'Europe', 'World']
-	await ctx.render('register', data)
+	await ctx.render('register',{title: 'Register'}, data)
 })
 
 /**
@@ -30,6 +30,7 @@ router.get('/register', async ctx => {
 router.post('/register', koaBody, async ctx => {
 	try {
 		const body = ctx.request.body
+		await accounts.alreadyTaken(body.user)
 		// ENCRYPTING PASSWORD AND BUILDING SQL
 		body.pass = await bcrypt.hash(body.pass, saltRounds)
 		user.register(body.user,body.pass)
@@ -51,13 +52,17 @@ router.get('/login', async ctx => {
 	await ctx.render('login', {title: 'Login'}, data)
 })
 
-router.post('/login', async ctx => { // 19 lines reduced to 10!
+router.get('/profile', async ctx =>{
+	await ctx.render('profile', {title: 'Profile', loggedIn: ctx.session.authorised, userName: ctx.session.userName})
+})
+
+router.post('/login', async ctx => {
  	const body = ctx.request.body
  	try {
  		await accounts.checkCredentials(body.user, body.pass)
 		 ctx.session.authorised = true
-		 ctx.session.user = body.user
-		 console.log(ctx.session.user)
+		 ctx.session.userName = body.user
+		 console.log(ctx.session.userName)
  		return ctx.redirect('/?msg=you are now logged in...')
  	} catch(err) {
  		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
