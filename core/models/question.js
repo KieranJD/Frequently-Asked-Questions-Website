@@ -41,6 +41,7 @@ module.exports = class Question {
 	async insertQuestion(request,date) {
 		//console.log('Request data:', request)
 		if(request.title === '') throw new Error('Title cannot be left empty')
+		if(request.question === '') throw new Error('Question cannot be left empty')
 		const body = request
 		const sql = `INSERT INTO Questions(title, question, date) 
 			VALUES("${body.title}", "${body.question}", "${date}");`
