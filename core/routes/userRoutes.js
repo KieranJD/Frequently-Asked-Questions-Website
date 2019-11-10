@@ -52,7 +52,7 @@ router.get('/login', async ctx => {
 	await ctx.render('login', {title: 'Login'}, data)
 })
 
-router.get('/profile', async ctx =>{
+router.get('/profile', async ctx => {
 	await ctx.render('profile', {title: 'Profile', loggedIn: ctx.session.authorised, userName: ctx.session.userName})
 })
 
