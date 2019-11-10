@@ -16,7 +16,7 @@ module.exports = class Question {
 		try {
 			let sql = 'SELECT question_id, title, question, solved, user_id, date FROM Questions;'
 			if(query !== undefined && query.search !== undefined) {
-				console.log('Query Search', query.search)
+				//console.log('Query Search', query.search)
 				sql = `SELECT question_id, title, question, solved, user_id, date FROM Questions
 								WHERE upper(title) LIKE "%${query.search}%";`
 			}

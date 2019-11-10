@@ -70,6 +70,25 @@ describe('getAll()', () => {
 		expect(count).toBe(2)
 		done()
 	})
+
+	test('retrieve all records LIKE query', async done => {
+		expect.assertions(2)
+		//ARRANGE
+		const question = await new Question()
+		const query = {search: 'The Legend of Zelda'}
+		const body = {title: 'The Legend of Zelda', question: 'How to beat the first boss'}
+		const body1 = {title: 'The Witcher 3 Wild Hunt', question: 'How to kill a griffin'}
+		const body2 = {title: 'The Legend of Zelda Ocarina of Time', question: 'How to beat the first boss'}
+		//ACT
+		await question.insertQuestion(body,'01/10/2019')
+		await question.insertQuestion(body1,'07/09/2019')
+		await question.insertQuestion(body2,'03/04/2019')
+		const data = await question.getAllQuestions(query)
+		//ASSERT
+		expect(data[0].title).toBe('The Legend of Zelda')
+		expect(data[1].title).toBe('The Legend of Zelda Ocarina of Time')
+		done()
+	})
 })
 
 describe('count()', () => {
