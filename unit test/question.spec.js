@@ -31,9 +31,9 @@ describe('insert()', () => {
 		expect.assertions(1)
 		//ARRANGE
 		const question = await new Question()
-		const body = {title: 'The Witcher 3 Wild Hunt', question: 'Where to find level 1 wolf armour?'}
+		const body = {title: '', question: 'Where to find level 1 wolf armour?'}
 		//ACT
-		await expect(question.insertQuestion(body,'06/11/2019')).rejects.toEqual( Error('Title cannot left be empty') )
+		await expect(question.insertQuestion(body,'06/11/2019')).rejects.toEqual( Error('Title cannot be left empty') )
 		//ASSERT
 		expect()
 		done()
