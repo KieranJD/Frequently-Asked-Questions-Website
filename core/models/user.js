@@ -7,7 +7,7 @@ module.exports = class User {
 
 	async register(username,pass) {
 		const sql = `INSERT INTO users(user, pass) VALUES("${username}", "${pass}")`
-		console.log(sql)
+		console.log('sql:', sql)
 		// DATABASE COMMANDS
 		const db = await sqlite.open('./website.db')
 		await db.run(sql)

@@ -42,7 +42,7 @@ router.post('/register', koaBody, async ctx => {
 })
 
 router.get('/login', async ctx => {
-	console.log(ctx.session.authorised)
+	console.log('Login Auth session:', ctx.session.authorised)
 	if(ctx.session.authorised === true) {
 		ctx.redirect('/')
 	}
@@ -62,7 +62,7 @@ router.post('/login', async ctx => {
  		await accounts.checkCredentials(body.user, body.pass)
 		 ctx.session.authorised = true
 		 ctx.session.userName = body.user
-		 console.log(ctx.session.userName)
+		 console.log('Username', ctx.session.userName)
  		return ctx.redirect('/?msg=you are now logged in...')
  	} catch(err) {
  		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)

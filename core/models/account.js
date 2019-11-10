@@ -18,7 +18,7 @@ const bcrypt = require('bcrypt-promise')
  */
 async function runSQL(query) {
 	try {
-		console.log(query)
+		console.log('Query', query)
 		const DBName = './website.db'
 		const db = await sqlite.open(DBName)
 		const data = await db.all(query)
