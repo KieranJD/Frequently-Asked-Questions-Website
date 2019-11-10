@@ -12,14 +12,17 @@ afterAll( async() => {
 
 describe('insert()', () => {
 	test('insert a single question', async done => {
-		expect.assertions(1)
+		expect.assertions(3)
 		// ARRANGE
 		const question = await new Question() // DB runs in-memory if no name supplied
 		const body = {title: 'Call of Duty World at War', question: 'Where is the pack-a-punch on Der Riese'}
 		// ACT
 		await question.insertQuestion(body,'10/11/2019')
 		const count = await question.countQuestions()
+		const data = await question.getAllQuestions()
 		// ASSERT
+		expect(data[0].title).toBe('Call of Duty World at War')
+		expect(data[0].question).toBe('Where is the pack-a-punch on Der Riese')
 		expect(count).toBe(1)
 		done()
 	})

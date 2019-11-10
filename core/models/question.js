@@ -22,7 +22,7 @@ module.exports = class Question {
 			}
 			const data = await this.db.all(sql)
 			//await this.db.close()
-			console.log('Returned data:', data)
+			//console.log('Returned data:', data)
 			return data
 		} catch(err) {
 			return err.message
@@ -43,7 +43,7 @@ module.exports = class Question {
 		const body = request
 		const sql = `INSERT INTO Questions(title, question, date) 
 			VALUES("${body.title}", "${body.question}", "${date}");`
-		console.log(sql)
+		//console.log(sql)
 		await this.db.run(sql)
 		//await this.db.close()
 	}
