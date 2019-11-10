@@ -26,6 +26,18 @@ describe('insert()', () => {
 		expect(count).toBe(1)
 		done()
 	})
+
+	test('title must not be empty', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const question = await new Question()
+		const body = {title: 'The Witcher 3 Wild Hunt', question: 'Where to find level 1 wolf armour?'}
+		//ACT
+		await expect(question.insertQuestion(body,'06/11/2019')).rejects.toEqual( Error('Title cannot left be empty') )
+		//ASSERT
+		expect()
+		done()
+	})
 })
 
 describe('getAll()', () => {
