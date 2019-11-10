@@ -4,7 +4,6 @@ const Koa = require('koa')
 const views = require('koa-views')
 const serve = require('koa-static')
 const koaBody = require('koa-body')
-//const exampleRoutes = require('./core/routes/exampleRoutes')
 const answerRoutes = require('./core/routes/answerRoutes')
 const sqlite = require('sqlite-async')
 const userRoutes = require('./core/routes/userRoutes')
@@ -45,10 +44,7 @@ module.exports = app.listen(async() => {
 	await db.run('CREATE TABLE IF NOT EXISTS Questions (question_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, question TEXT, solved INTEGER, user_id TEXT, date TEXT);')
 	await db.close()
 })
-/*
-app.use(exampleRoutes.routes())
-app.use(exampleRoutes.allowedMethods())
-*/
+
 app.use(answerRoutes.routes())
 app.use(answerRoutes.allowedMethods())
 

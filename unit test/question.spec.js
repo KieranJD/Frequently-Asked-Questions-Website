@@ -27,16 +27,19 @@ describe('insert()', () => {
 
 describe('getAll()', () => {
 	test('select all from Questions table',async done => {
-		expect.assertions(1)
+		expect.assertions(3)
 		//ARRANGE
 		const question = await new Question()
-		const body = {title: 'Call of Duty World at War', question: 'Where is the pack-a-punch on Der Riese'}
+		const body = {title: 'Mario Cart', question: 'How to unlock mirror'}
 		const body1 = {title: 'Super Mario Bros', question: 'How to beat bowser'}
 		//ACT
 		await question.insertQuestion(body,'10/11/2019')
 		await question.insertQuestion(body1,'09/11/2019')
 		const count = await question.countQuestions()
+		const data = await question.getAllQuestions()
 		//ASSERT
+		expect(data[0].title).toBe('Mario Cart')
+		expect(data[1].title).toBe('Super Mario Bros')
 		expect(count).toBe(2)
 		done()
 	})

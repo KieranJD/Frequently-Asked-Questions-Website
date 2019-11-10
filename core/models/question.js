@@ -15,8 +15,8 @@ module.exports = class Question {
 	async getAllQuestions(query) {
 		try {
 			let sql = 'SELECT question_id, title, question, solved, user_id, date FROM Questions;'
-			console.log('Query Search', query.search)
 			if(query !== undefined && query.search !== undefined) {
+				console.log('Query Search', query.search)
 				sql = `SELECT question_id, title, question, solved, user_id, date FROM Questions
 								WHERE upper(title) LIKE "%${query.search}%";`
 			}
@@ -39,7 +39,7 @@ module.exports = class Question {
 	}
 
 	async insertQuestion(request,date) {
-		console.log('Request data:', request)
+		//console.log('Request data:', request)
 		const body = request
 		const sql = `INSERT INTO Questions(title, question, date) 
 			VALUES("${body.title}", "${body.question}", "${date}");`
