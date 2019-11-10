@@ -38,6 +38,18 @@ describe('insert()', () => {
 		expect()
 		done()
 	})
+
+	test('question must not be empty', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const question = await new Question()
+		const body = {title: 'Lego Star Wars', question: ''}
+		//ACT
+		await expect(question.insertQuestion(body,'05/11/2019')).rejects.toEqual( Error('Question cannot be left empty') )
+		//ASSERT
+		expect()
+		done()
+	})
 })
 
 describe('getAll()', () => {
