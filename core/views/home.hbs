@@ -2,17 +2,18 @@
 
     <main>
         <form action="#">
-            <input type="text" placeholder="Search..." name="search" class="search">
+            <input type="text" placeholder="Search..." name="search" class="search" value="{{query}}">
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
 
-        {{#each mockData}}
+        {{#each Questions}}
         <article class="question">
             {{#if solved}}
             <p>Solved</p>
             {{/if}}
             <h2>{{ title }}</h2>
-            <small class="user">{{ user }}</small>
+            <h3>{{question}}</h3>
+            <small class="user">{{ user_id }}</small>
             <small class="date">{{ date }}</small>
         </article>
         {{/each}}        

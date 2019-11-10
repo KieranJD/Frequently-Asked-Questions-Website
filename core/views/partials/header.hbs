@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <link rel="stylesheet" href="{{__dirname}}/css/main.css">
 </head>
+
 <body>
     <header>
         <figure>
@@ -28,6 +29,10 @@
                 {{#if loggedIn}}
                 <li>
                     <a href="/profile">{{ userName }}</a>
+                </li>
+
+                <li>
+                    <a href="/createquestion">Add</a>
                 </li>
 
                 <li>
