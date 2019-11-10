@@ -5,10 +5,10 @@ const Question = require('../models/question')
 
 const router = new Router()
 //const question = new Question('website.db')
-const question = new Question()
 
 router.get('/', async ctx => {
 	try{
+		const question = await new Question('website.db')
 		const data = await question.getAllQuestions(ctx.query)
 	    console.log(data)
 	    await ctx.render('home', {Questions: data, title: 'Welcome to the GameHub', loggedIn: ctx.session.authorised, userName: ctx.session.user})
@@ -19,8 +19,9 @@ router.get('/', async ctx => {
 
 router.post('/insertquestion', async ctx => {
 	try{
+		const question = await new Question('website.db')
 		const date = await question.currentDate()
-		await question.insertQuestion(ctx.request,date)
+		await question.insertQuestion(ctx.request.body,date)
 		ctx.redirect('/')
 	}catch(err) {
 		await ctx.render('error', {message: err.message})

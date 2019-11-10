@@ -2,9 +2,17 @@
 
 const Database = require('sqlite-async')
 
-const dbName = 'website.db'
+//const dbName = 'website.db'
 
 module.exports = class Question {
+
+	constructor(dbName = ':memory:') {
+		return (async() => {
+			this.db = await Database.open(dbName)
+			await this.db.run('CREATE TABLE IF NOT EXISTS Questions (question_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, question TEXT, solved INTEGER, user_id TEXT, date TEXT);')
+			return this
+		})()
+	}
 
 	async getAllQuestions(query) {
 		try {
@@ -14,9 +22,8 @@ module.exports = class Question {
 				sql = `SELECT question_id, title, question, solved, user_id, date FROM Questions
 								WHERE upper(title) LIKE "%${query.search}%";`
 			}
-			const db = await Database.open(dbName)
-			const data = await db.all(sql)
-			await db.close()
+			const data = await this.db.all(sql)
+			//await this.db.close()
 			console.log(data)
 			return data
 		} catch(err) {
@@ -34,14 +41,18 @@ module.exports = class Question {
 	}
 
 	async insertQuestion(request,date) {
-		console.log(request.body)
-		const body = request.body
-		const sql = `INSERT INTO Questions(title, question,date) 
+		console.log(request)
+		const body = request
+		const sql = `INSERT INTO Questions(title, question, date) 
 			VALUES("${body.title}", "${body.question}", "${date}");`
 		console.log(sql)
-		const db = await Database.open(dbName)
-		await db.run(sql)
-		await db.close()
+		await this.db.run(sql)
+		//await this.db.close()
 	}
 
+	async countQuestions() {
+		const sql = 'SELECT COUNT(*) as Questions FROM Questions'
+		const data = await this.db.get(sql)
+		return data.Questions
+	}
 }
