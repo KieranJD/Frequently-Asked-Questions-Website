@@ -27,6 +27,6 @@ router.post('/insertquestion', async ctx => {
 	}
 })
 
-router.get('/createquestion', async ctx => ctx.render('createquestion', {title: 'Create a Question'}))
+router.get('/createquestion', async ctx => ctx.render('createquestion', {title: 'Create a Question', loggedIn: ctx.session.authorised, userName: ctx.session.userName}))
 
 module.exports = router
