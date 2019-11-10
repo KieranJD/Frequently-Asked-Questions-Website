@@ -9,8 +9,8 @@ router.get('/', async ctx => {
 	try{
 		const question = await new Question('website.db')
 		const data = await question.getAllQuestions(ctx.query)
-	    console.log(data)
-	    await ctx.render('home', {Questions: data, title: 'Welcome to the GameHub', loggedIn: ctx.session.authorised, userName: ctx.session.user})
+	    console.log('Data', data)
+	    await ctx.render('home', {Questions: data, title: 'Welcome to the GameHub', loggedIn: ctx.session.authorised, userName: ctx.session.userName})
 	}catch(err) {
 		await ctx.render('error', {message: err.message})
 	}

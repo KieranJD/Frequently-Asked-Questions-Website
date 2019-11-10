@@ -18,7 +18,7 @@ const bcrypt = require('bcrypt-promise')
  */
 async function runSQL(query) {
 	try {
-		console.log(query)
+		console.log('Query', query)
 		const DBName = './website.db'
 		const db = await sqlite.open(DBName)
 		const data = await db.all(query)
@@ -38,6 +38,15 @@ module.exports.checkCredentials = async(username, password) => {
 		const valid = await bcrypt.compare(password, record.pass)
 		if(valid === false) throw new Error('invalid password')
 		return true
+	} catch(err) {
+		throw err
+	}
+}
+
+module.exports.alreadyTaken = async(username) => {
+	try{
+		const records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`)
+		if(records.count) throw new Error('username already taken')
 	} catch(err) {
 		throw err
 	}
