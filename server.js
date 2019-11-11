@@ -39,9 +39,8 @@ app.use(session(app))
 
 module.exports = app.listen(async() => {
 	// MAKE SURE WE HAVE A DATABASE WITH THE CORRECT SCHEMA
-	const db = await sqlite.open('./website.db')
+	const db = await sqlite.open(process.env.DB)
 	await db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, pass TEXT);')
-	await db.run('CREATE TABLE IF NOT EXISTS Questions (question_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, question TEXT, solved INTEGER, user_id TEXT, date TEXT);')
 	await db.close()
 })
 

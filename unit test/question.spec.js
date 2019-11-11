@@ -45,7 +45,8 @@ describe('insert()', () => {
 		const question = await new Question()
 		const body = {title: 'Lego Star Wars', question: ''}
 		//ACT
-		await expect(question.insertQuestion(body,'05/11/2019')).rejects.toEqual( Error('Question cannot be left empty') )
+		await expect(question.insertQuestion(body,'05/11/2019')).rejects.toEqual( Error(
+			'Question cannot be left empty') )
 		//ASSERT
 		expect()
 		done()
