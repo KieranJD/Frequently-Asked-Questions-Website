@@ -5,7 +5,6 @@ const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const bcrypt = require('bcrypt-promise')
 const saltRounds = 10
 const User = require('../models/user')
-const user = new User()
 const accounts = require('../models/account')
 /**
  * The user registration page.
@@ -29,6 +28,7 @@ router.get('/register', async ctx => {
 
 router.post('/register', koaBody, async ctx => {
 	try {
+		const user = await new User()
 		const body = ctx.request.body
 		await accounts.alreadyTaken(body.user)
 		// ENCRYPTING PASSWORD AND BUILDING SQL
