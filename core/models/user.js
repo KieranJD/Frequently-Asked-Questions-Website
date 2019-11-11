@@ -1,17 +1,20 @@
 'use strict'
 const sqlite = require('sqlite-async')
 module.exports = class User {
-	async setName(name) {
-		return this.name = name
+	constructor(dbName = 'testing.db') {
+		return (async() => {
+			this.db = await sqlite.open(dbName)
+			const sql = 'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, pass TEXT);'
+			await this.db.run(sql)
+			return this
+		})()
 	}
 
 	async register(username,pass) {
 		const sql = `INSERT INTO users(user, pass) VALUES("${username}", "${pass}")`
 		console.log('sql:', sql)
 		// DATABASE COMMANDS
-		const db = await sqlite.open('./website.db')
-		await db.run(sql)
-		await db.close()
+		await this.db.run(sql)
 	}
 
 	async login() {
