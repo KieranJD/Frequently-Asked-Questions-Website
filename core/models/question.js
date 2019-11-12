@@ -2,14 +2,13 @@
 
 const Database = require('sqlite-async')
 
-//const dbName = 'website.db'
-
 module.exports = class Question {
 
 	constructor(dbName = ':memory:') {
 		return (async() => {
 			this.db = await Database.open(dbName)
-			await this.db.run('CREATE TABLE IF NOT EXISTS Questions (question_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, question TEXT, solved INTEGER, user_id TEXT, date TEXT);')
+			await this.db.run(`CREATE TABLE IF NOT EXISTS Questions (question_id INTEGER PRIMARY KEY AUTOINCREMENT,
+						title TEXT, question TEXT, solved INTEGER, user_id TEXT, date TEXT);`)
 			return this
 		})()
 	}
@@ -17,14 +16,12 @@ module.exports = class Question {
 	async getAllQuestions(query) {
 		try {
 			let sql = 'SELECT question_id, title, question, solved, user_id, date FROM Questions;'
-			console.log(query.search)
 			if(query !== undefined && query.search !== undefined) {
 				sql = `SELECT question_id, title, question, solved, user_id, date FROM Questions
 								WHERE upper(title) LIKE "%${query.search}%";`
 			}
 			const data = await this.db.all(sql)
 			//await this.db.close()
-			console.log(data)
 			return data
 		} catch(err) {
 			return err.message
@@ -41,11 +38,11 @@ module.exports = class Question {
 	}
 
 	async insertQuestion(request,date) {
-		console.log(request)
+		if(request.title === '') throw new Error('Title cannot be left empty')
+		if(request.question === '') throw new Error('Question cannot be left empty')
 		const body = request
 		const sql = `INSERT INTO Questions(title, question, date) 
 			VALUES("${body.title}", "${body.question}", "${date}");`
-		console.log(sql)
 		await this.db.run(sql)
 		//await this.db.close()
 	}

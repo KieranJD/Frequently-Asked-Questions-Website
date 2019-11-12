@@ -14,15 +14,16 @@ module.exports = class Answer {
 	}
 
 	async getAnswersByQuestion(id) {
-		try {
-			let sql = queries.select('answers.*, questions.title', 'answers')
-			sql = `${sql} INNER JOIN questions ON answers.question_id = questions.id
-			WHERE question_id = ${id};`
+		// try {
+		// 	let sql = queries.select('answers.*, questions.title', 'answers')
+		// 	sql = `${sql} INNER JOIN questions ON answers.question_id = questions.id
+		// 	WHERE question_id = ${id};`
 
-			const data = this.db.get(sql)
-			return data
-		} catch (err) {
-			throw err
-		}
+		// 	const data = this.db.get(sql)
+		// 	return data
+		// } catch (err) {
+		// 	throw err
+		// }
+		return `OK ${id}`
 	}
 }

@@ -1,24 +1,18 @@
 'use strict'
+
+require('dotenv').config()
 const Router = require('koa-router')
 const router = new Router()
 const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
-const bcrypt = require('bcrypt-promise')
-const saltRounds = 10
 const User = require('../models/user')
-const user = new User()
-const accounts = require('../models/account')
+
 /**
  * The user registration page.
  *
  * @name Register Page
  * @route {GET} /register
  */
-router.get('/register', async ctx => {
-	const data = {}
-	if(ctx.query.msg) data.msg = ctx.query.msg
-	data.countries = ['UK', 'Europe', 'World']
-	await ctx.render('register', data)
-})
+router.get('/register', async ctx => await ctx.render('register', {title: 'Register'}))
 
 /**
  * The script to process new user registrations.
@@ -27,47 +21,51 @@ router.get('/register', async ctx => {
  * @route {POST} /register
  */
 
-router.post('/register', koaBody, async ctx => {
+router.post('/register-action', koaBody, async ctx => {
 	try {
 		const body = ctx.request.body
-		// ENCRYPTING PASSWORD AND BUILDING SQL
-		body.pass = await bcrypt.hash(body.pass, saltRounds)
-		user.register(body.user,body.pass)
-		// REDIRECTING USER TO HOME PAGE
-		ctx.redirect(`/?msg=new user "${body.user}" added`)
+		const user = await new User(process.env.DB_NAME)
+
+		await user.register(body.username ,body.password)
+
+		ctx.redirect(`/?msg=new user "${body.username}" added`)
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
 })
 
 router.get('/login', async ctx => {
-	console.log(ctx.session.authorised)
 	if(ctx.session.authorised === true) {
 		ctx.redirect('/')
 	}
-	const data = {}
-	if(ctx.query.msg) data.msg = ctx.query.msg
-	if(ctx.query.user) data.user = ctx.query.user
-	await ctx.render('login', {title: 'Login'}, data)
+
+	await ctx.render('login', {title: 'Login'})
 })
 
-router.post('/login', async ctx => { // 19 lines reduced to 10!
- 	const body = ctx.request.body
- 	try {
- 		await accounts.checkCredentials(body.user, body.pass)
-		 ctx.session.authorised = true
-		 ctx.session.user = body.user
-		 console.log(ctx.session.user)
- 		return ctx.redirect('/?msg=you are now logged in...')
- 	} catch(err) {
- 		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
- 	}
-})
+router.post('/login-action', async ctx => {
+	try {
+		const body = ctx.request.body
+		const user = await new User(process.env.DB_NAME)
+		await user.login(body.username, body.password)
 
+		ctx.session.authorised = true
+		ctx.session.user = body.username
+
+		return ctx.redirect('/?msg=you are now logged in...')
+	} catch(err) {
+		await ctx.render('error', {message: err.message})
+	}
+})
 
 router.get('/logout', async ctx => {
-	ctx.session.authorised = false
-	ctx.redirect('/login')
+	ctx.session.authorised = null
+	ctx.session.user = null
+
+	ctx.redirect('/login?msg=you are now logged out...')
+})
+
+router.get('/profile', async ctx => {
+	await ctx.render('profile', {title: 'Profile', loggedIn: ctx.session.authorised, userName: ctx.session.user})
 })
 
 module.exports = router

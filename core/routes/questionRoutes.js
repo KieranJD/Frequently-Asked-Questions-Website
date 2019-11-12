@@ -1,25 +1,26 @@
 'use strict'
 
+require('dotenv').config()
 const Router = require('koa-router')
 const Question = require('../models/question')
 
 const router = new Router()
-//const question = new Question('website.db')
 
 router.get('/', async ctx => {
 	try{
-		const question = await new Question('website.db')
+		const question = await new Question(process.env.DB_NAME)
 		const data = await question.getAllQuestions(ctx.query)
-	    console.log(data)
-	    await ctx.render('home', {Questions: data, title: 'Welcome to the GameHub', loggedIn: ctx.session.authorised, userName: ctx.session.user})
+	    console.log('Data', data)
+		await ctx.render('home', {Questions: data, title: 'Welcome to the GameHub',
+			loggedIn: ctx.session.authorised, userName: ctx.session.userName})
 	}catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
-})  
+})
 
 router.post('/insertquestion', async ctx => {
 	try{
-		const question = await new Question('website.db')
+		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate()
 		await question.insertQuestion(ctx.request.body,date)
 		ctx.redirect('/')
@@ -28,6 +29,7 @@ router.post('/insertquestion', async ctx => {
 	}
 })
 
-router.get('/createquestion', async ctx => ctx.render('createquestion', {title: 'Create a Question'}))
+router.get('/createquestion', async ctx => ctx.render(
+	'createquestion', {title: 'Create a Question', loggedIn: ctx.session.authorised, userName: ctx.session.userName}))
 
 module.exports = router
