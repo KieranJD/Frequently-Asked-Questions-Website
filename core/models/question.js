@@ -1,27 +1,28 @@
 'use strict'
 
 const Database = require('sqlite-async')
+const queries = require('../dbQueries')
 
 module.exports = class Question {
 
 	constructor(dbName = ':memory:') {
 		return (async() => {
 			this.db = await Database.open(dbName)
-			await this.db.run(`CREATE TABLE IF NOT EXISTS Questions (question_id INTEGER PRIMARY KEY AUTOINCREMENT,
-						title TEXT, question TEXT, solved INTEGER, user_id TEXT, date TEXT);`)
+			await this.db.run(queries.createQuestionsTable())
 			return this
 		})()
 	}
 
 	async getAllQuestions(query) {
 		try {
-			let sql = 'SELECT question_id, title, question, solved, user_id, date FROM Questions;'
+			let sql = 'SELECT * FROM Questions;'
+
 			if(query !== undefined && query.search !== undefined) {
-				sql = `SELECT question_id, title, question, solved, user_id, date FROM Questions
-								WHERE upper(title) LIKE "%${query.search}%";`
+				sql = `SELECT * FROM Questions WHERE upper(title) LIKE "%${query.search}%";`
 			}
+
 			const data = await this.db.all(sql)
-			//await this.db.close()
+
 			return data
 		} catch(err) {
 			return err.message
@@ -44,7 +45,6 @@ module.exports = class Question {
 		const sql = `INSERT INTO Questions(title, question, date) 
 			VALUES("${body.title}", "${body.question}", "${date}");`
 		await this.db.run(sql)
-		//await this.db.close()
 	}
 
 	async countQuestions() {

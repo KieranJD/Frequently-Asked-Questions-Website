@@ -30,19 +30,11 @@ app.use(views(`${__dirname}/core/views`,
 			}
 		},
 		map: { hbs: 'handlebars' }
-	}))
-
-// module.exports = app.listen(async() => {
-// 	// MAKE SURE WE HAVE A DATABASE WITH THE CORRECT SCHEMA
-// 	const db = await sqlite.open('./website.db')
-// eslint-disable-next-line max-len
-// 	await db.run('CREATE TABLE IF NOT EXISTS Questions (question_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, question TEXT, solved INTEGER, user_id TEXT, date TEXT);')
-// 	await db.close()
-// })
+	})
+)
 
 app.use(answerRoutes.routes())
 app.use(answerRoutes.allowedMethods())
-
 
 app.use(questionRoutes.routes())
 app.use(questionRoutes.allowedMethods())

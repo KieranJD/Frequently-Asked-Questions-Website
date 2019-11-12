@@ -10,10 +10,10 @@ router.get('/', async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
 		const data = await question.getAllQuestions(ctx.query)
-	    console.log('Data', data)
+
 		await ctx.render('home', {Questions: data, title: 'Welcome to the GameHub',
 			loggedIn: ctx.session.authorised, userName: ctx.session.userName})
-	}catch(err) {
+	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
 })
@@ -24,7 +24,7 @@ router.post('/insertquestion', async ctx => {
 		const date = await question.currentDate()
 		await question.insertQuestion(ctx.request.body,date)
 		ctx.redirect('/')
-	}catch(err) {
+	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
 })

@@ -10,7 +10,14 @@ module.exports = class DbQueries {
 	}
 
 	static createQuestionsTable() {
-		// TO DO
+		return `CREATE TABLE IF NOT EXISTS questions (
+			question_id INTEGER PRIMARY KEY AUTOINCREMENT,
+			title TEXT,
+			question TEXT,
+			solved INTEGER,
+			user_id TEXT,
+			date TEXT
+		);`
 	}
 
 	static createAnswersTable() {
