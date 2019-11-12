@@ -1,11 +1,15 @@
 'use strict'
 
 module.exports = class DbQueries {
-	static cerateUsersTable() {
-		// TO DO
+
+	static createUsersTable() {
+		return `CREATE TABLE IF NOT EXISTS users (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			user TEXT, pass TEXT
+		);`
 	}
 
-	static cerateQuestionsTable() {
+	static createQuestionsTable() {
 		// TO DO
 	}
 
