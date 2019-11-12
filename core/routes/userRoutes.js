@@ -49,7 +49,7 @@ router.post('/login-action', async ctx => {
 		await user.login(body.username, body.password)
 
 		ctx.session.authorised = true
-		ctx.session.user = body.username
+		ctx.session.userName = body.username
 
 		return ctx.redirect('/?msg=you are now logged in...')
 	} catch(err) {
@@ -59,13 +59,13 @@ router.post('/login-action', async ctx => {
 
 router.get('/logout', async ctx => {
 	ctx.session.authorised = null
-	ctx.session.user = null
+	ctx.session.userName = null
 
 	ctx.redirect('/login?msg=you are now logged out...')
 })
 
 router.get('/profile', async ctx => {
-	await ctx.render('profile', {title: 'Profile', loggedIn: ctx.session.authorised, userName: ctx.session.user})
+	await ctx.render('profile', {title: 'Profile', loggedIn: ctx.session.authorised, userName: ctx.session.userName})
 })
 
 module.exports = router
