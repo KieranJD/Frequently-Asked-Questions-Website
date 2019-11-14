@@ -1,38 +1,50 @@
 'use strict'
 
-module.exports = class DbQueries {
+module.exports = class dbTables {
 
 	static createUsersTable() {
 		return `CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			user TEXT, pass TEXT
+			name TEXT NOT NULL,
+			username TEXT NOT NULL,
+			password TEXT NOT NULL,
+			avatar TEXT DEFAULT "default-avatar.jpg",
+			score INTEGER DEFAULT 0
 		);`
 	}
 
 	static createQuestionsTable() {
 		return `CREATE TABLE IF NOT EXISTS questions (
-			question_id INTEGER PRIMARY KEY AUTOINCREMENT,
-			title TEXT,
-			question TEXT,
-			solved INTEGER,
-			user_id TEXT,
-			date TEXT
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			title TEXT NOT NULL,
+			body TEXT NOT NULL,
+			image TEXT,
+			date TEXT NOT NULL,
+			user_id INTEGER NOT NULL,
+			FOREIGN KEY("user_id") REFERENCES "users"("id")
 		);`
 	}
 
 	static createAnswersTable() {
 		return `CREATE TABLE IF NOT EXISTS answers (
 			id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-			description TEXT NOT NULL,
-			total_rate INTEGER,
-			rate_counter INTEGER,
-			average_rate REAL,
+			body TEXT NOT NULL,
+			average_rate REAL DEFAULT 0.0,
 			is_correct INTEGER DEFAULT 0,
 			is_inapropriate INTEGER DEFAULT 0,
 			user_id INTEGER NOT NULL,
 			question_id INTEGER NOT NULL,
 			FOREIGN KEY("user_id") REFERENCES "users"("id"),
 			FOREIGN KEY("question_id") REFERENCES "questions"("id")
+		);`
+	}
+
+	static createRatesTable() {
+		return `CREATE TABLE IF NOT EXISTS rates (
+			id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+			rate INTEGER NOT NULL,
+			answer_id INTEGER NOT NULL,
+			FOREIGN KEY("answer_id") REFERENCES "answers"("id")
 		);`
 	}
 
