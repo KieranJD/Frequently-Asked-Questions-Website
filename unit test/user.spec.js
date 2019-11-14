@@ -52,10 +52,10 @@ describe('Register()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		const body = {name: 'TestAccount', pass: 'test123'}
+		const body = {username: 'TestAccount', pass: 'test123'}
 		// ACT
-		await user.register(body.name,body.pass)
-		await expect(user.register(body.name,body.pass)).rejects.toEqual( Error('username "TestAccount" already in use'))
+		await user.register(body.username,body.pass)
+		await expect(user.register(body.username,body.pass)).rejects.toEqual( Error('username "TestAccount" already in use'))
 		// ASSERT
 		done()
 	})

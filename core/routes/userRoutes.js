@@ -18,7 +18,7 @@ router.get('/register', async ctx => await ctx.render('register', {title: 'Regis
  * The script to process new user registrations.
  *
  * @name Register Script
- * @route {POST} /register
+ * @route {POST} /register-action
  */
 
 router.post('/register-action', koaBody, async ctx => {
@@ -29,10 +29,19 @@ router.post('/register-action', koaBody, async ctx => {
 		await user.register(body.username ,body.password)
 
 		ctx.redirect(`/?msg=new user "${body.username}" added`)
+		ctx.session.authorised = true
+		ctx.session.userName = body.username
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
 })
+
+/**
+ * The user login page.
+ *
+ * @name Login Page
+ * @route {GET} /login
+ */
 
 router.get('/login', async ctx => {
 	if(ctx.session.authorised === true) {
@@ -41,6 +50,13 @@ router.get('/login', async ctx => {
 
 	await ctx.render('login', {title: 'Login'})
 })
+
+/**
+ * The script to process user logins.
+ *
+ * @name Login Script
+ * @route {POST} /login-action
+ */
 
 router.post('/login-action', async ctx => {
 	try {
@@ -56,6 +72,13 @@ router.post('/login-action', async ctx => {
 		await ctx.render('error', {message: err.message})
 	}
 })
+
+/**
+ * The user login page.
+ *
+ * @name Logout Page
+ * @route {GET} /logout
+ */
 
 router.get('/logout', async ctx => {
 	ctx.session.authorised = null
