@@ -21,7 +21,7 @@ router.get('/', async ctx => {
 router.post('/insertquestion', async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
-		const date = await question.currentDate()
+		const date = await question.currentDate(new Date())
 		await question.insertQuestion(ctx.request.body,date)
 		ctx.redirect('/')
 	} catch(err) {

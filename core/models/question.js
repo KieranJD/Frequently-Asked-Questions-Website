@@ -14,23 +14,15 @@ module.exports = class Question {
 	}
 
 	async getAllQuestions(query) {
-		try {
-			let sql = 'SELECT * FROM Questions;'
-
-			if(query !== undefined && query.search !== undefined) {
-				sql = `SELECT * FROM Questions WHERE upper(title) LIKE "%${query.search}%";`
-			}
-
-			const data = await this.db.all(sql)
-
-			return data
-		} catch(err) {
-			return err.message
+		let sql = 'SELECT * FROM Questions;'
+		if(query !== undefined && query.search !== undefined) {
+			sql = `SELECT * FROM Questions WHERE upper(title) LIKE "%${query.search}%";`
 		}
+		const data = await this.db.all(sql)
+		return data
 	}
 
-	async currentDate() {
-		let today = new Date()
+	async currentDate(today) {
 		const dd = today.getDate().toString()
 		const mm = (today.getMonth()+1).toString() //As January is 0.
 		const yyyy = today.getFullYear()
