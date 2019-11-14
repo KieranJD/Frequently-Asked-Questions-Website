@@ -15,12 +15,25 @@ describe('Register()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		const body = {name: 'TestAccount', pass: 'test123'}
+		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
-		await user.register(body.name,body.pass)
+		await user.register(body.name,body.username,body.pass)
 		const count = await user.countUsers()
 		// ASSERT
 		expect(count).toBe(1)
+		done()
+	})
+
+
+	test('Without name', async done => {
+		expect.assertions(1)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		const body = {name: '', username: 'TestAccount', pass: 'test123'}
+		// ACT
+		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error('Name cannot be empty'))
+		// ASSERT
+		expect()
 		done()
 	})
 
@@ -28,9 +41,9 @@ describe('Register()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		const body = {name: '', pass: 'test123'}
+		const body = {name: 'Ben', username: '', pass: 'test123'}
 		// ACT
-		await expect(user.register(body.name,body.pass)).rejects.toEqual( Error('missing username'))
+		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error('Username cannot be empty'))
 		// ASSERT
 		expect()
 		done()
@@ -40,9 +53,9 @@ describe('Register()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		const body = {name: 'TestAccount', pass: ''}
+		const body = {name: 'Ben', username: 'TestAccount', pass: ''}
 		// ACT
-		await expect(user.register(body.name,body.pass)).rejects.toEqual( Error('missing password'))
+		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error('Password cannot be empty'))
 		// ASSERT
 		expect()
 		done()
@@ -52,10 +65,10 @@ describe('Register()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		const body = {username: 'TestAccount', pass: 'test123'}
+		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
-		await user.register(body.username,body.pass)
-		await expect(user.register(body.username,body.pass)).rejects.toEqual( Error('username "TestAccount" already in use'))
+		await user.register(body.name,body.username,body.pass)
+		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error('Username "TestAccount" already in use'))
 		// ASSERT
 		done()
 	})
@@ -67,10 +80,10 @@ describe('Login()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		const body = {name: 'TestAccount', pass: 'test123'}
+		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
-		await user.register(body.name,body.pass)
-		await user.login(body.name,body.pass)
+		await user.register(body.name,body.username,body.pass)
+		await user.login(body.username,body.pass)
 		// ASSERT
 		expect(1).toBe(1)
 		done()
@@ -80,11 +93,11 @@ describe('Login()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		let body = {name: 'TestAccount', pass: 'test123'}
+		let body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
-		await user.register(body.name,body.pass)
+		await user.register(body.name,body.username,body.pass)
 		body = {name: 'NoAccount', pass: 'test123'}
-		await expect(user.login(body.name,body.pass)).rejects.toEqual( Error('username "NoAccount" not found'))
+		await expect(user.login(body.name,body.pass)).rejects.toEqual( Error('Username "NoAccount" not found'))
 		// ASSERT
 		done()
 	})
@@ -93,11 +106,11 @@ describe('Login()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
-		let body = {name: 'TestAccount', pass: 'test123'}
+		let body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
-		await user.register(body.name,body.pass)
+		await user.register(body.name,body.username,body.pass)
 		body = {name: 'TestAccount', pass: 'wrongPassword'}
-		await expect(user.login(body.name,body.pass)).rejects.toEqual( Error('invalid password for account "TestAccount"'))
+		await expect(user.login(body.name,body.pass)).rejects.toEqual( Error('Invalid password for account "TestAccount"'))
 		// ASSERT
 		done()
 	})

@@ -26,7 +26,7 @@ router.post('/register-action', koaBody, async ctx => {
 		const body = ctx.request.body
 		const user = await new User(process.env.DB_NAME)
 
-		await user.register(body.username ,body.password)
+		await user.register(body.name, body.username, body.password)
 
 		ctx.redirect(`/?msg=new user "${body.username}" added`)
 		ctx.session.authorised = true

@@ -1,14 +1,14 @@
 'use strict'
 
 const Database = require('sqlite-async')
-const queries = require('../dbQueries')
+const table = require('../dbTables')
 
 module.exports = class Question {
 
 	constructor(dbName = ':memory:') {
 		return (async() => {
 			this.db = await Database.open(dbName)
-			await this.db.run(queries.createQuestionsTable())
+			await this.db.run(table.createQuestionsTable())
 			return this
 		})()
 	}
