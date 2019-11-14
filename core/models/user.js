@@ -45,4 +45,10 @@ module.exports = class User {
 			throw err
 		}
 	}
+
+	async countUsers() {
+		const sql = 'SELECT count(*) as user FROM users'
+		const data = await this.db.get(sql)
+		return data.user
+	}
 }
