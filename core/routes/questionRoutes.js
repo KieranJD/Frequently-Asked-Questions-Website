@@ -12,7 +12,7 @@ router.get('/', async ctx => {
 		const data = await question.getAllQuestions(ctx.query)
 
 		await ctx.render('home', {Questions: data, title: 'Welcome to the GameHub',
-			loggedIn: ctx.session.authorised, userName: ctx.session.userName})
+			loggedIn: ctx.session.authorised, userName: ctx.session.user.username})
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
@@ -30,6 +30,7 @@ router.post('/insertquestion', async ctx => {
 })
 
 router.get('/createquestion', async ctx => ctx.render(
-	'createquestion', {title: 'Create a Question', loggedIn: ctx.session.authorised, userName: ctx.session.userName}))
+	'createquestion', {title: 'Create a Question', loggedIn: ctx.session.authorised,
+		userName: ctx.session.user.username}))
 
 module.exports = router

@@ -44,6 +44,10 @@ module.exports = class User {
 		}
 	}
 
+	async getLoggedUser(username) {
+		return await this.db.get(`SELECT id, name, username, avatar FROM users WHERE username = "${username}"`)
+	}
+
 	async countUsers() {
 		const sql = 'SELECT count(*) as user FROM users'
 		const data = await this.db.get(sql)
