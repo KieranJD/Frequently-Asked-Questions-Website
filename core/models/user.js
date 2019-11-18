@@ -72,6 +72,10 @@ module.exports = class User {
 		if (valid === false) throw new Error(`Invalid password for account "${username}"`)
 	}
 
+	async checkAuthorised(auth) {
+		return auth
+	}
+
 	mandatoryFieldsCheck(name, username, password) {
 		if (name.length === 0) throw new Error('Name cannot be empty')
 		if (username.length === 0) throw new Error('Username cannot be empty')

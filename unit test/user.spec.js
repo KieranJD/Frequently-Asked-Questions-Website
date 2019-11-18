@@ -136,3 +136,16 @@ describe('getLoggedUser()', () => {
 	})
 })
 
+describe('checkAuthorised()', () => {
+	test('user is logged in', async done => {
+		expect.assertions(1)
+		// ARRANGE
+		const user = await new User()
+		const auth = true
+		// ACT
+		const loggedIn = await user.checkAuthorised(auth)
+		// ASSERT
+		expect(loggedIn).toBe(true)
+		done()
+	})
+})
