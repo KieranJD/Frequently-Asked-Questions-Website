@@ -30,12 +30,12 @@ module.exports = class Question {
 		return today
 	}
 
-	async insertQuestion(request,date) {
+	async insertQuestion(request, session, date) {
 		if(request.title === '') throw new Error('Title cannot be left empty')
 		if(request.question === '') throw new Error('Question cannot be left empty')
 		const body = request
-		const sql = `INSERT INTO Questions(title, question, date) 
-			VALUES("${body.title}", "${body.question}", "${date}");`
+		const sql = `INSERT INTO Questions(title, body, date, user_id) 
+			VALUES("${body.title}", "${body.body}", "${date}", "${session.user.id}");`
 		await this.db.run(sql)
 	}
 

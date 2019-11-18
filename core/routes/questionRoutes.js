@@ -22,15 +22,20 @@ router.post('/insertquestion', async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
-		await question.insertQuestion(ctx.request.body,date)
+		await question.insertQuestion(ctx.request.body, ctx.session, date)
 		ctx.redirect('/')
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
 	}
 })
 
-router.get('/createquestion', async ctx => ctx.render(
-	'createquestion', {title: 'Create a Question', loggedIn: ctx.session.authorised,
-		userName: ctx.session.user.username}))
+router.get('/createquestion', async ctx => {
+	if(ctx.session.authorised !== true) {
+		ctx.redirect('/login')
+	} else {
+		await ctx.render('createquestion', {title: 'Create a Question', loggedIn: ctx.session.authorised,
+			userName: ctx.session.user.username})
+	}
+})
 
 module.exports = router
