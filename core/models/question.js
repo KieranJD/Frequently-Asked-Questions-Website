@@ -14,9 +14,9 @@ module.exports = class Question {
 	}
 
 	async getAllQuestions(query) {
-		let sql = 'SELECT * FROM Questions;'
+		let sql = 'SELECT * FROM questions;'
 		if(query !== undefined && query.search !== undefined) {
-			sql = `SELECT * FROM Questions WHERE upper(title) LIKE "%${query.search}%";`
+			sql = `SELECT * FROM questions WHERE upper(title) LIKE "%${query.search}%";`
 		}
 		const data = await this.db.all(sql)
 		return data
@@ -33,14 +33,14 @@ module.exports = class Question {
 	async insertQuestion(request, session, date) {
 		if(request.title === '') throw new Error('Title cannot be left empty')
 		if(request.body === '') throw new Error('Question cannot be left empty')
-		const sql = `INSERT INTO Questions(title, body, date, user_id) 
+		const sql = `INSERT INTO questions(title, body, date, user_id) 
 			VALUES("${request.title}", "${request.body}", "${date}", "${session.user.id}");`
 		await this.db.run(sql)
 	}
 
 	async countQuestions() {
-		const sql = 'SELECT COUNT(*) as Questions FROM Questions'
+		const sql = 'SELECT COUNT(*) as questions FROM questions'
 		const data = await this.db.get(sql)
-		return data.Questions
+		return data.questions
 	}
 }
