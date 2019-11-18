@@ -15,14 +15,15 @@ describe('insert()', () => {
 		expect.assertions(3)
 		// ARRANGE
 		const question = await new Question() // DB runs in-memory if no name supplied
-		const body = {title: 'Call of Duty World at War', question: 'Where is the pack-a-punch on Der Riese'}
+		const body = {title: 'Call of Duty World at War', body: 'Where is the pack-a-punch on Der Riese'}
+		const session = {user: {id: 0}}
 		// ACT
-		await question.insertQuestion(body,'10/11/2019')
+		await question.insertQuestion(body,session,'10/11/2019')
 		const count = await question.countQuestions()
 		const data = await question.getAllQuestions()
 		// ASSERT
 		expect(data[0].title).toBe('Call of Duty World at War')
-		expect(data[0].question).toBe('Where is the pack-a-punch on Der Riese')
+		expect(data[0].body).toBe('Where is the pack-a-punch on Der Riese')
 		expect(count).toBe(1)
 		done()
 	})
@@ -43,7 +44,7 @@ describe('insert()', () => {
 		expect.assertions(1)
 		//ARRANGE
 		const question = await new Question()
-		const body = {title: 'Lego Star Wars', question: ''}
+		const body = {title: 'Lego Star Wars', body: ''}
 		//ACT
 		await expect(question.insertQuestion(body,'05/11/2019')).rejects.toEqual( Error(
 			'Question cannot be left empty') )
@@ -60,9 +61,10 @@ describe('getAll()', () => {
 		const question = await new Question()
 		const body = {title: 'Mario Cart', question: 'How to unlock mirror'}
 		const body1 = {title: 'Super Mario Bros', question: 'How to beat bowser'}
+		const session = {user: {id: 0}}
 		//ACT
-		await question.insertQuestion(body,'10/11/2019')
-		await question.insertQuestion(body1,'09/11/2019')
+		await question.insertQuestion(body,session, '10/11/2019')
+		await question.insertQuestion(body1,session,'09/11/2019')
 		const count = await question.countQuestions()
 		const data = await question.getAllQuestions()
 		//ASSERT
@@ -80,10 +82,11 @@ describe('getAll()', () => {
 		const body = {title: 'The Legend of Zelda', question: 'How to beat the first boss'}
 		const body1 = {title: 'The Witcher 3 Wild Hunt', question: 'How to kill a griffin'}
 		const body2 = {title: 'The Legend of Zelda Ocarina of Time', question: 'How to beat the first boss'}
+		const session = {user: {id: 0}}
 		//ACT
-		await question.insertQuestion(body,'01/10/2019')
-		await question.insertQuestion(body1,'07/09/2019')
-		await question.insertQuestion(body2,'03/04/2019')
+		await question.insertQuestion(body, session, '01/10/2019')
+		await question.insertQuestion(body1, session,'07/09/2019')
+		await question.insertQuestion(body2, session,'03/04/2019')
 		const data = await question.getAllQuestions(query)
 		//ASSERT
 		expect(data[0].title).toBe('The Legend of Zelda')
@@ -99,9 +102,10 @@ describe('count()', () => {
 		const question = await new Question()
 		const body = {title: 'Call of Duty World at War', question: 'Where is the pack-a-punch on Der Riese'}
 		const body1 = {title: 'Super Mario Bros', question: 'How to beat bowser'}
+		const session = {user: {id: 0}}
 		//ACT
-		await question.insertQuestion(body,'10/11/2019')
-		await question.insertQuestion(body1,'09/11/2019')
+		await question.insertQuestion(body, session,'10/11/2019')
+		await question.insertQuestion(body1, session,'09/11/2019')
 		const count = await question.countQuestions()
 		//ASSERT
 		expect(count).toBe(2)

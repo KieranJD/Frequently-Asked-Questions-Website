@@ -96,8 +96,8 @@ describe('Login()', () => {
 		let body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
 		await user.register(body.name,body.username,body.pass)
-		body = {name: 'NoAccount', pass: 'test123'}
-		await expect(user.login(body.name,body.pass)).rejects.toEqual( Error('Username "NoAccount" not found'))
+		body = {username: 'NoAccount', pass: 'test123'}
+		await expect(user.login(body.username,body.pass)).rejects.toEqual( Error('Username "NoAccount" not found'))
 		// ASSERT
 		done()
 	})
@@ -109,9 +109,26 @@ describe('Login()', () => {
 		let body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
 		await user.register(body.name,body.username,body.pass)
-		body = {name: 'TestAccount', pass: 'wrongPassword'}
-		await expect(user.login(body.name,body.pass)).rejects.toEqual( Error('Invalid password for account "TestAccount"'))
+		body = {username: 'TestAccount', pass: 'wrongPassword'}
+		await expect(user.login(body.username,body.pass)).rejects.toEqual( Error('Invalid password for account "TestAccount"'))
 		// ASSERT
 		done()
 	})
 })
+
+describe('getLoggedUser()', () => {
+	test('retreive user object', async done => {
+		expect.assertions(2)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
+		// ACT
+		await user.register(body.name,body.username,body.pass)
+		const detail = await user.getLoggedUser(body.username)
+		// ASSERT
+		expect(detail.name).toBe('Ben')
+		expect(detail.username).toBe('TestAccount')
+		done()
+	})
+})
+
