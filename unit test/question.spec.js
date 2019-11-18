@@ -32,7 +32,7 @@ describe('insert()', () => {
 		expect.assertions(1)
 		//ARRANGE
 		const question = await new Question()
-		const body = {title: '', question: 'Where to find level 1 wolf armour?'}
+		const body = {title: '', body: 'Where to find level 1 wolf armour?'}
 		//ACT
 		await expect(question.insertQuestion(body,'06/11/2019')).rejects.toEqual( Error('Title cannot be left empty') )
 		//ASSERT
@@ -59,8 +59,8 @@ describe('getAll()', () => {
 		expect.assertions(3)
 		//ARRANGE
 		const question = await new Question()
-		const body = {title: 'Mario Cart', question: 'How to unlock mirror'}
-		const body1 = {title: 'Super Mario Bros', question: 'How to beat bowser'}
+		const body = {title: 'Mario Cart', body: 'How to unlock mirror'}
+		const body1 = {title: 'Super Mario Bros', body: 'How to beat bowser'}
 		const session = {user: {id: 0}}
 		//ACT
 		await question.insertQuestion(body,session, '10/11/2019')
@@ -79,9 +79,9 @@ describe('getAll()', () => {
 		//ARRANGE
 		const question = await new Question()
 		const query = {search: 'The Legend of Zelda'}
-		const body = {title: 'The Legend of Zelda', question: 'How to beat the first boss'}
-		const body1 = {title: 'The Witcher 3 Wild Hunt', question: 'How to kill a griffin'}
-		const body2 = {title: 'The Legend of Zelda Ocarina of Time', question: 'How to beat the first boss'}
+		const body = {title: 'The Legend of Zelda', body: 'How to beat the first boss'}
+		const body1 = {title: 'The Witcher 3 Wild Hunt', body: 'How to kill a griffin'}
+		const body2 = {title: 'The Legend of Zelda Ocarina of Time', body: 'How to beat the first boss'}
 		const session = {user: {id: 0}}
 		//ACT
 		await question.insertQuestion(body, session, '01/10/2019')
@@ -100,8 +100,8 @@ describe('count()', () => {
 		expect.assertions(1)
 		//ARRANGE
 		const question = await new Question()
-		const body = {title: 'Call of Duty World at War', question: 'Where is the pack-a-punch on Der Riese'}
-		const body1 = {title: 'Super Mario Bros', question: 'How to beat bowser'}
+		const body = {title: 'Call of Duty World at War', body: 'Where is the pack-a-punch on Der Riese'}
+		const body1 = {title: 'Super Mario Bros', body: 'How to beat bowser'}
 		const session = {user: {id: 0}}
 		//ACT
 		await question.insertQuestion(body, session,'10/11/2019')
