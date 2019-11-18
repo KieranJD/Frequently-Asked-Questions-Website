@@ -43,7 +43,8 @@ describe('Register()', () => {
 		const user = await new User() // DB runs in-memory if no name supplied
 		const body = {name: 'Ben', username: '', pass: 'test123'}
 		// ACT
-		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error('Username cannot be empty'))
+		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error(
+			'Username cannot be empty'))
 		// ASSERT
 		expect()
 		done()
@@ -55,7 +56,8 @@ describe('Register()', () => {
 		const user = await new User() // DB runs in-memory if no name supplied
 		const body = {name: 'Ben', username: 'TestAccount', pass: ''}
 		// ACT
-		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error('Password cannot be empty'))
+		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error(
+			'Password cannot be empty'))
 		// ASSERT
 		expect()
 		done()
@@ -68,7 +70,8 @@ describe('Register()', () => {
 		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
 		await user.register(body.name,body.username,body.pass)
-		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error('Username "TestAccount" already in use'))
+		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error(
+			'Username "TestAccount" already in use'))
 		// ASSERT
 		done()
 	})
@@ -110,7 +113,8 @@ describe('Login()', () => {
 		// ACT
 		await user.register(body.name,body.username,body.pass)
 		body = {username: 'TestAccount', pass: 'wrongPassword'}
-		await expect(user.login(body.username,body.pass)).rejects.toEqual( Error('Invalid password for account "TestAccount"'))
+		await expect(user.login(body.username,body.pass)).rejects.toEqual(
+			Error('Invalid password for account "TestAccount"'))
 		// ASSERT
 		done()
 	})
