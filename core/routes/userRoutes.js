@@ -12,7 +12,13 @@ const User = require('../models/user')
  * @name Register Page
  * @route {GET} /register
  */
-router.get('/register', async ctx => await ctx.render('register', {title: 'Register'}))
+router.get('/register', async ctx => {
+	const data = {
+		title: 'Create an account',
+		content: 'Page for creating a new account'
+	}
+	await ctx.render('register', data)
+})
 
 /**
  * The script to process new user registrations.
@@ -46,9 +52,13 @@ router.post('/register-action', koaBody, async ctx => {
 router.get('/login', async ctx => {
 	if(ctx.session.authorised === true) {
 		ctx.redirect('/')
+	} else {
+		const data = {
+			title: 'Login',
+			content: 'Page for logging into an account'
+		}
+		await ctx.render('login', data)
 	}
-
-	await ctx.render('login', {title: 'Login'})
 })
 
 /**
@@ -88,8 +98,17 @@ router.get('/logout', async ctx => {
 })
 
 router.get('/profile', async ctx => {
-	await ctx.render('profile', {title: 'Profile', loggedIn: ctx.session.authorised,
-		userName: ctx.session.user.username})
+	if(ctx.session.authorised !== true) {
+		ctx.redirect('/')
+	} else {
+		const data = {
+			title: `${ctx.session.user.name}'s Profile`,
+			content: 'user\'s profile page',
+			auth: ctx.session.authorised,
+			username: ctx.session.user.username
+		}
+		await ctx.render('profile', data)
+	}
 })
 
 module.exports = router
