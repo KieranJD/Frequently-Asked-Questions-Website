@@ -19,7 +19,7 @@ module.exports = class User {
 		try {
 			this.mandatoryFieldsCheck(name, username, password)
 			let sql = await this.checkIfUsernameExists('register', username)
-
+			sql = await this.checkNameInUser(name, username)
 			password = await bcrypt.hash(password, saltRounds)
 			sql = `INSERT INTO users(name, username, password) VALUES("${name}", "${username}", "${password}")`
 
@@ -74,6 +74,12 @@ module.exports = class User {
 
 	async checkAuthorised(auth) {
 		return auth
+	}
+
+	async checkNameInUser(name, username) {
+		if (username.toUpperCase().includes(name.toUpperCase())) {
+			throw new Error('Username cannot include real name')
+		}
 	}
 
 	mandatoryFieldsCheck(name, username, password) {
