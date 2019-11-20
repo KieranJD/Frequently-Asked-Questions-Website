@@ -46,10 +46,20 @@ describe('insert()', () => {
 		const question = await new Question()
 		const body = {title: 'Lego Star Wars', body: ''}
 		//ACT
+		//ASSERT
 		await expect(question.insertQuestion(body,'05/11/2019')).rejects.toEqual( Error(
 			'Question cannot be left empty') )
+		done()
+	})
+	test('title cannot be more than 50 characters', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const question = await new Question()
+		const example = {title: 'Portal 2, how on earth do i talk for this long to get to over 50 characters ', body: 'How to beat the boss'}
+		//ACT
 		//ASSERT
-		expect()
+		await expect(question.insertQuestion(example,'05/11/2019')).rejects.toEqual( Error(
+			'Title cannot be more than 50 characters') )
 		done()
 	})
 })
