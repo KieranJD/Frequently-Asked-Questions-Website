@@ -82,7 +82,6 @@ describe('Register()', () => {
 		const user = await new User() // DB runs in-memory if no name supplied
 		const body = {name: 'Ben', username: 'Ben997', pass: 'test123'}
 		// ACT
-		await user.register(body.name,body.username,body.pass)
 		await expect(user.register(body.name,body.username,body.pass)).rejects.toEqual( Error(
 			'Username cannot include real name'))
 		// ASSERT
