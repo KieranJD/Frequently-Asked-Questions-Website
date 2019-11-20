@@ -38,7 +38,7 @@ router.post('/register-action', koaBody, async ctx => {
 		ctx.session.authorised = true
 		ctx.session.user = await user.getLoggedUser(body.username)
 	} catch(err) {
-		await ctx.render('error', {message: err.message})
+		await ctx.render('register', {msg: err.message})
 	}
 })
 
@@ -79,7 +79,7 @@ router.post('/login-action', async ctx => {
 
 		return ctx.redirect('/?msg=you are now logged in...')
 	} catch(err) {
-		await ctx.render('error', {message: err.message})
+		await ctx.render('login', {msg: err.message})
 	}
 })
 

@@ -41,7 +41,7 @@ router.get('/createquestion', async ctx => {
 	}
 })
 
-router.post('/insertquestion', async ctx => {
+router.post('/createquestion', async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
@@ -49,7 +49,7 @@ router.post('/insertquestion', async ctx => {
 
 		ctx.redirect('/')
 	} catch(err) {
-		await ctx.render('error', {message: err.message})
+		await ctx.render('createquestion', {msg: err.message})
 	}
 })
 
