@@ -80,6 +80,9 @@ module.exports = class User {
 		if (username.toUpperCase().includes(name.toUpperCase())) {
 			throw new Error('Username cannot include real name')
 		}
+		if (username.includes(' ')) {
+			throw new Error('Username cannot include spaces')
+		}
 	}
 
 	mandatoryFieldsCheck(name, username, password) {
