@@ -31,16 +31,18 @@ module.exports = class Question {
 	}
 
 	async insertQuestion(request, session, date) {
-		if(request.title === '') throw new Error('Title cannot be left empty')
-		if(request.body === '') throw new Error('Question cannot be left empty')
-		const sql = `INSERT INTO questions(title, body, date, user_id) 
-			VALUES("${request.title}", "${request.body}", "${date}", "${session.user.id}");`
-		await this.db.run(sql)
+		try{
+			const limit = 50
+			if(request.title === '') throw new Error('Title cannot be left empty')
+			if(request.title.length >= limit) throw new Error('Title cannot be more than 50 characters')
+			if(request.body === '') throw new Error('Question cannot be left empty')
+			const sql = `INSERT INTO questions(title, body, date, user_id) 
+				VALUES("${request.title}", "${request.body}", "${date}", "${session.user.id}");`
+			await this.db.run(sql)
+			return true
+		}catch(err) {
+			throw err
+		}
 	}
 
-	async countQuestions() {
-		const sql = 'SELECT COUNT(*) as questions FROM questions'
-		const data = await this.db.get(sql)
-		return data.questions
-	}
 }

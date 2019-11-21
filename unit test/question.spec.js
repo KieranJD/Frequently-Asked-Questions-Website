@@ -12,19 +12,15 @@ afterAll( async() => {
 
 describe('insert()', () => {
 	test('insert a single question', async done => {
-		expect.assertions(3)
+		expect.assertions(1)
 		// ARRANGE
 		const question = await new Question() // DB runs in-memory if no name supplied
 		const body = {title: 'Call of Duty World at War', body: 'Where is the pack-a-punch on Der Riese'}
 		const session = {user: {id: 0}}
 		// ACT
-		await question.insertQuestion(body,session,'10/11/2019')
-		const count = await question.countQuestions()
-		const data = await question.getAllQuestions()
+		const check = await question.insertQuestion(body,session,'10/11/2019')
 		// ASSERT
-		expect(data[0].title).toBe('Call of Duty World at War')
-		expect(data[0].body).toBe('Where is the pack-a-punch on Der Riese')
-		expect(count).toBe(1)
+		expect(check).toBe(true)
 		done()
 	})
 
@@ -55,7 +51,8 @@ describe('insert()', () => {
 		expect.assertions(1)
 		//ARRANGE
 		const question = await new Question()
-		const example = {title: 'Portal 2, how on earth do i talk for this long to get to over 50 characters ', body: 'How to beat the boss'}
+		const example = {title: 'Portal 2, how on earth do i talk for this long to get to over 50 characters',
+			body: 'How to beat the boss'}
 		//ACT
 		//ASSERT
 		await expect(question.insertQuestion(example,'05/11/2019')).rejects.toEqual( Error(
@@ -66,7 +63,7 @@ describe('insert()', () => {
 
 describe('getAll()', () => {
 	test('select all from Questions table',async done => {
-		expect.assertions(3)
+		expect.assertions(2)
 		//ARRANGE
 		const question = await new Question()
 		const body = {title: 'Mario Cart', body: 'How to unlock mirror'}
@@ -75,12 +72,10 @@ describe('getAll()', () => {
 		//ACT
 		await question.insertQuestion(body,session, '10/11/2019')
 		await question.insertQuestion(body1,session,'09/11/2019')
-		const count = await question.countQuestions()
 		const data = await question.getAllQuestions()
 		//ASSERT
 		expect(data[0].title).toBe('Mario Cart')
 		expect(data[1].title).toBe('Super Mario Bros')
-		expect(count).toBe(2)
 		done()
 	})
 
