@@ -4,8 +4,8 @@ const User = require('../core/models/user.js')
 const mock = require('mock-fs')
 beforeAll( async() => {
 	console.log()
-	mock({ 'public/gamehub-v2.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
-		'public/gamehub-v2.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
+	mock({ 'Avatarpng.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
+		'Avatardoc.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
 
 })
 
@@ -168,18 +168,17 @@ describe('uploadPicture()', () => {
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
 		// ACT
-		await user.uploadPicture( 'image/png', 'public/gamehub-v2.png' ,'image/png', '1' , 'ImageTest')
+		await user.uploadPicture( 'image/png', 'Avatarpng.png' ,'image/png', '1' , 'ImageTest')
 		// ASSERT
 		expect(true).toBe(true)
 		done()
 	})
-
 	test('Incorrect file type', async done => {
 		expect.assertions(2)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
 		// ACT
-		await expect(user.uploadPicture( 'doc', 'public/gamehub-v2.doc'
+		await expect(user.uploadPicture( 'doc', 'Avatardoc.doc'
 			,'image/png', '1' , 'ImageTest')).rejects.toEqual(Error('Invalid Filetype'))
 		// ASSERT
 		expect(true).toBe(true)

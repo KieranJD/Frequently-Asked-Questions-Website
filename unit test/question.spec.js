@@ -1,13 +1,15 @@
 'use strict'
 
 const Question = require('../core/models/question.js')
-
+const mock = require('mock-fs')
 beforeAll( async() => {
-	// stuff to do before any of the tests run
+	console.log()
+	mock({ 'Questionimage.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
+		'Questiondoc.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
 })
 
 afterAll( async() => {
-	// runs after all the tests have completed
+	mock.restore()
 })
 
 describe('insert()', () => {
@@ -100,24 +102,6 @@ describe('getAll()', () => {
 	})
 })
 
-describe('count()', () => {
-	test('count amount of questions in Question table',async done => {
-		expect.assertions(1)
-		//ARRANGE
-		const question = await new Question()
-		const body = {title: 'Call of Duty World at War', body: 'Where is the pack-a-punch on Der Riese'}
-		const body1 = {title: 'Super Mario Bros', body: 'How to beat bowser'}
-		const session = {user: {id: 0}}
-		//ACT
-		await question.insertQuestion(body, session,'10/11/2019')
-		await question.insertQuestion(body1, session,'09/11/2019')
-		const count = await question.countQuestions()
-		//ASSERT
-		expect(count).toBe(2)
-		done()
-	})
-})
-
 describe('Date()', () => {
 	test('Correct date', async done => {
 		expect.assertions(1)
@@ -127,6 +111,31 @@ describe('Date()', () => {
 		const date = await question.currentDate(new Date('December 17, 1995'))
 		//ASSERT
 		expect(date).toBe('17/12/1995')
+		done()
+	})
+})
+
+describe('uploadPicture()', () => {
+	test('Change Avatar', async done => {
+		expect.assertions(1)
+		// ARRANGE
+		const user = await new Question() // DB runs in-memory if no name supplied
+		// ACT
+		await user.uploadPicture( 'image/png', 'Questionimage.png' ,'image/png')
+		// ASSERT
+		expect(true).toBe(true)
+		done()
+	})
+
+	test('Incorrect file type', async done => {
+		expect.assertions(2)
+		// ARRANGE
+		const question = await new Question() // DB runs in-memory if no name supplied
+		// ACT
+		await expect(question.uploadPicture( 'doc', 'Questiondoc.doc'
+			,'image/png', '1' , 'ImageTest')).rejects.toEqual(Error('Invalid Filetype'))
+		// ASSERT
+		expect(true).toBe(true)
 		done()
 	})
 })
