@@ -2,7 +2,8 @@
 
 const Database = require('sqlite-async')
 const table = require('../dbTables')
-
+const fs = require('fs-extra')
+const mime = require('mime-types')
 module.exports = class Question {
 
 	constructor(dbName = ':memory:') {
@@ -45,4 +46,24 @@ module.exports = class Question {
 		}
 	}
 
+	async uploadPicture(title, filetype ,path, mimeType) {
+		try{
+			const extension = mime.extension(mimeType)
+			let QuestionId = await this.db.run('select last_insert_rowid()')
+			QuestionId = QuestionId.lastID
+			console.log('id: ', QuestionId)
+			console.log('filetype:', filetype)
+			if(!filetype.includes('image/')) {
+				throw new Error('Invalid Filetype')
+			}
+			console.log(`path: ${path}`)
+			console.log(`extension: ${extension}`)
+			await fs.copy(path, `public/images/questions/${QuestionId}/${title}.${extension}`)
+			const sql = `UPDATE questions SET image = "${title}.${extension}" WHERE id = ${QuestionId}`
+			this.db.run(sql)
+			return true
+		} catch(err) {
+			throw err
+		}
+	}
 }

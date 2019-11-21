@@ -2,9 +2,9 @@
 
 require('dotenv').config()
 const Router = require('koa-router')
-const Question = require('../models/question')
-
 const router = new Router()
+const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
+const Question = require('../models/question')
 
 router.get('/', async ctx => {
 	try{
@@ -39,14 +39,15 @@ router.get('/createquestion', async ctx => {
 		}
 		await ctx.render('createquestion', data)
 	}
+	console.log('banter')
 })
 
-router.post('/createquestion', async ctx => {
+router.post('/addquestion', koaBody, async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
 		await question.insertQuestion(ctx.request.body, ctx.session, date)
-
+		await question.uploadPicture(ctx.request.body.title, ctx.request.files.image.type, ctx.request.files.image.path, 'image/png')
 		ctx.redirect('/')
 	} catch(err) {
 		await ctx.render('createquestion', {msg: err.message})

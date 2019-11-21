@@ -31,9 +31,7 @@ router.post('/register-action', koaBody, async ctx => {
 	try {
 		const body = ctx.request.body
 		const user = await new User(process.env.DB_NAME)
-
 		await user.register(body.name, body.username, body.password)
-
 		ctx.redirect(`/?msg=new user "${body.username}" added`)
 		ctx.session.authorised = true
 		ctx.session.user = await user.getLoggedUser(body.username)
@@ -110,5 +108,14 @@ router.get('/profile', async ctx => {
 		await ctx.render('profile', data)
 	}
 })
+
+router.post('/profile-action',koaBody, async ctx => {
+	const user = await new User(process.env.DB_NAME)
+	await user.uploadPicture(ctx.request.files.avatar.type, ctx.request.files.avatar.path,
+		'image/png', ctx.session.user.id, ctx.session.user.username)
+	ctx.redirect('/profile?msg=Avatar changed')
+
+})
+
 
 module.exports = router

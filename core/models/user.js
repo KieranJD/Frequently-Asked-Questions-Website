@@ -3,7 +3,8 @@
 const sqlite = require('sqlite-async')
 const bcrypt = require('bcrypt-promise')
 const table = require('../dbTables')
-
+const mime = require('mime-types')
+const fs = require('fs-extra')
 const saltRounds = 10
 
 module.exports = class User {
@@ -66,16 +67,30 @@ module.exports = class User {
 		if (valid === false) throw new Error(`Invalid password for account "${username}"`)
 	}
 
-	async checkAuthorised(auth) {
-		return auth
-	}
-
 	async usernameValidation(name, username) {
 		if (username.toUpperCase().includes(name.toUpperCase())) {
 			throw new Error('Username cannot include real name')
 		}
 		if (username.includes(' ')) {
 			throw new Error('Username cannot include spaces')
+		}
+	}
+
+	async uploadPicture(filetype ,path, mimeType, userId, username) {
+		try{
+			const extension = mime.extension(mimeType)
+			console.log(filetype)
+			if(!filetype.includes('image/')) {
+				throw new Error('Invalid Filetype')
+			}
+			console.log(`path: ${path}`)
+			console.log(`extension: ${extension}`)
+			await fs.copy(path, `public/images/user_avatar/${userId}/${username}.${extension}`)
+			const sql = `UPDATE users SET avatar = "${username}.${extension}" WHERE id = ${userId}`
+			this.db.run(sql)
+			return true
+		} catch(err) {
+			throw err
 		}
 	}
 

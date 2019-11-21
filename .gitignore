@@ -30,3 +30,7 @@ website.db
 
 # Database
 *.db
+
+# Images
+public/images/questions/*
+public/images/user_avatar/*
