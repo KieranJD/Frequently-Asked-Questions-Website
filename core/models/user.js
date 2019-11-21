@@ -48,12 +48,6 @@ module.exports = class User {
 		return await this.db.get(`SELECT id, name, username, avatar FROM users WHERE username = "${username}"`)
 	}
 
-	async countUsers() {
-		const sql = 'SELECT count(*) as user FROM users'
-		const data = await this.db.get(sql)
-		return data.user
-	}
-
 	async checkIfUsernameExists(method, username) {
 		const sql = `SELECT COUNT(id) AS count FROM users WHERE username="${username}";`
 		const records = await this.db.get(sql)

@@ -5,6 +5,9 @@
   <main>
     <section id="box">
       <h1>Sign Up</h1>
+      {{#if msg}}
+      <p class="msg">{{msg}}</p>
+      {{/if}}
       <form action="/register-action" enctype="multipart/form-data" method="post">
         <p>Full Name:<br /><input type="text" name="name" placeholder="What is your name?" value=""></p>
         <p>Username:<br /><input type="text" name="username" placeholder="Your preferred username (no spaces)" value=""></p>
