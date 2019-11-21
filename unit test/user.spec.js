@@ -1,13 +1,16 @@
 'use strict'
 
 const User = require('../core/models/user.js')
-
+const mock = require('mock-fs')
 beforeAll( async() => {
-	// stuff to do before any of the tests run
+	console.log()
+	mock({ 'public/gamehub-v2.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
+		'public/gamehub-v2.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
+
 })
 
 afterAll( async() => {
-	// runs after all the tests have completed
+	mock.restore()
 })
 
 describe('Register()', () => {
@@ -159,16 +162,27 @@ describe('getLoggedUser()', () => {
 	})
 })
 
-describe('checkAuthorised()', () => {
-	test('user is logged in', async done => {
+describe('uploadPicture()', () => {
+	test('Change Avatar', async done => {
 		expect.assertions(1)
 		// ARRANGE
-		const user = await new User()
-		const auth = true
+		const user = await new User() // DB runs in-memory if no name supplied
 		// ACT
-		const loggedIn = await user.checkAuthorised(auth)
+		await user.uploadPicture( 'image/png', 'public/gamehub-v2.png' ,'image/png', '1' , 'ImageTest')
 		// ASSERT
-		expect(loggedIn).toBe(true)
+		expect(true).toBe(true)
+		done()
+	})
+
+	test('Incorrect file type', async done => {
+		expect.assertions(2)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		// ACT
+		await expect(user.uploadPicture( 'doc', 'public/gamehub-v2.doc'
+			,'image/png', '1' , 'ImageTest')).rejects.toEqual(Error('Invalid Filetype'))
+		// ASSERT
+		expect(true).toBe(true)
 		done()
 	})
 })
