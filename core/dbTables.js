@@ -32,6 +32,7 @@ module.exports = class dbTables {
 			average_rate REAL DEFAULT 0.0,
 			is_correct INTEGER DEFAULT 0,
 			is_inapropriate INTEGER DEFAULT 0,
+			date TEXT NOT NULL,
 			user_id INTEGER NOT NULL,
 			question_id INTEGER NOT NULL,
 			FOREIGN KEY("user_id") REFERENCES "users"("id"),

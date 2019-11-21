@@ -3,7 +3,7 @@
 require('dotenv').config()
 const Router = require('koa-router')
 const router = new Router()
-const Answer = require('../models/answer')
+//const Answer = require('../models/answer')
 
 /**
  *
