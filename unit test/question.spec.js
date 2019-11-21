@@ -100,24 +100,6 @@ describe('getAll()', () => {
 	})
 })
 
-describe('count()', () => {
-	test('count amount of questions in Question table',async done => {
-		expect.assertions(1)
-		//ARRANGE
-		const question = await new Question()
-		const body = {title: 'Call of Duty World at War', body: 'Where is the pack-a-punch on Der Riese'}
-		const body1 = {title: 'Super Mario Bros', body: 'How to beat bowser'}
-		const session = {user: {id: 0}}
-		//ACT
-		await question.insertQuestion(body, session,'10/11/2019')
-		await question.insertQuestion(body1, session,'09/11/2019')
-		const count = await question.countQuestions()
-		//ASSERT
-		expect(count).toBe(2)
-		done()
-	})
-})
-
 describe('Date()', () => {
 	test('Correct date', async done => {
 		expect.assertions(1)
