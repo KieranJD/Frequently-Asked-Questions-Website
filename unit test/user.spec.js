@@ -17,10 +17,9 @@ describe('Register()', () => {
 		const user = await new User() // DB runs in-memory if no name supplied
 		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
 		// ACT
-		await user.register(body.name,body.username,body.pass)
-		const count = await user.countUsers()
+		const newUser = await user.register(body.name,body.username,body.pass)
 		// ASSERT
-		expect(count).toBe(1)
+		expect(newUser).toBe(true)
 		done()
 	})
 
