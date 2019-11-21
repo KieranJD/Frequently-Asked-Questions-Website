@@ -168,7 +168,13 @@ describe('uploadPicture()', () => {
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
 		// ACT
-		await user.uploadPicture( 'image/png', 'Avatarpng.png' ,'image/png', '1' , 'ImageTest')
+		const data = {
+			filetype: 'image/png',
+			path: 'Avatarpng.png',
+			userId: '1',
+			username: 'ImageTest'
+		}
+		await user.uploadPicture( data ,'image/png')
 		// ASSERT
 		expect(true).toBe(true)
 		done()
@@ -177,9 +183,14 @@ describe('uploadPicture()', () => {
 		expect.assertions(2)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
+		const data = {
+			filetype: 'doc',
+			path: 'Avatardoc.doc',
+			userId: '1',
+			username: 'ImageTest'
+		}
 		// ACT
-		await expect(user.uploadPicture( 'doc', 'Avatardoc.doc'
-			,'image/png', '1' , 'ImageTest')).rejects.toEqual(Error('Invalid Filetype'))
+		await expect(user.uploadPicture( data,'image/png')).rejects.toEqual(Error('Invalid Filetype'))
 		// ASSERT
 		expect(true).toBe(true)
 		done()

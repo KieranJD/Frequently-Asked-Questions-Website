@@ -46,22 +46,21 @@ module.exports = class Question {
 		}
 	}
 
-	async uploadPicture(title, filetype ,path, mimeType) {
+	async uploadPicture(data, mimeType) {
 		try{
 			const extension = mime.extension(mimeType)
 			let QuestionId = await this.db.run('select last_insert_rowid()')
 			QuestionId = QuestionId.lastID
 			console.log('id: ', QuestionId)
-			console.log('filetype:', filetype)
-			if(!filetype.includes('image/')) {
+			console.log('filetype:', data.filetype)
+			if(data.filetype.includes('image/')) {
+				await fs.copy(data.path, `public/images/questions/${QuestionId}/${data.title}.${extension}`)
+				const sql = `UPDATE questions SET image = "${data.title}.${extension}" WHERE id = ${QuestionId}`
+				this.db.run(sql)
+				return true
+			} else {
 				throw new Error('Invalid Filetype')
 			}
-			console.log(`path: ${path}`)
-			console.log(`extension: ${extension}`)
-			await fs.copy(path, `public/images/questions/${QuestionId}/${title}.${extension}`)
-			const sql = `UPDATE questions SET image = "${title}.${extension}" WHERE id = ${QuestionId}`
-			this.db.run(sql)
-			return true
 		} catch(err) {
 			throw err
 		}

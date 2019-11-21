@@ -76,19 +76,20 @@ module.exports = class User {
 		}
 	}
 
-	async uploadPicture(filetype ,path, mimeType, userId, username) {
+	async uploadPicture(data, mimeType) {
 		try{
 			const extension = mime.extension(mimeType)
-			console.log(filetype)
-			if(!filetype.includes('image/')) {
+			console.log(data.filetype)
+			if(data.filetype.includes('image/')) {
+				console.log(`path: ${data.path}`)
+				console.log(`extension: ${extension}`)
+				await fs.copy(data.path, `public/images/user_avatar/${data.userId}/${data.username}.${extension}`)
+				const sql = `UPDATE users SET avatar = "${data.username}.${extension}" WHERE id = ${data.userId}`
+				this.db.run(sql)
+				return true
+			} else {
 				throw new Error('Invalid Filetype')
 			}
-			console.log(`path: ${path}`)
-			console.log(`extension: ${extension}`)
-			await fs.copy(path, `public/images/user_avatar/${userId}/${username}.${extension}`)
-			const sql = `UPDATE users SET avatar = "${username}.${extension}" WHERE id = ${userId}`
-			this.db.run(sql)
-			return true
 		} catch(err) {
 			throw err
 		}

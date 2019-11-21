@@ -111,8 +111,13 @@ router.get('/profile', async ctx => {
 
 router.post('/profile-action',koaBody, async ctx => {
 	const user = await new User(process.env.DB_NAME)
-	await user.uploadPicture(ctx.request.files.avatar.type, ctx.request.files.avatar.path,
-		'image/png', ctx.session.user.id, ctx.session.user.username)
+	const data = {
+		filetype: ctx.request.files.avatar.type,
+		path: ctx.request.files.avatar.path,
+		userId: ctx.session.user.id,
+		username: ctx.session.user.username
+	}
+	await user.uploadPicture(data , 'image/png' )
 	ctx.redirect('/profile?msg=Avatar changed')
 
 })

@@ -47,7 +47,12 @@ router.post('/addquestion', koaBody, async ctx => {
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
 		await question.insertQuestion(ctx.request.body, ctx.session, date)
-		await question.uploadPicture(ctx.request.body.title, ctx.request.files.image.type, ctx.request.files.image.path, 'image/png')
+		const data = {
+			title: ctx.request.body.title,
+			filetype: ctx.request.files.image.type,
+			path: ctx.request.files.image.path
+		}
+		await question.uploadPicture(data, 'image/png')
 		ctx.redirect('/')
 	} catch(err) {
 		await ctx.render('createquestion', {msg: err.message})

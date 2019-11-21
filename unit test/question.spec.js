@@ -116,12 +116,17 @@ describe('Date()', () => {
 })
 
 describe('uploadPicture()', () => {
-	test('Change Avatar', async done => {
+	test('upload picture', async done => {
 		expect.assertions(1)
 		// ARRANGE
-		const user = await new Question() // DB runs in-memory if no name supplied
+		const question = await new Question() // DB runs in-memory if no name supplied
 		// ACT
-		await user.uploadPicture( 'TitleExample', 'image/png', 'Questionimage.png' ,'image/png')
+		const data = {
+			title: 'TitleExample',
+			filetype: 'image/png',
+			path: 'Questionimage.png'
+		}
+		await question.uploadPicture(data, 'image/png')
 		// ASSERT
 		expect(true).toBe(true)
 		done()
@@ -132,7 +137,12 @@ describe('uploadPicture()', () => {
 		// ARRANGE
 		const question = await new Question() // DB runs in-memory if no name supplied
 		// ACT
-		await expect(question.uploadPicture( 'doc', 'Questionimage.png' ,'image/png', 'TitleExample' )).rejects.toEqual(Error('Invalid Filetype'))
+		const data = {
+			title: 'TitleExample',
+			filetype: 'doc',
+			path: 'Questiondoc.doc'
+		}
+		await expect(question.uploadPicture(data,'image/png')).rejects.toEqual(Error('Invalid Filetype'))
 		// ASSERT
 		expect(true).toBe(true)
 		done()
