@@ -4,6 +4,7 @@ const Database = require('sqlite-async')
 const table = require('../dbTables')
 const fs = require('fs-extra')
 const mime = require('mime-types')
+const sharp = require('sharp')
 module.exports = class Question {
 
 	constructor(dbName = ':memory:') {
@@ -46,18 +47,51 @@ module.exports = class Question {
 		}
 	}
 
+	async setVarforPicture(data, mimeType) {
+		
+		data.extension = mime.extension(mimeType)
+		const QuestionId = await this.db.run('select last_insert_rowid()')
+		data.QuestionId = QuestionId.lastID
+		let imageName = data.title.split(' ')
+		imageName = imageName[0]
+		data.imageName = imageName.concat('.',data.extension)
+		data.paths = {
+			filePath: `public/images/questions/${data.QuestionId}/${imageName}.${data.extension}`,
+			thumbPath: `public/images/questions/thumb/${data.QuestionId}/${imageName}.${data.extension}`
+		}
+		return data
+	}
+
+	async savePicture(data) {
+		try{
+			console.log(data.paths.filePath)
+			await fs.copy(data.path, data.paths.filePath)
+			await fs.copy(data.path, data.paths.thumbPath)
+			const sql = `UPDATE questions SET image = '${data.imageName}' WHERE id = ${data.QuestionId}`
+			await this.db.run(sql)
+		} catch(err) {
+			throw err
+		}
+	}
+
+	async convertThumbnail(data) {
+		try{
+			const thumb = await sharp(data.paths.filePath)
+				.resize({width: 360, height: 240})
+				.toFile(data.paths.thumbPath)
+			return thumb
+		} catch(err) {
+			throw err
+		}
+	}
+
 	async uploadPicture(data, mimeType) {
 		try{
-			const extension = mime.extension(mimeType)
-			let QuestionId = await this.db.run('select last_insert_rowid()')
-			QuestionId = QuestionId.lastID
-			console.log('id: ', QuestionId)
-			console.log('filetype:', data.filetype)
+			data = await this.setVarforPicture(data, mimeType)
 			if(data.filetype.includes('image/')) {
-				await fs.copy(data.path, `public/images/questions/${QuestionId}/${data.title}.${extension}`)
-				const sql = `UPDATE questions SET image = "${data.title}.${extension}" WHERE id = ${QuestionId}`
-				this.db.run(sql)
-				return true
+				await this.savePicture(data)
+				console.log(data)
+				return data
 			} else {
 				throw new Error('Invalid Filetype')
 			}
