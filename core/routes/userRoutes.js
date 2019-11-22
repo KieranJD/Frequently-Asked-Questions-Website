@@ -35,6 +35,7 @@ router.post('/register-action', koaBody, async ctx => {
 		ctx.redirect(`/?msg=new user "${body.username}" added`)
 		ctx.session.authorised = true
 		ctx.session.user = await user.getLoggedUser(body.username)
+		ctx.session.user.avatar = 'images/default-avatar.jpg'
 	} catch(err) {
 		await ctx.render('register', {msg: err.message})
 	}

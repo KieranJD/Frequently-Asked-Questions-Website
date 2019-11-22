@@ -84,7 +84,7 @@ module.exports = class User {
 				console.log(`path: ${data.path}`)
 				console.log(`extension: ${extension}`)
 				const avatarPath = `public/images/user_avatar/${data.userId}/${data.username}.${extension}`
-				const avatarName = `${data.username}.${extension}`
+				const avatarName = `images/user_avatar/${data.userId}/${data.username}.${extension}`
 				await fs.copy(data.path,avatarPath )
 				const sql = `UPDATE users SET avatar = "${data.username}.${extension}" WHERE id = ${data.userId}`
 				await this.db.run(sql)
