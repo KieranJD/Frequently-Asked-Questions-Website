@@ -38,6 +38,8 @@
     "markdown": "^0.5.0",
     "markdownlint-cli": "^0.18.0",
     "mime-types": "^2.1.22",
+    "mock-fs": "^4.10.3",
+    "mockfs": "^0.1.5",
     "remark-cli": "^7.0.0",
     "remark-lint": "^6.0.5",
     "remark-preset-lint-markdown-style-guide": "^2.1.3",

@@ -1,13 +1,15 @@
 'use strict'
 
 const Question = require('../core/models/question.js')
-
+const mock = require('mock-fs')
 beforeAll( async() => {
-	// stuff to do before any of the tests run
+	console.log()
+	mock({ 'Questionimage.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
+		'Questiondoc.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
 })
 
 afterAll( async() => {
-	// runs after all the tests have completed
+	mock.restore()
 })
 
 describe('insert()', () => {
@@ -103,12 +105,33 @@ describe('getAll()', () => {
 describe('Date()', () => {
 	test('Correct date', async done => {
 		expect.assertions(1)
-		//ARRANGE
-		const question = await new Question()
-		//ACT
-		const date = await question.currentDate(new Date('December 17, 1995'))
-		//ASSERT
-		expect(date).toBe('17/12/1995')
+		// ARRANGE
+		const question = await new Question() // DB runs in-memory if no name supplied
+		// ACT
+		const data = {
+			title: 'TitleExample',
+			filetype: 'image/png',
+			path: 'Questionimage.png'
+		}
+		await question.uploadPicture(data, 'image/png')
+		// ASSERT
+		expect(true).toBe(true)
+		done()
+	})
+
+	test('Incorrect file type', async done => {
+		expect.assertions(2)
+		// ARRANGE
+		const question = await new Question() // DB runs in-memory if no name supplied
+		// ACT
+		const data = {
+			title: 'TitleExample',
+			filetype: 'doc',
+			path: 'Questiondoc.doc'
+		}
+		await expect(question.uploadPicture(data,'image/png')).rejects.toEqual(Error('Invalid Filetype'))
+		// ASSERT
+		expect(true).toBe(true)
 		done()
 	})
 })
