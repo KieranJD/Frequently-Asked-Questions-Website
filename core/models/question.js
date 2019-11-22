@@ -48,7 +48,6 @@ module.exports = class Question {
 	}
 
 	async setVarforPicture(data, mimeType) {
-		
 		data.extension = mime.extension(mimeType)
 		const QuestionId = await this.db.run('select last_insert_rowid()')
 		data.QuestionId = QuestionId.lastID
