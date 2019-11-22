@@ -130,6 +130,13 @@ main > article.question > small.date {
     font-weight: 400;
 }
 
+main > article.question > img.thumb {
+    border: 1px solid #ddd; /* Gray border */
+    border-radius: 4px;  /* Rounded border */
+    padding: 5px; /* Some padding */
+    float: left;
+}
+
 footer {
     border-top: solid #119DA4;
     background: #001242;

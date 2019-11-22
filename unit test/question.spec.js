@@ -5,7 +5,10 @@ const mock = require('mock-fs')
 beforeAll( async() => {
 	console.log()
 	mock({ 'Questionimage.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
-		'Questiondoc.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
+		'Questiondoc.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
+		'public/images/questions/0/TitleExample.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
+		'public/images/questions/thumb/0/TitleExample.png': Buffer.from([8, 6, 7, 5, 3, 0, 9])
+	})
 })
 
 afterAll( async() => {
@@ -120,15 +123,27 @@ describe('uploadPicture()', () => {
 		expect.assertions(1)
 		// ARRANGE
 		const question = await new Question() // DB runs in-memory if no name supplied
-		// ACT
-		const data = {
+		let data = {
 			title: 'TitleExample',
 			filetype: 'image/png',
 			path: 'Questionimage.png'
 		}
-		await question.uploadPicture(data, 'image/png')
+		const expData = {
+			title: 'TitleExample',
+			filetype: 'image/png',
+			path: 'Questionimage.png',
+			extension: 'png',
+			QuestionId: 0,
+			imageName: 'TitleExample.png',
+			paths: {
+				  filePath: 'public/images/questions/0/TitleExample.png',
+				  thumbPath: 'public/images/questions/thumb/0/TitleExample.png'
+			}
+			  }
+		// ACT
+		data = await question.uploadPicture(data, 'image/png')
 		// ASSERT
-		expect(true).toBe(true)
+		expect(data).toStrictEqual(expData)
 		done()
 	})
 
@@ -148,3 +163,32 @@ describe('uploadPicture()', () => {
 		done()
 	})
 })
+
+/*
+###____CANNOT COVER THIS FUNCTION BECAUSE SHARP DOESNT WORK WITH JEST____###
+describe('savePicture()', () => {
+	test('save picture', async done => {
+		expect.assertions(2)
+		// ARRANGE
+		const question = await new Question() // DB runs in-memory if no name supplied
+		// ACT
+		const data = {
+			data: {
+				  title: 'TitleExample',
+				  filetype: 'image/png',
+				  path: 'Questionimage.png'
+			},
+			paths: {
+				  filePath: 'public/images/questions/0/TitleExample.png',
+				  thumbPath: 'public/images/questions/thumb/0/TitleExample.png'
+			},
+			extension: 'png',
+			QuestionId: 0
+			  }
+		await question.savePicture(data)
+		// ASSERT
+		expect(true).toBe(true)
+		done()
+	})
+})
+*/

@@ -11,8 +11,10 @@
             {{#if solved}}
             <p>Solved</p>
             {{/if}}
+            <img class = "thumb" src="images/questions/thumb/{{ id }}/{{ image }}" alt="thumbnail"> 
             <h2>{{ title }}</h2>
-            <h3>{{body}}</h3>
+            <br>
+            <br><h3>{{body}}</h3>
             <small class="user">{{ user_id }}</small>
             <small class="date">{{ date }}</small>
         </article>

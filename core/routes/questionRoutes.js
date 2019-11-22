@@ -39,7 +39,6 @@ router.get('/createquestion', async ctx => {
 		}
 		await ctx.render('createquestion', data)
 	}
-	console.log('banter')
 })
 
 router.post('/addquestion', koaBody, async ctx => {
@@ -47,12 +46,14 @@ router.post('/addquestion', koaBody, async ctx => {
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
 		await question.insertQuestion(ctx.request.body, ctx.session, date)
-		const data = {
+		let data = {
 			title: ctx.request.body.title,
 			filetype: ctx.request.files.image.type,
 			path: ctx.request.files.image.path
 		}
-		await question.uploadPicture(data, 'image/png')
+		data = await question.uploadPicture(data, 'image/png')
+		console.log(data)
+		await question.convertThumbnail(data)
 		ctx.redirect('/')
 	} catch(err) {
 		await ctx.render('createquestion', {msg: err.message})
