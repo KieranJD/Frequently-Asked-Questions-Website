@@ -105,6 +105,19 @@ describe('getAll()', () => {
 describe('Date()', () => {
 	test('Correct date', async done => {
 		expect.assertions(1)
+		//ARRANGE
+		const question = await new Question()
+		//ACT
+		const date = await question.currentDate(new Date('December 17, 1995'))
+		//ASSERT
+		expect(date).toBe('17/12/1995')
+		done()
+	})
+})
+
+describe('uploadPicture()', () => {
+	test('upload picture', async done => {
+		expect.assertions(1)
 		// ARRANGE
 		const question = await new Question() // DB runs in-memory if no name supplied
 		// ACT
