@@ -7,7 +7,8 @@
         </form>
 
         {{#each questions}}
-        <article class="question">
+        <a href="/question/{{ id }}/answers">
+            <article class="question">
             {{#if solved}}
             <p>Solved</p>
             {{/if}}
@@ -16,6 +17,7 @@
             <small class="user">{{ user_id }}</small>
             <small class="date">{{ date }}</small>
         </article>
+        </a>
         {{/each}}        
     </main>
 

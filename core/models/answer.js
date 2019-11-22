@@ -17,7 +17,7 @@ module.exports = class Answer {
 		try {
 			if (request.body.body === '') throw new Error('Answer cannot be empty!')
 			const sql = `INSERT INTO answers(body, date, user_id, question_id) 
-			VALUES("${request.body.body}", "${date}", "${request.session.user_id}",
+			VALUES("${request.body.body}", "${date}", "${request.session.user.id}",
 			"${request.parameters.question_id}");`
 			this.db.run(sql)
 			return true

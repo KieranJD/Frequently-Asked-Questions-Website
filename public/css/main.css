@@ -85,7 +85,7 @@ main > form > button {
     cursor: pointer;
 }
 
-main > article.question {
+main > a > article.question {
     background: #FFF;
     width: 48%;
     margin: 1%;
@@ -94,20 +94,22 @@ main > article.question {
     border-radius: 10px;
     min-height: 180px;
     position: relative;
+    text-decoration: none;
+    color: #000000;
 }
 
-main > article:hover.question {
+main > a > article:hover.question {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-main > article.question > h2 {
+main > a > article.question > h2 {
     padding: 0 20px;
     float: left;
     color: #001242;
     font-weight: 700;
 }
 
-main > article.question > p {
+main > a > article.question > p {
     margin: 0;
     padding: 5px;
     color: white;
@@ -116,14 +118,14 @@ main > article.question > p {
     border-radius: 10px 10px 0 0;
 }
 
-main > article.question > small.user {
+main > a > article.question > small.user {
     position: absolute;
     bottom: 20px;
     left: 20px;
     font-weight: 400;
 }
 
-main > article.question > small.date {
+main > a > article.question > small.date {
     position: absolute;
     bottom: 20px;
     right: 20px;
