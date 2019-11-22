@@ -83,10 +83,12 @@ module.exports = class User {
 			if(data.filetype.includes('image/')) {
 				console.log(`path: ${data.path}`)
 				console.log(`extension: ${extension}`)
-				await fs.copy(data.path, `public/images/user_avatar/${data.userId}/${data.username}.${extension}`)
+				const avatarPath = `public/images/user_avatar/${data.userId}/${data.username}.${extension}`
+				const avatarName = `${data.username}.${extension}`
+				await fs.copy(data.path,avatarPath )
 				const sql = `UPDATE users SET avatar = "${data.username}.${extension}" WHERE id = ${data.userId}`
 				await this.db.run(sql)
-				return true
+				return avatarName
 			} else {
 				throw new Error('Invalid Filetype')
 			}

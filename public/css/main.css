@@ -43,6 +43,10 @@ header > nav > ul > li > a {
     padding: 1%;
 }
 
+header > nav > ul > li > img.avatar {
+    width: 25px;
+}
+
 header > h1 {
     font-size: 48px;
     text-transform: uppercase;

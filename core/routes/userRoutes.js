@@ -103,7 +103,9 @@ router.get('/profile', async ctx => {
 			title: `${ctx.session.user.name}'s Profile`,
 			content: 'user\'s profile page',
 			auth: ctx.session.authorised,
-			username: ctx.session.user.username
+			username: ctx.session.user.username,
+			avatarName: ctx.session.user.avatar,
+			id: ctx.session.user.id
 		}
 		await ctx.render('profile', data)
 	}
@@ -117,7 +119,8 @@ router.post('/profile-action',koaBody, async ctx => {
 		userId: ctx.session.user.id,
 		username: ctx.session.user.username
 	}
-	await user.uploadPicture(data , 'image/png' )
+	ctx.session.user.avatar = await user.uploadPicture(data , 'image/png' )
+	console.log('returned: ', ctx.session.user.avatar)
 	ctx.redirect('/profile?msg=Avatar changed')
 })
 
