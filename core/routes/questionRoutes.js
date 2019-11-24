@@ -9,18 +9,18 @@ const Question = require('../models/question')
 router.get('/', async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
-
 		const data = {
 			title: 'Welcome to the GameHub',
 			content: 'Home page with all the questions',
 			questions: await question.getAllQuestions(ctx.query)
 		}
-
 		if (ctx.session.authorised === true) {
 			data.auth = ctx.session.authorised
 			data.username = ctx.session.user.username
+			data.avatarName = ctx.session.user.avatar
+			data.id = ctx.session.user.id
+			console.log('path:' , data.avatarName)
 		}
-
 		await ctx.render('home', data)
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
@@ -46,15 +46,16 @@ router.post('/addquestion', koaBody, async ctx => {
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
 		await question.insertQuestion(ctx.request.body, ctx.session, date)
-		let data = {
-			title: ctx.request.body.title,
-			filetype: ctx.request.files.image.type,
+		let data = { title: ctx.request.body.title, filetype: ctx.request.files.image.type,
 			path: ctx.request.files.image.path
 		}
-		data = await question.uploadPicture(data, 'image/png')
-		console.log(data)
-		await question.convertThumbnail(data)
-		ctx.redirect('/')
+		try{
+			data = await question.uploadPicture(data, 'image/png')
+			await question.convertThumbnail(data)
+			ctx.redirect('/')
+		} catch(err) {
+			ctx.redirect('/')
+		}
 	} catch(err) {
 		await ctx.render('createquestion', {msg: err.message})
 	}
