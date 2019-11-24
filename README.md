@@ -18,8 +18,8 @@ Intermediate
 
 This adds some additional functionality.
 
-~~The optional screenshot should be displayed as a low-resolution thumbnail.~~
-Clicking on the thumbnail should display the full-resolution image.
+~~The optional screenshot should be displayed as a low-resolution thumbnail.
+Clicking on the thumbnail should display the full-resolution image.~~
 The person who posted the original question can flag one of the answers as the correct one.
 This correct answer should be flagged on the details page.
 On the home page any question that has a correct answer flag should be indicated as 'solved' on the homepage.
