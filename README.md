@@ -2,6 +2,8 @@
 
 ## TODO
 
+ENCRYPT SESSIONS
+
 Basic
 
 This will produce a basic yet functional FAQ system.
