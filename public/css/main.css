@@ -45,6 +45,7 @@ header > nav > ul > li > a {
 
 header > nav > ul > li > img.avatar {
     width: 25px;
+    height: 25px;
 }
 
 header > h1 {
