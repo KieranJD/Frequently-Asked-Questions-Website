@@ -5,7 +5,8 @@ const mock = require('mock-fs')
 beforeAll( async() => {
 	console.log()
 	mock({ 'Avatarpng.png': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
-		'Avatardoc.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
+		'Avatardoc.doc': Buffer.from([8, 6, 7, 5, 3, 0, 9]),
+		'Avatardoc.gif': Buffer.from([8, 6, 7, 5, 3, 0, 9]), })
 
 })
 
@@ -179,7 +180,7 @@ describe('uploadPicture()', () => {
 		expect(true).toBe(true)
 		done()
 	})
-	test('Incorrect file type', async done => {
+	test('Incorrect file type DOC', async done => {
 		expect.assertions(2)
 		// ARRANGE
 		const user = await new User() // DB runs in-memory if no name supplied
@@ -190,7 +191,24 @@ describe('uploadPicture()', () => {
 			username: 'ImageTest'
 		}
 		// ACT
-		await expect(user.uploadPicture( data,'image/png')).rejects.toEqual(Error('Invalid Filetype'))
+		await expect(user.uploadPicture( data,'image/png')).rejects.toEqual(Error('Invalid Filetype, file must be PNG'))
+		// ASSERT
+		expect(true).toBe(true)
+		done()
+	})
+
+	test('Incorrect file type GIF', async done => {
+		expect.assertions(2)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		const data = {
+			filetype: 'gif',
+			path: 'Avatardoc.gif',
+			userId: '1',
+			username: 'ImageTest'
+		}
+		// ACT
+		await expect(user.uploadPicture( data,'image/png')).rejects.toEqual(Error('Invalid Filetype, file must be PNG'))
 		// ASSERT
 		expect(true).toBe(true)
 		done()

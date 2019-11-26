@@ -80,7 +80,7 @@ module.exports = class User {
 		try{
 			const extension = mime.extension(mimeType)
 			console.log(data.filetype)
-			if(data.filetype.includes('image/')) {
+			if(data.filetype.includes('image/png')) {
 				console.log(`path: ${data.path}`)
 				console.log(`extension: ${extension}`)
 				const avatarPath = `public/images/user_avatar/${data.userId}/${data.username}.${extension}`
@@ -90,7 +90,7 @@ module.exports = class User {
 				await this.db.run(sql)
 				return avatarName
 			} else {
-				throw new Error('Invalid Filetype')
+				throw new Error('Invalid Filetype, file must be PNG')
 			}
 		} catch(err) {
 			throw err
