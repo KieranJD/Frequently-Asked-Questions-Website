@@ -41,9 +41,9 @@ describe('Create()', () => {
 	})
 })
 
-describe('getAnswerByQuestion()', () => {
+describe('getAnswersByQuestion()', () => {
 	test('Get all answers from a question', async done => {
-		expect.assertions(3)
+		expect.assertions(4)
 		//Arrange
 		const answer = await new Answer()
 		const request = {
@@ -53,11 +53,12 @@ describe('getAnswerByQuestion()', () => {
 		}
 		// Act
 		await answer.createAnswer(request, '21/11/2019')
-		const data = await answer.getAnswerByQuestion(request.parameters.question_id)
+		const data = await answer.getAnswersByQuestion(request.parameters.question_id)
 		// Assert
-		expect(data.body).toBe('Getting Answers')
-		expect(data.question_id).toBe(3)
-		expect(data.user_id).toBe(2)
+		expect(data[0].body).toBe('Getting Answers')
+		expect(data[0].date).toBe('21/11/2019')
+		expect(data[0].question_id).toBe(3)
+		expect(data[0].user_id).toBe(2)
 		done()
 	})
 })
