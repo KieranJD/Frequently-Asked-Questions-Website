@@ -19,7 +19,6 @@ module.exports = class User {
 			this.page = await this.browser.newPage()
 			await this.page.setViewport({ width, height })
 			await this.page.goto(`http://localhost:8080/${link}`)
-			await this.page.waitFor(wait)
 			await this.page.evaluate(() => localStorage.clear())
 			await this.page.reload()
 			return this.page
