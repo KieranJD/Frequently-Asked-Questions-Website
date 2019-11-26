@@ -41,7 +41,7 @@ router.get('/createquestion', async ctx => {
 	}
 })
 
-router.post('/addquestion', koaBody, async ctx => {
+router.post('/createquestion', koaBody, async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
@@ -52,12 +52,13 @@ router.post('/addquestion', koaBody, async ctx => {
 		try{
 			data = await question.uploadPicture(data, 'image/png')
 			await question.convertThumbnail(data)
-			ctx.redirect('/')
+			ctx.redirect('/?msg=question added')
 		} catch(err) {
-			ctx.redirect('/')
+			ctx.redirect('/?msg=question added')
 		}
 	} catch(err) {
-		await ctx.render('createquestion', {msg: err.message})
+		await ctx.render('createquestion', {title: 'Create a question',
+			content: 'Create a question', msg: err.message})
 	}
 })
 

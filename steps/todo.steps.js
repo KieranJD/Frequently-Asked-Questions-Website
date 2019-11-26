@@ -36,6 +36,7 @@ Then('take a screenshot called {string}', async filename => {
 })
 
 Then('the heading should be {string}', async heading => {
+	page.waitForSelector('h1')
 	const text = await page.evaluate( () => {
 		const dom = document.querySelector('h1')
 		return dom.innerText
@@ -44,6 +45,7 @@ Then('the heading should be {string}', async heading => {
 })
 
 Then('the title should be {string}', async heading => {
+	page.waitForSelector('title')
 	const text = await page.evaluate( () => {
 		const dom = document.querySelector('title')
 		return dom.innerText
@@ -52,6 +54,7 @@ Then('the title should be {string}', async heading => {
 })
 
 Then('the unordered list in header should be {string}', async heading => {
+	page.waitForSelector('ul')
 	const text = await page.evaluate( () => {
 		const dom = document.querySelector('ul')
 		return dom.innerText
