@@ -12,31 +12,52 @@ afterAll( async() => {
 describe('Create()', () => {
 	test('Create an answer', async done => {
 		expect.assertions(1)
-		// ARRANGE
+		// Arrange
 		const answer = await new Answer()
 		const request = {
 			body: {body: 'Test'},
 			parameters: {question_id: 1},
 			session: {user: {id: 1}}
 		}
-		// ACT
+		// Act
 		const insert = await answer.createAnswer(request, '21/11/2019')
-		// ASSERT
+		// Assert
 		expect(insert).toBeTruthy()
 		done()
 	})
 
 	test('Empty answer', async done => {
 		expect.assertions(1)
-		//ARRANGE
+		//Arrange
 		const answer = await new Answer()
 		const request = {
 			body: {body: ''},
 			parameters: {question_id: 1},
 			session: {user: {id: 1}}
 		}
-		//ACT & ASSERT
+		//Act & Assert
 		await expect(answer.createAnswer(request, '21/11/2019')).rejects.toEqual(Error('Answer cannot be empty!'))
+		done()
+	})
+})
+
+describe('getAnswerByQuestion()', () => {
+	test('Get all answers from a question', async done => {
+		expect.assertions(3)
+		//Arrange
+		const answer = await new Answer()
+		const request = {
+			body: {body: 'Getting Answers'},
+			parameters: {question_id: 3},
+			session: {user: {id: 2}}
+		}
+		// Act
+		await answer.createAnswer(request, '21/11/2019')
+		const data = await answer.getAnswerByQuestion(request.parameters.question_id)
+		// Assert
+		expect(data.body).toBe('Getting Answers')
+		expect(data.question_id).toBe(3)
+		expect(data.user_id).toBe(2)
 		done()
 	})
 })
