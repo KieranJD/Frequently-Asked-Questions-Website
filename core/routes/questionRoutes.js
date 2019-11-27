@@ -6,6 +6,10 @@ const router = new Router()
 const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const Question = require('../models/question')
 
+/**
+ * @name Home Page
+ * @route {GET} /
+ */
 router.get('/', async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
@@ -27,6 +31,10 @@ router.get('/', async ctx => {
 	}
 })
 
+/**
+ * @name Create Question Page
+ * @route {GET} /createquestion
+ */
 router.get('/createquestion', async ctx => {
 	if(ctx.session.authorised !== true) {
 		ctx.redirect('/')
@@ -41,6 +49,10 @@ router.get('/createquestion', async ctx => {
 	}
 })
 
+/**
+ * @name Add Question Page
+ * @route {POST} /addquestion
+ */
 router.post('/addquestion', koaBody, async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
