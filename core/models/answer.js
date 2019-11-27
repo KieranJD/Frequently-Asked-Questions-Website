@@ -25,4 +25,14 @@ module.exports = class Answer {
 			throw err
 		}
 	}
+
+	async getAnswersByQuestion(id) {
+		try {
+			const sql = `SELECT * FROM answers WHERE question_id = "${id}";`
+			const answers = await this.db.all(sql)
+			return answers
+		} catch (err) {
+			throw err
+		}
+	}
 }
