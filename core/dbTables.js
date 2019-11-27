@@ -20,6 +20,7 @@ module.exports = class dbTables {
 			body TEXT NOT NULL,
 			image TEXT,
 			date TEXT NOT NULL,
+			solved INTEGER DEFAULT 0,
 			user_id INTEGER NOT NULL,
 			FOREIGN KEY("user_id") REFERENCES "users"("id")
 		);`
