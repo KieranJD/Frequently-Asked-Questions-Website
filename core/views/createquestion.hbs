@@ -8,11 +8,11 @@
         {{/if}}
          <form action ="/createquestion" enctype="multipart/form-data" method = "POST">
             <label>Question Title:<br></label>
-            <input id = "qtitle" type="text" placeholder = "Input title..." maxlength="100" name="title"><br>
+            <input type="text" placeholder = "Input title..." maxlength="100" name="title" id="title"><br>
             <label>Question:<br></label>
-            <textarea id = "question" type="text" placeholder = "Input question..." maxlength="1500"  name="body"></textarea>
-            <p><input type="file" name="image"></p>
-            <p><input type="submit" value="Create Question"></p>
+            <textarea type="text" placeholder = "Input question..." maxlength="1500" name="body" id="body"></textarea>
+            <p><input type="file" name="image" id="image"></p>
+            <p><input type="submit" value="Create Question" id="submit"></p>
         </form>
     </section>
 </main>

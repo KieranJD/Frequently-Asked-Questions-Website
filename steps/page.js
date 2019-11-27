@@ -2,8 +2,6 @@
 'use strict'
 
 const puppeteer = require('puppeteer')
-const wait = 2000
-
 
 module.exports = class User {
 
