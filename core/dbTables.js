@@ -48,12 +48,4 @@ module.exports = class dbTables {
 			FOREIGN KEY("answer_id") REFERENCES "answers"("id")
 		);`
 	}
-
-	static select(select, table, condition) {
-		if (condition === undefined) {
-			return `SELECT ${select} FROM ${table}`
-		}
-
-		return `SELECT ${select} FROM ${table} WHERE ${condition}`
-	}
 }

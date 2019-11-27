@@ -13,11 +13,14 @@ const Question = require('../models/question')
  * @route {GET} /
  */
 router.get('/question/:question_id/answers', async ctx => {
+	let question = await new Question(process.env.DB_NAME)
+	question = await question.getOneQuestion(ctx.params.question_id)
 	const answer = await new Answer(process.env.DB_NAME)
 	const answers = await answer.getAnswersByQuestion(ctx.params.question_id)
 	const data = {
-		title: ctx.params.question_id,
+		title: question.title,
 		content: 'Answers to a question',
+		question: question,
 		answers: answers
 	}
 	if (ctx.session.authorised === true) {
