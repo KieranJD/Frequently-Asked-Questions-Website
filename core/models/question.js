@@ -24,6 +24,16 @@ module.exports = class Question {
 		return data
 	}
 
+	async getOneQuestion(id) {
+		try {
+			const sql = `SELECT * FROM questions WHERE id = "${id}";`
+			const question = await this.db.get(sql)
+			return question
+		} catch (err) {
+			throw err
+		}
+	}
+
 	async currentDate(today) {
 		const dd = today.getDate().toString()
 		const mm = (today.getMonth()+1).toString() //As January is 0.
