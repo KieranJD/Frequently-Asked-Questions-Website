@@ -9,8 +9,9 @@ Feature: Create a question
 		And I click on the "submit" field
 		And I click on the "add" field
 		Then take a screenshot called "createquestion-page" in "addQuestion"
-		And the title should be "Game Hub | Create a question"
-		And the heading should be "CREATE A QUESTION"
+		And the first "title" should be "Game Hub | Create a question"
+		And the first "h1" should be "CREATE A QUESTION"
+		And the "h1" number "1" should be "Create a Question"
 		And the unordered list in header should be "Home Vasper123 Add Logout"
 
 	Scenario: create a question without image
@@ -24,9 +25,9 @@ Feature: Create a question
         And I enter "How to find pack-a-punch on Die Riese" in the "body" field
         And I click on the "submit" field
 		Then take a screenshot called "question-created" in "addQuestion"
-        And the title should be "Game Hub | Welcome to the GameHub"
-		And the heading should be "WELCOME TO THE GAMEHUB"
+        And the first "title" should be "Game Hub | Welcome to the GameHub"
+		And the first "h1" should be "WELCOME TO THE GAMEHUB"
 		And the unordered list in header should be "Home Vasper123 Add Logout"
-		And the title of the question should be "Call of Duty"
-		And the body of the question should be "How to find pack-a-punch on Die Riese"
-
+		And the first "h2" should be "Call of Duty"
+		And the first "h3" should be "How to find pack-a-punch on Die Riese"
+		

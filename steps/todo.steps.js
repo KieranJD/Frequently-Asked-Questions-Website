@@ -56,41 +56,26 @@ Then('take a screenshot called {string} in {string}', async(filename, folder) =>
 	await page.screenshot({ path: `screenshots/${folder}/${filename}.png` })
 })
 
-Then('the heading should be {string}', async heading => {
-	const text = await page.evaluate( () => {
-		const dom = document.querySelector('h1')
+Then('the first {string} should be {string}', async(element, heading) => {
+	const text = await page.evaluate( (element) => {
+		const dom = document.querySelector(element)
 		return dom.innerText
-	})
+	}, element)
 	assert.equal(heading, text)
 })
 
-Then('the title should be {string}', async heading => {
-	const text = await page.evaluate( () => {
-		const dom = document.querySelector('title')
-		return dom.innerText
-	})
-	assert.equal(heading, text)
+Then('the {string} number {string} should be {string}', async(element, num, heading) => {
+	const items = await page.evaluate( (element, num) => {
+		const dom = document.querySelectorAll(`${element}:nth-child(${num})`)
+		const arr = Array.from(dom).map(h1 => h1.innerText)
+		return arr
+	}, element, num)
+	assert.equal(items, heading)
 })
 
 Then('the unordered list in header should be {string}', async heading => {
 	const text = await page.evaluate( () => {
 		const dom = document.querySelector('ul')
-		return dom.innerText
-	})
-	assert.equal(heading, text)
-})
-
-Then('the title of the question should be {string}', async heading => {
-	const text = await page.evaluate( () => {
-		const dom = document.querySelector('h2')
-		return dom.innerText
-	})
-	assert.equal(heading, text)
-})
-
-Then('the body of the question should be {string}', async heading => {
-	const text = await page.evaluate( () => {
-		const dom = document.querySelector('h3')
 		return dom.innerText
 	})
 	assert.equal(heading, text)

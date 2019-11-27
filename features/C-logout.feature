@@ -9,7 +9,7 @@ Feature: Logout an account
 		And I click on the "submit" field
 		And I click on the "logout" field	
 		Then take a screenshot called "logged-out" in "logout"
-        And the title should be "Game Hub | Welcome to the GameHub"
-		And the heading should be "WELCOME TO THE GAMEHUB"
+        And the first "title" should be "Game Hub | Welcome to the GameHub"
+		And the first "h1" should be "WELCOME TO THE GAMEHUB"
 		And the unordered list in header should be "Home Login Register"
 	
