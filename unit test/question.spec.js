@@ -105,6 +105,27 @@ describe('getAll()', () => {
 	})
 })
 
+describe('getOneQuestion()', () => {
+	test('Get a single question based on its id', async done => {
+		expect.assertions(3)
+		// Arrange
+		const params = {question_id: 1}
+		const question = await new Question()
+		const request1 = {title: 'Question 1', body: 'This is question number 1'}
+		const request2 = {title: 'Question 2', body: 'This is question number 2'}
+		const session = {user: {id: 1}}
+		// Act
+		await question.insertQuestion(request1, session, '21/11/2019')
+		await question.insertQuestion(request2, session, '22/11/2019')
+		const data = await question.getOneQuestion(params.question_id)
+		// Assert
+		expect(data.title).toBe('Question 1')
+		expect(data.body).toBe('This is question number 1')
+		expect(data.user_id).toBe(1)
+		done()
+	})
+})
+
 describe('Date()', () => {
 	test('Correct date', async done => {
 		expect.assertions(1)
