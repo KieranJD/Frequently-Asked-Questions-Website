@@ -27,12 +27,14 @@ module.exports = class Answer {
 	}
 
 	async getAnswersByQuestion(id) {
-		try {
-			const sql = `SELECT * FROM answers WHERE question_id = "${id}";`
-			const answers = await this.db.all(sql)
-			return answers
-		} catch (err) {
-			throw err
-		}
+		const sql = `SELECT answers.*, users.name AS user_name FROM answers
+			INNER JOIN users ON users.id = answers.user_id WHERE question_id = "${id}";`
+		const answers = await this.db.all(sql)
+		return answers
+	}
+
+	async __testData() {
+		await this.db.run(table.createUsersTable())
+		await this.db.run('INSERT INTO users(name, username, password) VALUES("Wallef", "username", "password");')
 	}
 }
