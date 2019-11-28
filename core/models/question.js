@@ -52,6 +52,7 @@ module.exports = class Question {
 		try {
 			const sql = `SELECT * FROM questions WHERE id = "${id}";`
 			const question = await this.db.get(sql)
+			if (question === undefined) throw new Error('Entry not found')
 			return question
 		} catch (err) {
 			throw err
@@ -128,7 +129,6 @@ module.exports = class Question {
 	 */
 	async savePicture(data) {
 		try{
-			console.log(data.paths.filePath)
 			await fs.copy(data.path, data.paths.filePath)
 			await fs.copy(data.path, data.paths.thumbPath)
 			const sql = `UPDATE questions SET image = '${data.imageName}' WHERE id = ${data.QuestionId}`
@@ -172,7 +172,6 @@ module.exports = class Question {
 			data = await this.setVarforPicture(data, mimeType)
 			if(data.filetype.includes('image/')) {
 				await this.savePicture(data)
-				console.log(data)
 				return data
 			} else {
 				throw new Error('Invalid Filetype')

@@ -133,7 +133,6 @@ router.post('/profile-action',koaBody, async ctx => {
 		username: ctx.session.user.username
 	}
 	ctx.session.user.avatar = await user.uploadPicture(data , 'image/png' )
-	console.log('returned: ', ctx.session.user.avatar)
 	ctx.redirect('/profile?msg=Avatar changed')
 })
 
