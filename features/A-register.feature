@@ -19,7 +19,7 @@ Feature: Register an account
 		Then take a screenshot called "regsitered" in "register"
 		And the first "title" should be "Game Hub | Welcome to the GameHub"
 		And the first "h1" should be "WELCOME TO THE GAMEHUB"
-		And the unordered list in header should be "Home Vasper123 Add Logout"
+		And the unordered list in header should be "Home  Vasper123 Add Logout"
 	
 	Scenario: create another account with profile picture
 		Given The browser is open on the register page
@@ -30,4 +30,4 @@ Feature: Register an account
 		Then take a screenshot called "regsitered-another" in "register"
 		And the first "title" should be "Game Hub | Welcome to the GameHub"
 		And the first "h1" should be "WELCOME TO THE GAMEHUB"
-		And the unordered list in header should be "Home Gamer123 Add Logout"
+		And the unordered list in header should be "Home  Gamer123 Add Logout"

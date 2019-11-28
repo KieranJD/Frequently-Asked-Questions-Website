@@ -13,13 +13,13 @@ rm -rf *.db
 # [ ! -d "node_modules" ] && echo "INSTALLING MODULES" && npm install
 
 # start the web server in background mode
-node index.js&
+# node index.js&
 
 # run the test suite in background mode
 node_modules/.bin/cucumber-js ./features -r ./steps &
 
 # wait for the tests to complete
-sleep 5
+sleep 100
 
 # kill the web server
 pkill node

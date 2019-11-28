@@ -9,26 +9,12 @@
         {{#each questions}}
         <a href="/question/{{ id }}/answers">
             <article class="question">
-<<<<<<< HEAD
-            {{#if solved}}
-            <p>Solved</p>
-            {{/if}}
-            <a href="images/questions/{{ id }}/{{ image }}">
-                <img class = "thumb" src="images/questions/thumb/{{ id }}/{{ image }}" alt="thumbnail">
-            </a>
-            <h2>{{ title }}</h2>
-            <br>
-            <br><h3>{{body}}</h3>
-            <small class="user">{{ user_id }}</small>
-            <small class="date">{{ date }}</small>
-=======
                 {{#if solved}}
                 <p>Solved</p>
                 {{/if}}
                 <h2>{{ title }}</h2>
                 <small class="user">{{ user_id }}</small>
                 <small class="date">{{ date }}</small>
->>>>>>> master
             </article>
         </a>
         {{/each}}        

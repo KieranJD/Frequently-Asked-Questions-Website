@@ -43,7 +43,9 @@ router.get('/createquestion', async ctx => {
 			title: 'Create a question',
 			content: 'Page for creating a new question',
 			auth: ctx.session.authorised,
-			username: ctx.session.user.username
+			username: ctx.session.user.username,
+			avatarName: ctx.session.user.avatar,
+			id: ctx.session.user.id
 		}
 		await ctx.render('createquestion', data)
 	}
