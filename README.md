@@ -8,13 +8,13 @@ Basic
 
 This will produce a basic yet functional FAQ system.
 
-~~Without logging in a user can view all the question titles and dates on the homepage.~~
-Clicking on a question title takes the user to a details page where they can see the question details together with any answers supplied by other users.
+~~Without logging in a user can view all the question titles and dates on the homepage.
+Clicking on a question title takes the user to a details page where they can see the question details together with any answers supplied by other users.~~
 ~~If a user logs in they can add new questions. This should include:
         A short title.
         A detailed description of the problem.
-        An optional photo or screenshot.~~
-If a logged in user views a question details page they will be able to add an answer.
+        An optional photo or screenshot
+If a logged in user views a question details page they will be able to add an answer.~~
 
 Intermediate
 
