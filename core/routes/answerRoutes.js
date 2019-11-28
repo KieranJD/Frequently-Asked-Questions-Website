@@ -26,8 +26,10 @@ router.get('/question/:question_id/answers', async ctx => {
 	if (ctx.session.authorised === true) {
 		data.auth = ctx.session.authorised
 		data.username = ctx.session.user.username
+		data.avatarName = ctx.session.user.avatar
+		data.id = ctx.session.user.id
 	}
-
+	console.table(data)
 	await ctx.render('answer', data)
 })
 

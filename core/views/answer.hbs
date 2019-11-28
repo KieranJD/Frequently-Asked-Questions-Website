@@ -7,7 +7,7 @@
             {{#if msg}}
                 <p>{{msg}}</p>
             {{/if}}
-            <form action ="/question/{{ title }}/answer-action" method = "POST">
+            <form action ="/question/{{ question.id }}/answer-action" method = "POST">
                 <label>Answer:<br></label>
                 <textarea type="text" placeholder = "Input answer..." maxlength="1500"  name="body"></textarea>
                 <p><input type="submit" value="Submit Answer"></p>
