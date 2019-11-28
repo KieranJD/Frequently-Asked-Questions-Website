@@ -21,3 +21,13 @@ Feature: Register an account
 		And the first "h1" should be "WELCOME TO THE GAMEHUB"
 		And the unordered list in header should be "Home Vasper123 Add Logout"
 	
+	Scenario: create another account
+		Given The browser is open on the register page
+		And I enter "Emma Jones" in the "name" field
+		And I enter "Gamer123" in the "username" field
+		And I enter "1234" in the "password" field
+		And I click on the "submit" field
+		Then take a screenshot called "regsitered-another" in "register"
+		And the first "title" should be "Game Hub | Welcome to the GameHub"
+		And the first "h1" should be "WELCOME TO THE GAMEHUB"
+		And the unordered list in header should be "Home Gamer123 Add Logout"

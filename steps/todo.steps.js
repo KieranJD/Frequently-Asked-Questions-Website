@@ -66,6 +66,14 @@ Then('the first {string} should be {string}', async(element, heading) => {
 
 Then('the {string} number {string} should be {string}', async(element, num, heading) => {
 	const items = await page.evaluate( (element, num) => {
+		const dom = document.querySelector(`${element}:nth-child(${num})`)
+		return dom.innerText
+	}, element, num)
+	assert.equal(items, heading)
+})
+
+Then('count elements', async(element, num, heading) => {
+	const items = await page.evaluate( (element, num) => {
 		const dom = document.querySelectorAll(`${element}:nth-child(${num})`)
 		const arr = Array.from(dom).map(h1 => h1.innerText)
 		return arr

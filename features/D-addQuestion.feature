@@ -30,4 +30,3 @@ Feature: Create a question
 		And the unordered list in header should be "Home Vasper123 Add Logout"
 		And the first "h2" should be "Call of Duty"
 		And the first "h3" should be "How to find pack-a-punch on Die Riese"
-		
