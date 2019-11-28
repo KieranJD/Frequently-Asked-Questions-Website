@@ -63,21 +63,4 @@ describe('getAnswersByQuestion()', () => {
 		expect(data[0].user_name).toBe('Wallef')
 		done()
 	})
-
-	test('Bad data', async done => {
-		expect.assertions(1)
-		// Arrange
-		const answer = await new Answer()
-		await answer.__testData()
-		const request = {
-			body: {body: 'Getting Answers'},
-			parameters: {question_id: 3},
-			session: {user: {id: 1}}
-		}
-		// Act
-		await answer.createAnswer(request, '21/11/2019')
-		// Assert
-		await expect(answer.getAnswersByQuestion(8)).rejects.toEqual(Error('Answers not found!'))
-		done()
-	})
 })
