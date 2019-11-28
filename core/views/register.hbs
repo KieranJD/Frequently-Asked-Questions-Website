@@ -7,10 +7,10 @@
       <p class="msg">{{msg}}</p>
       {{/if}}
       <form action="/register-action" enctype="multipart/form-data" method="post">
-        <p>Full Name:<br /><input type="text" name="name" placeholder="What is your name?" value=""></p>
-        <p>Username:<br /><input type="text" name="username" placeholder="Your preferred username (no spaces)" value=""></p>
-        <p>Password:<br /><input type="password" name="password" placeholder="Your chosen password" value=""></p>
-        <p><input type="submit" value="Create"></p>
+        <p>Full Name:<br /><input type="text" name="name" placeholder="What is your name?" value="" id="name"></p>
+        <p>Username:<br /><input type="text" name="username" placeholder="Your preferred username (no spaces)" value="" id="username"></p>
+        <p>Password:<br /><input type="password" name="password" placeholder="Your chosen password" value="" id="password"></p>
+        <p><input type="submit" value="Create" id="submit"></p>
       </form>
     </section>
   </main>

@@ -15,7 +15,7 @@
 <body>
     <header>
         <figure>
-            <a href="/">
+            <a href="/" id="logo">
                 <img src="{{__dirname}}/images/gamehub-v2.png" alt="logo"/>
             </a>
         </figure>       
@@ -23,31 +23,31 @@
         <nav>
             <ul>
                 <li>
-                    <a href="/">Home</a>
+                    <a href="/" id="home">Home</a>
                 </li>
-
+                
                 {{#if auth}}
                 <li>
-                     <img class = "avatar" src="{{__dirname}}/{{ avatarName }}" alt="avatar"> 
+                     <img class = "avatar" id="avatar" src="{{__dirname}}/{{ avatarName }}" alt="avatar"> 
                 </li>
                 <li>
-                    <a href="/profile">{{ username }}</a>
-                </li>
-
-                <li>
-                    <a href="/createquestion">Add</a>
+                    <a href="/profile" id="profile">{{ username }}</a>
                 </li>
 
                 <li>
-                    <a href="/logout">Logout</a>
+                    <a href="/createquestion" id="add">Add</a>
+                </li>
+
+                <li>
+                    <a href="/logout" id="logout">Logout</a>
                 </li>
                 {{else}}
                 <li>
-                    <a href="/login">Login</a>
+                    <a href="/login" id="login">Login</a>
                 </li>
 
                 <li>
-                    <a href="/register">Register</a>
+                    <a href="/register" id="register">Register</a>
                 </li>
                 {{/if}}
             </ul>

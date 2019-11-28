@@ -43,17 +43,19 @@ router.get('/createquestion', async ctx => {
 			title: 'Create a question',
 			content: 'Page for creating a new question',
 			auth: ctx.session.authorised,
-			username: ctx.session.user.username
+			username: ctx.session.user.username,
+			avatarName: ctx.session.user.avatar,
+			id: ctx.session.user.id
 		}
 		await ctx.render('createquestion', data)
 	}
 })
 
 /**
- * @name Add Question Page
- * @route {POST} /addquestion
+ * @name Create Question Action
+ * @route {POST} /createquestion
  */
-router.post('/addquestion', koaBody, async ctx => {
+router.post('/createquestion', koaBody, async ctx => {
 	try{
 		const question = await new Question(process.env.DB_NAME)
 		const date = await question.currentDate(new Date())
@@ -64,12 +66,13 @@ router.post('/addquestion', koaBody, async ctx => {
 		try{
 			data = await question.uploadPicture(data, 'image/png')
 			await question.convertThumbnail(data)
-			ctx.redirect('/')
+			ctx.redirect('/?msg=question added')
 		} catch(err) {
-			ctx.redirect('/')
+			ctx.redirect('/?msg=question added')
 		}
 	} catch(err) {
-		await ctx.render('createquestion', {msg: err.message})
+		await ctx.render('createquestion', {title: 'Create a question',
+			content: 'Create a question', msg: err.message})
 	}
 })
 

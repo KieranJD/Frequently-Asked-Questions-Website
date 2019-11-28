@@ -37,7 +37,8 @@ router.post('/register-action', koaBody, async ctx => {
 		ctx.session.user = await user.getLoggedUser(body.username)
 		ctx.session.user.avatar = 'images/default-avatar.jpg'
 	} catch(err) {
-		await ctx.render('register', {msg: err.message})
+		await ctx.render('register', {title: 'Create an account',
+			 content: 'Page for creating a new account', msg: err.message})
 	}
 })
 
@@ -78,7 +79,8 @@ router.post('/login-action', async ctx => {
 
 		return ctx.redirect('/?msg=you are now logged in...')
 	} catch(err) {
-		await ctx.render('login', {msg: err.message})
+		await ctx.render('login', {title: 'Login',
+			content: 'Login', msg: err.message})
 	}
 })
 
@@ -93,7 +95,7 @@ router.get('/logout', async ctx => {
 	ctx.session.authorised = null
 	ctx.session.user = null
 
-	ctx.redirect('/login?msg=you are now logged out...')
+	ctx.redirect('/?msg=you are now logged out...')
 })
 
 /**
