@@ -30,4 +30,4 @@ Feature: Login to an account
 		Then take a screenshot called "logged-in-another" in "login"
         And the first "title" should be "Game Hub | Welcome to the GameHub"
 		And the first "h1" should be "WELCOME TO THE GAMEHUB"
-		And the unordered list in header should be "Home Gamer1234 Add Logout"
+		And the unordered list in header should be "Home Gamer123 Add Logout"

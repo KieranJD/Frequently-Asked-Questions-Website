@@ -10,7 +10,7 @@ Feature: Register an account
 		And the "h1" number "1" should be "Sign Up"
 		And the unordered list in header should be "Home Login Register"
 		
-	Scenario: create an account
+	Scenario: create an account without profile picture
 		Given The browser is open on the register page
 		And I enter "Sam Smith" in the "name" field
 		And I enter "Vasper123" in the "username" field
@@ -21,7 +21,7 @@ Feature: Register an account
 		And the first "h1" should be "WELCOME TO THE GAMEHUB"
 		And the unordered list in header should be "Home Vasper123 Add Logout"
 	
-	Scenario: create another account
+	Scenario: create another account with profile picture
 		Given The browser is open on the register page
 		And I enter "Emma Jones" in the "name" field
 		And I enter "Gamer123" in the "username" field
