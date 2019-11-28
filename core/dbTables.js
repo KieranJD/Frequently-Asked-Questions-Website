@@ -20,6 +20,7 @@ module.exports = class dbTables {
 			body TEXT NOT NULL,
 			image TEXT,
 			date TEXT NOT NULL,
+			solved INTEGER DEFAULT 0,
 			user_id INTEGER NOT NULL,
 			FOREIGN KEY("user_id") REFERENCES "users"("id")
 		);`
@@ -47,13 +48,5 @@ module.exports = class dbTables {
 			answer_id INTEGER NOT NULL,
 			FOREIGN KEY("answer_id") REFERENCES "answers"("id")
 		);`
-	}
-
-	static select(select, table, condition) {
-		if (condition === undefined) {
-			return `SELECT ${select} FROM ${table}`
-		}
-
-		return `SELECT ${select} FROM ${table} WHERE ${condition}`
 	}
 }

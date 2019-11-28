@@ -98,6 +98,12 @@ router.get('/logout', async ctx => {
 	ctx.redirect('/?msg=you are now logged out...')
 })
 
+/**
+ * The user profile page.
+ *
+ * @name Profile Page
+ * @route {GET} /profile
+ */
 router.get('/profile', async ctx => {
 	if(ctx.session.authorised !== true) {
 		ctx.redirect('/')
@@ -114,6 +120,10 @@ router.get('/profile', async ctx => {
 	}
 })
 
+/**
+ * @name Profile Script
+ * @route {POST} /profile-action
+ */
 router.post('/profile-action',koaBody, async ctx => {
 	const user = await new User(process.env.DB_NAME)
 	const data = {

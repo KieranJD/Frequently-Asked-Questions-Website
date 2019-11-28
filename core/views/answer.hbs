@@ -1,14 +1,27 @@
 {{> header }}
 
     <main>
-        {{#if msg}}
-            <p>{{msg}}</p>
+        <h2>{{ question.body }}</h2>
+
+        {{#if auth}}
+            {{#if msg}}
+                <p>{{msg}}</p>
+            {{/if}}
+            <form action ="/question/{{ question.id }}/answer-action" method = "POST">
+                <label>Answer:<br></label>
+                <textarea type="text" placeholder = "Input answer..." maxlength="1500"  name="body"></textarea>
+                <p><input type="submit" value="Submit Answer"></p>
+            </form>
         {{/if}}
-        <form action ="/question/{{ title }}/answer-action" method = "POST">
-            <label>Question:<br></label>
-            <textarea type="text" placeholder = "Input answer..." maxlength="1500"  name="body"></textarea>
-            <p><input type="submit" value="Submit Answer"></p>
-        </form>
+
+        {{#each answers}}
+        <article style="background-color: white;">
+            <p>{{ body }}</p>
+            <p>{{ date }}</p>
+            <p>{{ user_id }}</p>
+        </article>
+        <hr>
+        {{/each}}
     </main>
     
 {{> footer }}
