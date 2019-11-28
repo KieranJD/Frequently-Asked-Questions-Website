@@ -124,6 +124,21 @@ describe('getOneQuestion()', () => {
 		expect(data.user_id).toBe(1)
 		done()
 	})
+
+	test('Bad data', async done => {
+		expect.assertions(1)
+		// Arrange
+		const question = await new Question()
+		const request1 = {title: 'Question 1', body: 'This is question number 1'}
+		const request2 = {title: 'Question 2', body: 'This is question number 2'}
+		const session = {user: {id: 1}}
+		// Act
+		await question.insertQuestion(request1, session, '21/11/2019')
+		await question.insertQuestion(request2, session, '22/11/2019')
+		// Assert
+		await expect(question.getOneQuestion(124124)).rejects.toEqual(Error('Entry not found'))
+		done()
+	})
 })
 
 describe('Date()', () => {
@@ -135,6 +150,19 @@ describe('Date()', () => {
 		const date = await question.currentDate(new Date('December 17, 1995'))
 		//ASSERT
 		expect(date).toBe('17/12/1995')
+		done()
+	})
+})
+
+describe('savePicture()', () => {
+	test('Bad Data', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const question = await new Question()
+		//ACT
+		await expect(question.savePicture(124123)).rejects
+			.toThrowError('Cannot read property \'filePath\' of undefined')
+		//ASSERT
 		done()
 	})
 })
@@ -187,29 +215,5 @@ describe('uploadPicture()', () => {
 
 /*
 ###____CANNOT COVER THIS FUNCTION BECAUSE SHARP DOESNT WORK WITH JEST____###
-describe('savePicture()', () => {
-	test('save picture', async done => {
-		expect.assertions(2)
-		// ARRANGE
-		const question = await new Question() // DB runs in-memory if no name supplied
-		// ACT
-		const data = {
-			data: {
-				  title: 'TitleExample',
-				  filetype: 'image/png',
-				  path: 'Questionimage.png'
-			},
-			paths: {
-				  filePath: 'public/images/questions/0/TitleExample.png',
-				  thumbPath: 'public/images/questions/thumb/0/TitleExample.png'
-			},
-			extension: 'png',
-			QuestionId: 0
-			  }
-		await question.savePicture(data)
-		// ASSERT
-		expect(true).toBe(true)
-		done()
-	})
-})
+	convertThumbnail()
 */

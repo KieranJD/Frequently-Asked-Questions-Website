@@ -23,7 +23,6 @@ router.get('/', async ctx => {
 			data.username = ctx.session.user.username
 			data.avatarName = ctx.session.user.avatar
 			data.id = ctx.session.user.id
-			console.log('path:' , data.avatarName)
 		}
 		await ctx.render('home', data)
 	} catch(err) {
