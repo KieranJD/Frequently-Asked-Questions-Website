@@ -14,4 +14,4 @@ Feature: Edit a profile
         
         And the "h1" number "1" should be "Profile"
 		
-        And the unordered list in header should be "Home Vasper123 Add Logout"
+        And the unordered list in header should be "Home  Vasper123 Add Logout"

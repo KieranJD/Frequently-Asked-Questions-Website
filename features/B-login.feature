@@ -19,7 +19,7 @@ Feature: Login to an account
 		Then take a screenshot called "logged-in" in "login"
         And the first "title" should be "Game Hub | Welcome to the GameHub"
 		And the first "h1" should be "WELCOME TO THE GAMEHUB"
-		And the unordered list in header should be "Home Vasper123 Add Logout"
+		And the unordered list in header should be "Home  Vasper123 Add Logout"
 
 		Scenario: login to another account
 		Given The browser is open on the login page
@@ -30,4 +30,4 @@ Feature: Login to an account
 		Then take a screenshot called "logged-in-another" in "login"
         And the first "title" should be "Game Hub | Welcome to the GameHub"
 		And the first "h1" should be "WELCOME TO THE GAMEHUB"
-		And the unordered list in header should be "Home Gamer123 Add Logout"
+		And the unordered list in header should be "Home  Gamer123 Add Logout"
