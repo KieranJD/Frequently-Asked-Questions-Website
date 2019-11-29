@@ -47,8 +47,8 @@ module.exports = class dbTables {
 			answer_id INTEGER NOT NULL,
 			rate INTEGER NOT NULL,
 			FOREIGN KEY("user_id") REFERENCES "users"("id"),
-			FOREIGN KEY("answer_id") REFERENCES "answers"("id")
-			PRIMARY KEY("user_id", "answer_id"),
+			FOREIGN KEY("answer_id") REFERENCES "answers"("id"),
+			PRIMARY KEY("user_id", "answer_id")
 		);`
 	}
 }
