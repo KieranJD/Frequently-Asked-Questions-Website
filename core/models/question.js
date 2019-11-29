@@ -138,6 +138,16 @@ module.exports = class Question {
 		}
 	}
 
+	async solved(data) {
+		try{
+			const sql = `UPDATE questions SET solved = '1' WHERE id = ${data.questionID}`
+			await this.db.run(sql)
+			return true
+		} catch(err) {
+			throw err
+		}
+	}
+
 	/**
 	 * @function convertThumbnail
 	 * @async

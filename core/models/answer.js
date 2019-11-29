@@ -27,12 +27,15 @@ module.exports = class Answer {
 	}
 
 	async getAnswersByQuestion(id) {
-		try {
-			const sql = `SELECT * FROM answers WHERE question_id = "${id}";`
-			const answers = await this.db.all(sql)
-			return answers
-		} catch (err) {
-			throw err
-		}
+		const sql = `SELECT * FROM answers WHERE question_id = "${id}";`
+		const answers = await this.db.all(sql)
+		return answers
+
+	}
+
+	async getUserID(id) {
+		const sql = `SELECT user_id FROM answers WHERE id = "${id}";`
+		const user = await this.db.all(sql)
+		return user[0].user_id
 	}
 }
