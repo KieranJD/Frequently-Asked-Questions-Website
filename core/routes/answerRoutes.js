@@ -63,6 +63,7 @@ router.post('/question/:question_id/answer-correct-action', async ctx => {
 		console.table(userID)
 		const user = await new User(process.env.DB_NAME)
 		await user.correctAnswer(userID)
+		await answer.isCorrect(ctx.request.body.ID)
 		ctx.redirect(`/question/${data.questionID}/answers`)
 	} catch(err) {
 		console.log(err)
