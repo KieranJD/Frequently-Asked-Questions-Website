@@ -138,6 +138,13 @@ module.exports = class Question {
 		}
 	}
 
+	/**
+	 * @function solved
+	 * @async
+	 * @param {object} data - the data object of the question being uploaded.
+	 * @returns {true} when the sql command is executed.
+	 * This function copies the file being uploaded to the file path and the thumbnail to the thumb path.
+	 */
 	async solved(data) {
 		const sql = `UPDATE questions SET solved = '1' WHERE id = ${data.questionID}`
 		await this.db.run(sql)
