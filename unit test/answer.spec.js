@@ -62,3 +62,23 @@ describe('getAnswersByQuestion()', () => {
 		done()
 	})
 })
+
+
+describe('getUserID()', () => {
+	test('get userID from answer', async done => {
+		expect.assertions(1)
+		// Arrange
+		const answer = await new Answer()
+		const request = {
+			body: {body: 'Test'},
+			parameters: {question_id: 1},
+			session: {user: {id: 1}}
+		}
+		// Act
+		await answer.createAnswer(request, '21/11/2019')
+		const userID = await answer.getUserID('1')
+		// Assert
+		expect(userID).toBe(1)
+		done()
+	})
+})
