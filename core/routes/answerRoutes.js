@@ -5,6 +5,8 @@ const Router = require('koa-router')
 const router = new Router()
 const Answer = require('../models/answer')
 const Question = require('../models/question')
+const User = require('../models/user')
+
 
 /**
  *
@@ -21,10 +23,11 @@ router.get('/question/:question_id/answers', async ctx => {
 		title: question.title,
 		content: 'Answers to a question',
 		question: question,
-		answers: answers
+		answers: answers,
 	}
 	if (ctx.session.authorised === true) {
 		await pushSessionItemsToObject(data, ctx)
+		if (question.user_id === ctx.session.user.id) data.author = true
 	}
 	await ctx.render('answer', data)
 })
@@ -47,6 +50,22 @@ router.post('/question/:question_id/answer-action', async ctx => {
 			await pushSessionItemsToObject(data, ctx)
 		}
 		await ctx.render('answer', data)
+	}
+})
+
+router.post('/question/:question_id/answer-correct-action', async ctx => {
+	try{
+		const { question, answer } = await createObjects()
+		const data = {questionID: ctx.params.question_id, userID: ctx.session.user.id}
+		console.log(ctx.request.body.ID)
+		await question.solved(data)
+		const userID = await answer.getUserID(ctx.request.body.ID)
+		console.table(userID)
+		const user = await new User(process.env.DB_NAME)
+		await user.correctAnswer(userID)
+		ctx.redirect(`/question/${data.questionID}/answers`)
+	} catch(err) {
+		console.log(err)
 	}
 })
 

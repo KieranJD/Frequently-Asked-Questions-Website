@@ -213,6 +213,25 @@ describe('uploadPicture()', () => {
 	})
 })
 
+describe('solved()', () => {
+	test('Change question to solved', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const question = await new Question() // DB runs in-memory if no name supplied
+		const body = {title: 'Call of Duty World at War', body: 'Where is the pack-a-punch on Der Riese'}
+		const session = {user: {id: 0}}
+		const data = {
+			questionID: '1'
+		}
+		// ACT
+		await question.insertQuestion(body,session,'10/11/2019')
+		const check = await question.solved(data)
+		//ASSERT
+		expect(check).toBeTruthy()
+		done()
+	})
+})
+
 /*
 ###____CANNOT COVER THIS FUNCTION BECAUSE SHARP DOESNT WORK WITH JEST____###
 	convertThumbnail()

@@ -214,3 +214,19 @@ describe('uploadPicture()', () => {
 		done()
 	})
 })
+
+describe('correctAnswer()', () => {
+	test('give the user 50 points for the correct answer to a question', async done => {
+		expect.assertions(1)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
+		// ACT
+		await user.register(body.name,body.username,body.pass)
+		await user.correctAnswer('1')
+		const detail = await user.getLoggedUser(body.username)
+		// ASSERT
+		expect(detail.score).toBe(50)
+		done()
+	})
+})

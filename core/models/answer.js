@@ -26,6 +26,12 @@ module.exports = class Answer {
 		}
 	}
 
+	async getUserID(id) {
+		const sql = `SELECT user_id FROM answers WHERE id = "${id}";`
+		const user = await this.db.all(sql)
+		return user[0].user_id
+	}
+
 	async getAnswersByQuestion(id) {
 		const sql = `SELECT answers.*, users.name AS user_name FROM answers
 			INNER JOIN users ON users.id = answers.user_id WHERE question_id = "${id}";`

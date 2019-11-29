@@ -10,11 +10,20 @@
             <form action ="/question/{{ question.id }}/answer-action" method = "POST">
                 <label>Answer:<br></label>
                 <textarea type="text" placeholder = "Input answer..." maxlength="1500"  name="body"></textarea>
-                <p><input type="submit" value="Submit Answer"></p>
+                <p><input type="submit" value="Submit Answer"></p>            
             </form>
         {{/if}}
 
         {{#each answers}}
+            {{#if ../question.solved}}
+            {{else}}
+                {{#if ../author}}
+                    <form action ="/question/{{ ../question.id }}/answer-correct-action" method = "POST">
+                        <input type="hidden" name="ID" value= {{id}} />
+                        <p><input type="submit" value="Mark As Correct"></p>   
+                    </form>         
+                {{/if}}
+            {{/if}}
         <article style="background-color: white;">
             <p>{{ body }}</p>
             <p>{{ date }}</p>
