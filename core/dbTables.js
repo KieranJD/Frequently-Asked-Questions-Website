@@ -8,7 +8,7 @@ module.exports = class dbTables {
 			name TEXT NOT NULL,
 			username TEXT NOT NULL,
 			password TEXT NOT NULL,
-			avatar TEXT DEFAULT "default-avatar.jpg",
+			avatar TEXT DEFAULT "images/default-avatar.jpg",
 			score INTEGER DEFAULT 0
 		);`
 	}
