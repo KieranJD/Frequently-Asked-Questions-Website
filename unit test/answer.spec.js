@@ -84,3 +84,23 @@ describe('getUserID()', () => {
 		done()
 	})
 })
+
+describe('isCorrect()', () => {
+	test('Change question to solved', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const answer = await new Answer() // DB runs in-memory if no name supplied
+		const request = {
+			body: {body: 'Test'},
+			parameters: {question_id: 1},
+			session: {user: {id: 1}}
+		}
+		// ACT
+		await answer.createAnswer(request, '21/11/2019')
+		await answer.is_correct(request.parameters.question_id)
+		const data = await answer.getAnswersByQuestion(request.parameters.question_id)
+		//ASSERT
+		expect(data[0].is_correct).toBe(1)
+		done()
+	})
+})
