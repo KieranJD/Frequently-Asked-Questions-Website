@@ -2,7 +2,7 @@
 
 ## TODO
 
-ENCRYPT SESSIONS
+~~ENCRYPT SESSIONS~~
 
 Basic
 
