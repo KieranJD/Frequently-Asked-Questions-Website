@@ -230,3 +230,19 @@ describe('correctAnswer()', () => {
 		done()
 	})
 })
+
+describe('inappropriateAnswer()', () => {
+	test('remove 5 points from the user for an inappropriate answer', async done => {
+		expect.assertions(1)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		const body = {name: 'Ben', username: 'TestAccount', pass: 'test123'}
+		// ACT
+		await user.register(body.name,body.username,body.pass)
+		await user.inappropriateAnswer('1')
+		const detail = await user.getLoggedUser(body.username)
+		// ASSERT
+		expect(detail.score).toBe(-5)
+		done()
+	})
+})

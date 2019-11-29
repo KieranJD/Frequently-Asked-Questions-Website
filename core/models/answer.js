@@ -33,8 +33,15 @@ module.exports = class Answer {
 	}
 
 	async isCorrect(id) {
-		console.table(id)
 		const sql = `UPDATE answers SET is_correct = 1 WHERE id = "${id}";`
+		await this.db.all(sql)
+		return true
+	}
+
+
+	async isInappropriate(id) {
+		console.log(id)
+		const sql = `UPDATE answers SET is_inappropriate = 1 WHERE id = "${id}";`
 		await this.db.all(sql)
 		return true
 	}
@@ -43,7 +50,6 @@ module.exports = class Answer {
 		const sql = `SELECT answers.*, users.name AS user_name FROM answers
 			INNER JOIN users ON users.id = answers.user_id WHERE question_id = "${id}";`
 		const answers = await this.db.all(sql)
-		console.table(answers)
 		return answers
 	}
 
