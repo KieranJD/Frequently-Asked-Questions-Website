@@ -172,6 +172,12 @@ module.exports = class User {
 		return true
 	}
 
+	async inappropriateAnswer(userID) {
+		const sql = `UPDATE users SET score = score - 5 WHERE id = ${userID}`
+		await this.db.run(sql)
+		return true
+	}
+
 	/** @function mandatoryFieldsCheck
 	 * @async
 	 * @param {string} name - the name of the user registering.
