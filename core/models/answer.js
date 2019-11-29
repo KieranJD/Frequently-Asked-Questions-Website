@@ -32,10 +32,18 @@ module.exports = class Answer {
 		return user[0].user_id
 	}
 
+	async isCorrect(id) {
+		console.table(id)
+		const sql = `UPDATE answers SET is_correct = 1 WHERE id = "${id}";`
+		await this.db.all(sql)
+		return true
+	}
+
 	async getAnswersByQuestion(id) {
 		const sql = `SELECT answers.*, users.name AS user_name FROM answers
 			INNER JOIN users ON users.id = answers.user_id WHERE question_id = "${id}";`
 		const answers = await this.db.all(sql)
+		console.table(answers)
 		return answers
 	}
 
