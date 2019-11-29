@@ -31,9 +31,9 @@ Advanced
 
 The advanced functionality covers gamification.
 
-Every user start off with a contribution score of 0.
+~~Every user start off with a contribution score of 0.~~
 Logged in users can flag answers as off topic or inappropriate. This takes 5 points off the poster's score.
-Every answer flagged as correct adds 50 points to the posting person's contribution score.
+~~Every answer flagged as correct adds 50 points to the posting person's contribution score.~~
 The best users are flagged with a gold, silver or bronze start:
         The top 5% of users are flagged with a gold star.
         The top 25% are flagged as silver.
