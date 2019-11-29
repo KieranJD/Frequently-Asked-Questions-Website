@@ -6,7 +6,7 @@ const views = require('koa-views')
 const serve = require('koa-static')
 const koaBody = require('koa-body')
 const bodyParser = require('koa-bodyparser')
-const session = require('koa-session')
+const session = require('koa-encrypted-session')
 
 // CUSTOM MODULES IMPORTS
 const answerRoutes = require('./core/routes/answerRoutes')
@@ -19,7 +19,10 @@ app.keys = ['darkSecret']
 app.use(serve('public'))
 app.use(koaBody())
 app.use(bodyParser())
-app.use(session(app))
+app.use(session({
+	key: 'session',
+	secretKey: Buffer.from('EsAg64LMvGITBBz1ZGLfDNU/MYqGDpTzJ1u4BsvIfTw=', 'base64')
+}, app))
 app.use(views(`${__dirname}/core/views`,
 	{
 		extension: 'hbs',

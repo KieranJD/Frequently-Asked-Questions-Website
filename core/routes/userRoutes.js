@@ -35,7 +35,6 @@ router.post('/register-action', koaBody, async ctx => {
 		ctx.redirect(`/?msg=new user "${body.username}" added`)
 		ctx.session.authorised = true
 		ctx.session.user = await user.getLoggedUser(body.username)
-		ctx.session.user.avatar = 'images/default-avatar.jpg'
 	} catch(err) {
 		await ctx.render('register', {title: 'Create an account',
 			 content: 'Page for creating a new account', msg: err.message})
@@ -108,13 +107,16 @@ router.get('/profile', async ctx => {
 	if(ctx.session.authorised !== true) {
 		ctx.redirect('/')
 	} else {
+		const user = await new User(process.env.DB_NAME)
+		const update = await user.getLoggedUser(ctx.session.user.username)
 		const data = {
 			title: `${ctx.session.user.name}'s Profile`,
 			content: 'user\'s profile page',
 			auth: ctx.session.authorised,
 			username: ctx.session.user.username,
 			avatarName: ctx.session.user.avatar,
-			id: ctx.session.user.id
+			id: ctx.session.user.id,
+			score: update.score
 		}
 		await ctx.render('profile', data)
 	}

@@ -64,3 +64,61 @@ describe('getAnswersByQuestion()', () => {
 		done()
 	})
 })
+
+
+describe('getUserID()', () => {
+	test('get userID from answer', async done => {
+		expect.assertions(1)
+		// Arrange
+		const answer = await new Answer()
+		const request = {
+			body: {body: 'Test'},
+			parameters: {question_id: 1},
+			session: {user: {id: 1}}
+		}
+		// Act
+		await answer.createAnswer(request, '21/11/2019')
+		const userID = await answer.getUserID('1')
+		// Assert
+		expect(userID).toBe(1)
+		done()
+	})
+})
+
+describe('isCorrect()', () => {
+	test('Change question to solved', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const answer = await new Answer() // DB runs in-memory if no name supplied
+		const request = {
+			body: {body: 'Test'},
+			parameters: {question_id: 1},
+			session: {user: {id: 1}}
+		}
+		// ACT
+		await answer.createAnswer(request, '21/11/2019')
+		const check = await answer.isCorrect(1)
+		//ASSERT
+		expect(check).toBeTruthy()
+		done()
+	})
+})
+
+describe('isInappropriate()', () => {
+	test('Change question to solved', async done => {
+		expect.assertions(1)
+		//ARRANGE
+		const answer = await new Answer() // DB runs in-memory if no name supplied
+		const request = {
+			body: {body: 'Test'},
+			parameters: {question_id: 1},
+			session: {user: {id: 1}}
+		}
+		// ACT
+		await answer.createAnswer(request, '21/11/2019')
+		const check = await answer.isInappropriate(1)
+		//ASSERT
+		expect(check).toBeTruthy()
+		done()
+	})
+})

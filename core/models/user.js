@@ -82,7 +82,7 @@ module.exports = class User {
 	 *		getLoggedUser('ExampleAccount')
 	 */
 	async getLoggedUser(username) {
-		return await this.db.get(`SELECT id, name, username, avatar FROM users WHERE username = "${username}"`)
+		return await this.db.get(`SELECT * FROM users WHERE username = "${username}"`)
 	}
 
 	/** @function checkIfUsernameExists
@@ -141,7 +141,7 @@ module.exports = class User {
 
 	/** @function uploadPicture
 	 * @async
-	 * @param {string} data - the data object of the picture being uploaded.
+	 * @param {object} data - the data object of the picture being uploaded.
 	 * @param {string} mimeType - the mime type for the extenstion of the file, which is image/png.
 	 * @returns {string} The avatarName constant wehich is the path where the image is saved on the server.
 	 * @returns {Error} 'Invalid Filetype, file must be PNG' if the file is of a different file type than png.
@@ -155,7 +155,7 @@ module.exports = class User {
 				const avatarPath = `public/images/user_avatar/${data.userId}/${data.username}.${extension}`
 				const avatarName = `images/user_avatar/${data.userId}/${data.username}.${extension}`
 				await fs.copy(data.path,avatarPath )
-				const sql = `UPDATE users SET avatar = "${data.username}.${extension}" WHERE id = ${data.userId}`
+				const sql = `UPDATE users SET avatar = "${avatarName}" WHERE id = ${data.userId}`
 				await this.db.run(sql)
 				return avatarName
 			} else {
@@ -164,6 +164,33 @@ module.exports = class User {
 		} catch(err) {
 			throw err
 		}
+	}
+
+
+	/** @function correctAnswer
+	 * @async
+	 * @param {integer} userID - the ID object of the User being updated.
+	 * @returns {true} Once the sql command has been executed.
+	 * @example
+	 *		correctAnswer(1)
+	 */
+	async correctAnswer(userID) {
+		const sql = `UPDATE users SET score = score + 50 WHERE id = ${userID}`
+		await this.db.run(sql)
+		return true
+	}
+
+	/** @function correctAnswer
+	 * @async
+	 * @param {integer} userID - the ID object of the User being updated.
+	 * @returns {true} Once the sql command has been executed.
+	 * @example
+	 *		inappropriateAnswer(1)
+	 */
+	async inappropriateAnswer(userID) {
+		const sql = `UPDATE users SET score = score - 5 WHERE id = ${userID}`
+		await this.db.run(sql)
+		return true
 	}
 
 	/** @function mandatoryFieldsCheck

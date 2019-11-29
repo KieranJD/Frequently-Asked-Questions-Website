@@ -15,10 +15,28 @@
         {{/if}}
 
         {{#each answers}}
+            {{#if ../question.solved}}
+            {{else}}
+                {{#if ../author}}
+                    <form action ="/question/{{ ../question.id }}/answer-correct-action" method = "POST">
+                        <input type="hidden" name="ID" value= {{id}} />
+                        <p><input type="submit" value="Mark As Correct"></p>   
+                    </form>         
+                {{/if}}
+            {{/if}}
+            {{#if is_correct}}
+                <p>Correct Answer</p>
+            {{/if}}
         <article style="background-color: white;">
             <p>{{ body }}</p>
             <p>{{ date }}</p>
             <p>{{ user_name }}</p>
+            {{#if is_inappropriate}}
+            {{else}}
+                <form action ="/question/{{ ../question.id }}/answer-flag-action/{{ id }}" method = "POST">
+                    <p><input type="submit" value="Mark As Inappropriate"></p>   
+                </form>
+            {{/if}}
         </article>
         <hr>
         {{/each}}
