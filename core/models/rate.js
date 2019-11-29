@@ -11,4 +11,15 @@ module.exports = class Rates {
 			return this
 		})()
 	}
+
+	async rateAnswer(request) {
+		try {
+			const sql = `INSERT INTO rates(rate, user_id, answer_id)
+			VALUES ("${request.rate}", "${request.session.user.id}", "${request.parameters.answer_id}");`
+			this.db.run(sql)
+			return true
+		} catch (err) {
+			throw err
+		}
+	}
 }
