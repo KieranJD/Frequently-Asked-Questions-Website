@@ -3,29 +3,26 @@ Feature: Create a question
 
     Scenario: createQuestion page
 		Given The browser is open on the home page
-        When I click on the "login" field
-		And I enter "Vasper123" in the "username" field
-		And I enter "123" in the "password" field
-		And I click on the "submit" field
+        When I login as "Vasper123" with password "123"
 		And I click on the "add" field
 		Then take a screenshot called "createquestion-page" in "addQuestion"
-		And the first "title" should be "Game Hub | Create a question"
-		And the first "h1" should be "CREATE A QUESTION"
+		And the "title" number "0" should be "Game Hub | Create a question"
+		And the "h1" number "0" should be "CREATE A QUESTION"
 		And the "h1" number "1" should be "Create a Question"
 		And the unordered list in header should be "Home  Vasper123 Add Logout"
 
 	Scenario: create a question without image
 		Given The browser is open on the home page
-        When I click on the "login" field
-		And I enter "Vasper123" in the "username" field
-		And I enter "123" in the "password" field
-		And I click on the "submit" field
-		And I click on the "add" field
-        And I enter "Call of Duty" in the "title" field
-        And I enter "How to find pack-a-punch on Die Riese" in the "body" field
-        And I click on the "submit" field
+        When I login as "Vasper123" with password "123"
+		And I create the question title:"Call of Duty" body:"How to find pack-a-punch on Die Riese"
 		Then take a screenshot called "question-created" in "addQuestion"
-        And the first "title" should be "Game Hub | Welcome to the GameHub"
-		And the first "h1" should be "WELCOME TO THE GAMEHUB"
-		And the unordered list in header should be "Home  Vasper123 Add Logout"
-		And the first "h2" should be "Call of Duty"
+        And the page should be the home page logged in as "Vasper123"
+		And the "h2" number "0" should be "Call of Duty"
+
+	Scenario: create another question without image 
+		Given The browser is open on the home page
+        When I login as "Gamer123" with password "1234"
+		And I create the question title:"Skyrim Elder Scrolls V" body:"Best way to kill Alduin" 
+		Then take a screenshot called "question2-created" in "addQuestion"
+        And the page should be the home page logged in as "Gamer123"
+		And the "h2" number "0" should be "Call of Duty"
