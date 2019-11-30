@@ -9,7 +9,7 @@ Feature: Edit a profile
         And the "title" number "0" should be "Game Hub | Sam Smith's Profile"
         And the "h1" number "0" should be "SAM SMITH'S PROFILE"     
         And the "h1" number "1" should be "Profile"
-        And the unordered list in header should be "Home  Vasper123 Add Logout"
+        And the "ul" number "0" should be "Home  Vasper123 Add Logout"
 
     Scenario: change profile avatar
         Given The browser is open on the home page
@@ -18,4 +18,5 @@ Feature: Edit a profile
         And I enter image "public/images/tests/python-logo.png" in the "avatar-input" field
         And I click on the "submit" field
         Then take a screenshot called "avatar" in "profile"
+        
 

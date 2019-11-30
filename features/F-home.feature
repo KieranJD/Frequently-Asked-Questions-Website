@@ -6,20 +6,20 @@ Feature: Open Home page
         Then take a screenshot called "home-page" in "home"
         And the "title" number "0" should be "Game Hub | Welcome to the GameHub"
 		    And the "h1" number "0" should be "WELCOME TO THE GAMEHUB"
-		    And the unordered list in header should be "Home Login Register"
+		    And the "ul" number "0" should be "Home Login Register"
 
     Scenario: home page link
-		    Given The browser is open on the register page
+		    Given The browser is open on the "register" page
         When I click on the "home" field
         Then take a screenshot called "home-page-another" in "home"
         And the "title" number "0" should be "Game Hub | Welcome to the GameHub"
 		    And the "h1" number "0" should be "WELCOME TO THE GAMEHUB"
-		    And the unordered list in header should be "Home Login Register"
+		    And the "ul" number "0" should be "Home Login Register"
     
     Scenario: home page logo button
-		    Given The browser is open on the login page
+		    Given The browser is open on the "login" page
         When I click on the "logo" field
         Then take a screenshot called "home-page-button" in "home"
         And the "title" number "0" should be "Game Hub | Welcome to the GameHub"
 	  	  And the "h1" number "0" should be "WELCOME TO THE GAMEHUB"
-	  	  And the unordered list in header should be "Home Login Register"
+	  	  And the "ul" number "0" should be "Home Login Register"

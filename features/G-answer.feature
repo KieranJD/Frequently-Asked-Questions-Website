@@ -9,7 +9,7 @@ Feature: Create an answer
 		And the "title" number "0" should be "Game Hub | Call of Duty"
 		And the "h1" number "0" should be "CALL OF DUTY"
 		And the "h2" number "0" should be "How to find pack-a-punch on Die Riese"
-		And the unordered list in header should be "Home  Vasper123 Add Logout"
+		And the "ul" number "0" should be "Home  Vasper123 Add Logout"
 
     Scenario: answer page when not logged in
 		Given The browser is open on the home page
@@ -18,7 +18,7 @@ Feature: Create an answer
 		And the "title" number "0" should be "Game Hub | Call of Duty"
 		And the "h1" number "0" should be "CALL OF DUTY"
 		And the "h2" number "0" should be "How to find pack-a-punch on Die Riese"
-		And the unordered list in header should be "Home Login Register"
+		And the "ul" number "0" should be "Home Login Register"
 
     Scenario: create an answer for question when logged in
 		Given The browser is open on the home page
@@ -30,12 +30,12 @@ Feature: Create an answer
 		And the "title" number "0" should be "Game Hub | Call of Duty"
 		And the "h1" number "0" should be "CALL OF DUTY"
 		And the "h2" number "0" should be "How to find pack-a-punch on Die Riese"
-		And the unordered list in header should be "Home  Vasper123 Add Logout"
+		And the "ul" number "0" should be "Home  Vasper123 Add Logout"
         And the "article" number "0" should be
 			"""
 			It is located at the starting area after all the teleporters are turned on
 			
-			30/11/2019
+			{current date}
 			
 			Sam Smith
 			"""
@@ -50,12 +50,12 @@ Feature: Create an answer
 		And the "title" number "0" should be "Game Hub | Call of Duty"
 		And the "h1" number "0" should be "CALL OF DUTY"
 		And the "h2" number "0" should be "How to find pack-a-punch on Die Riese"
-		And the unordered list in header should be "Home  Gamer123 Add Logout"
+		And the "ul" number "0" should be "Home  Gamer123 Add Logout"
 		And the "article" number "1" should be 
 			"""
 			Starting area
 			
-			30/11/2019
+			{current date}
 			
 			Emma Jones
 			"""
@@ -70,12 +70,12 @@ Feature: Create an answer
 		And the "title" number "0" should be "Game Hub | Skyrim Elder Scrolls V"
 		And the "h1" number "0" should be "SKYRIM ELDER SCROLLS V"
 		And the "h2" number "0" should be "Best way to kill Alduin"
-		And the unordered list in header should be "Home  Vasper123 Add Logout"
+		And the "ul" number "0" should be "Home  Vasper123 Add Logout"
 		And the "article" number "0" should be
 			"""
 			Use a daedric bow with daedric arrows
 			
-			30/11/2019
+			{current date}
 			
 			Sam Smith
 			"""

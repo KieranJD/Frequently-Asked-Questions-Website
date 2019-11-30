@@ -9,7 +9,7 @@ Feature: Create a question
 		And the "title" number "0" should be "Game Hub | Create a question"
 		And the "h1" number "0" should be "CREATE A QUESTION"
 		And the "h1" number "1" should be "Create a Question"
-		And the unordered list in header should be "Home  Vasper123 Add Logout"
+		And the "ul" number "0" should be "Home  Vasper123 Add Logout"
 
 	Scenario: create a question without image
 		Given The browser is open on the home page
@@ -21,7 +21,7 @@ Feature: Create a question
 			"""
 			Call of Duty
 			1
-			30/11/2019
+			{current date}
 			"""
 
 	Scenario: create another question without image 
@@ -34,7 +34,7 @@ Feature: Create a question
 			"""
 			Skyrim Elder Scrolls V
 			2
-			30/11/2019
+			{current date}
 			"""
 
 	Scenario: create a question with image 
@@ -51,5 +51,5 @@ Feature: Create a question
 			"""
 			The Witcher 3: Wild Hunt
 			2
-			30/11/2019
+			{current date}
 			"""

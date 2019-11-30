@@ -8,7 +8,7 @@ Feature: Login to an account
 		And the "title" number "0" should be "Game Hub | Login"
 		And the "h1" number "0" should be "LOGIN"
 		And the "h1" number "1" should be "Login"
-		And the unordered list in header should be "Home Login Register"
+		And the "ul" number "0" should be "Home Login Register"
 
 	Scenario: login to an account
 		Given The browser is open on the home page
