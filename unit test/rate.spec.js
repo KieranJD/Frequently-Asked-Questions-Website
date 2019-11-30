@@ -39,3 +39,28 @@ describe('Rate()', () => {
 		done()
 	})
 })
+
+describe('averageRate()', () => {
+	test('Returning an average rate', async done => {
+		expect.assertions(1)
+		// Arrange
+		const rate = await new Rate()
+		const request = {
+			body: {rate: 5},
+			parameters: {answer_id: 1},
+			session: {user: {id: 1}}
+		}
+		const request2 = {
+			body: {rate: 3},
+			parameters: {answer_id: 1},
+			session: {user: {id: 2}}
+		}
+		// Act
+		await rate.rateAnswer(request)
+		await rate.rateAnswer(request2)
+		const avg = await rate.averageRate(1)
+		// Assert
+		expect(avg).toBe(4)
+		done()
+	})
+})
