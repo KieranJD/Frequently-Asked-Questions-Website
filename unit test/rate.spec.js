@@ -87,15 +87,10 @@ describe('updateAnswerRate()', () => {
 	test('Update the answer\'s average rate', async done => {
 		expect.assertions(1)
 		//Arrange
-		const answer = await new Answer() // DB runs in-memory if no name supplied
-		const request = {
-			body: {body: 'Test'},
-			parameters: {question_id: 1},
-			session: {user: {id: 1}}
-		}
+		const rate = await new Rate()
+		await rate.__testData()
 		// Act
-		await answer.createAnswer(request, '21/11/2019')
-		const update = answer.updateAnswerRate(1, 4)
+		const update = await rate.updateAnswerRate(1, 4)
 		// Assert
 		expect(update).toBeTruthy()
 		done()

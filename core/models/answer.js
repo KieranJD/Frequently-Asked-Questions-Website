@@ -32,7 +32,7 @@ module.exports = class Answer {
 			const sql = `INSERT INTO answers(body, date, user_id, question_id) 
 			VALUES("${request.body.body}", "${date}", "${request.session.user.id}",
 			"${request.parameters.question_id}");`
-			this.db.run(sql)
+			await this.db.run(sql)
 			return true
 		} catch (err) {
 			throw err

@@ -31,4 +31,17 @@ module.exports = class Rates {
 		isNaN(averageRate) ? averageRate = 0.0 : averageRate
 		return averageRate
 	}
+
+	async updateAnswerRate(answerId, avgRate) {
+		const sql = `UPDATE answers SET average_rate = "${avgRate}" WHERE id = "${answerId}";`
+		await this.db.run(sql)
+		return true
+	}
+
+	async __testData() {
+		await this.db.run(table.createAnswersTable())
+		const sql = `INSERT INTO answers(body, date, user_id, question_id) 
+			VALUES("Test", "20/12/2010", 1, 1);`
+		await this.db.run(sql)
+	}
 }
