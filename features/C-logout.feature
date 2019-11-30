@@ -8,5 +8,6 @@ Feature: Logout an account
 		Then take a screenshot called "logged-out" in "logout"
         And the "title" number "0" should be "Game Hub | Welcome to the GameHub"
 		And the "h1" number "0" should be "WELCOME TO THE GAMEHUB"
-		And the unordered list in header should be "Home Login Register"
+		And the "ul" number "0" should be "Home Login Register"
+
 	

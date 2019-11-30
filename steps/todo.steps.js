@@ -3,6 +3,7 @@
 const { Given, When, Then } = require('cucumber')
 const assert = require('assert')
 const Page = require('./page.js')
+const Question = require('../core/models/question')
 
 let page // this is the page object we use to reference a web page
 
@@ -13,13 +14,10 @@ Given('The browser is open on the home page', async() => {
 	page = await new Page(width, height,'')
 })
 
-Given('The browser is open on the login page', async() => {
-	page = await new Page(width, height,'')
+Given('The browser is open on the {string} page', async(route) => {
+	page = await new Page(width, height,`${route}`)
 })
 
-Given('The browser is open on the register page', async() => {
-	page = await new Page(width, height,'')
-})
 When('I login as {string} with password {string}', async(username, password) => {
 	await page.waitForSelector('#login')
 	await page.click('#login') //field represents the id attribute in html
@@ -110,20 +108,15 @@ Then('the {string} number {string} should be {string}', async(element, num, head
 
 //Multiple argument steps
 Then('the {string} number {string} should be', async(element, num, heading) => {
+	const question = await new Question(process.env.DB_NAME)
+	const date = await question.currentDate(new Date())
+	const newHeading = heading.replace('{current date}', date)
 	const text = await page.evaluate( (element, num) => {
 		const dom = document.querySelectorAll(element)
 		const arr = Array.from(dom).map(h1 => h1.innerText)
 		return arr[num]
 	}, element, num)
-	assert.equal(text, heading)
-})
-
-Then('the unordered list in header should be {string}', async heading => {
-	const text = await page.evaluate( () => {
-		const dom = document.querySelector('ul')
-		return dom.innerText
-	})
-	assert.equal(heading, text)
+	assert.equal(text, newHeading)
 })
 
 /*Then('count elements', async(element, num, heading) => {
