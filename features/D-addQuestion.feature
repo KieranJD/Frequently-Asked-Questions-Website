@@ -17,7 +17,12 @@ Feature: Create a question
 		And I create the question title:"Call of Duty" body:"How to find pack-a-punch on Die Riese"
 		Then take a screenshot called "question-created" in "addQuestion"
         And the page should be the home page logged in as "Vasper123"
-		And the "h2" number "0" should be "Call of Duty"
+		And the "article" number "0" should be
+			"""
+			Call of Duty
+			1
+			30/11/2019
+			"""
 
 	Scenario: create another question without image 
 		Given The browser is open on the home page
@@ -25,4 +30,26 @@ Feature: Create a question
 		And I create the question title:"Skyrim Elder Scrolls V" body:"Best way to kill Alduin" 
 		Then take a screenshot called "question2-created" in "addQuestion"
         And the page should be the home page logged in as "Gamer123"
-		And the "h2" number "0" should be "Call of Duty"
+		And the "article" number "1" should be
+			"""
+			Skyrim Elder Scrolls V
+			2
+			30/11/2019
+			"""
+
+	Scenario: create a question with image 
+		Given The browser is open on the home page
+        When I login as "Gamer123" with password "1234"
+		And I click on the "add" field
+		And I enter "The Witcher 3: Wild Hunt" in the "title" field
+		And I enter "Best way to get money" in the "body" field
+		And I enter image "public/images/tests/wolf-armour.png" in the "image" field
+		And I click on the "submit" field 
+		Then take a screenshot called "question-image-created" in "addQuestion"
+        And the page should be the home page logged in as "Gamer123"
+		And the "article" number "2" should be
+			"""
+			The Witcher 3: Wild Hunt
+			2
+			30/11/2019
+			"""
