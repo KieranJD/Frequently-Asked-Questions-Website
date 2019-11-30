@@ -196,4 +196,14 @@ module.exports = class Question {
 			throw err
 		}
 	}
+
+	/**
+	 * @function __testData
+	 * @async
+	 * @returns {user} creates a dummy user in the in-memory db in order to run the required unit tests.
+	 */
+	async __testData() {
+		await this.db.run(table.createUsersTable())
+		await this.db.run('INSERT INTO users(name, username, password) VALUES("Wallef", "username", "password");')
+	}
 }
