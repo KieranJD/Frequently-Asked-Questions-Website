@@ -89,7 +89,6 @@ module.exports = class Question {
 			if(request.title === '') throw new Error('Title cannot be left empty')
 			if(request.title.length >= limit) throw new Error('Title cannot be more than 50 characters')
 			if(request.body === '') throw new Error('Question cannot be left empty')
-			console.table(session)
 			const sql = `INSERT INTO questions(title, body, date, user_id) 
 				VALUES("${request.title}", "${request.body}", "${date}", "${session.user.id}");`
 			await this.db.run(sql)

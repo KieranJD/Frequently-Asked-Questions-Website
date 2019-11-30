@@ -73,7 +73,8 @@ router.post('/question/:question_id/answer-flag-action/:id', async ctx => {
 		const answer = await new Answer(process.env.DB_NAME)
 		const data = {questionID: ctx.params.question_id, answerID: ctx.params.id}
 		const user = await new User(process.env.DB_NAME)
-		await user.inappropriateAnswer(data.answerID)
+		const userID = await answer.getUserID(data.answerID)
+		await user.inappropriateAnswer(userID)
 		await answer.isInappropriate(data.answerID)
 		ctx.redirect(`/question/${data.questionID}/answers`)
 	} catch(err) {
