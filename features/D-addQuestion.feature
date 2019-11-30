@@ -11,7 +11,7 @@ Feature: Create a question
 		And the "h1" number "1" should be "Create a Question"
 		And the "ul" number "0" should be "Home  Vasper123 Add Logout"
 
-	Scenario: create a question without image
+	Scenario: create a question without an image
 		Given The browser is open on the home page
         When I login as "Vasper123" with password "123"
 		And I create the question title:"Call of Duty" body:"How to find pack-a-punch on Die Riese"
@@ -24,7 +24,7 @@ Feature: Create a question
 			{current date}
 			"""
 
-	Scenario: create another question without image 
+	Scenario: create another question without an image 
 		Given The browser is open on the home page
         When I login as "Gamer123" with password "1234"
 		And I create the question title:"Skyrim Elder Scrolls V" body:"Best way to kill Alduin" 
@@ -35,8 +35,7 @@ Feature: Create a question
 			Skyrim Elder Scrolls V
 			2
 			{current date}
-			"""
-
+			"""	
 	Scenario: create a question with image 
 		Given The browser is open on the home page
         When I login as "Gamer123" with password "1234"
@@ -53,3 +52,15 @@ Feature: Create a question
 			2
 			{current date}
 			"""
+	Scenario: create a third question without an image 
+		Given The browser is open on the home page
+        When I login as "Vasper123" with password "123"
+		And I create the question title:"Elder Scrolls Online" body:"Fastest way to get exp" 
+		Then take a screenshot called "question3-created" in "addQuestion"
+        And the page should be the home page logged in as "Vasper123"
+		And the "article" number "3" should be
+			"""
+			Elder Scrolls Online
+			1
+			{current date}
+			"""	
