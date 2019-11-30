@@ -20,7 +20,7 @@ Feature: Create a question
 		And the "article" number "0" should be
 			"""
 			Call of Duty
-			1
+			Sam Smith
 			{current date}
 			"""
 
@@ -33,7 +33,7 @@ Feature: Create a question
 		And the "article" number "1" should be
 			"""
 			Skyrim Elder Scrolls V
-			2
+			Emma Jones
 			{current date}
 			"""	
 	Scenario: create a question with image 
@@ -49,7 +49,7 @@ Feature: Create a question
 		And the "article" number "2" should be
 			"""
 			The Witcher 3: Wild Hunt
-			2
+			Emma Jones
 			{current date}
 			"""
 	Scenario: create a third question without an image 
@@ -61,6 +61,6 @@ Feature: Create a question
 		And the "article" number "3" should be
 			"""
 			Elder Scrolls Online
-			1
+			Sam Smith
 			{current date}
 			"""	
