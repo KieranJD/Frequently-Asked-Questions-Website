@@ -12,6 +12,7 @@
     "jsdoc": "node_modules/.bin/jsdoc -c jsdoc.conf",
     "linter": "node_modules/.bin/eslint .",
     "test": "jest --coverage --detectOpenHandles",
+    "test-verbose": "jest --coverage --detectOpenHandles --verbose",
     "unit": "node_modules/.bin/jest --coverage --runInBand tests/unit/",
     "cucumber": "cucumberTest.sh"
   },
