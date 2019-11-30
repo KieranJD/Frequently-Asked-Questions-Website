@@ -7,7 +7,7 @@
         </form>
 
         {{#each questions}}
-        <a href="/question/{{ id }}/answers">
+        <a href="/question/{{ id }}/answers" id="question{{id}}">
             <article class="question">
                 {{#if solved}}
                 <p>Solved</p>

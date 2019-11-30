@@ -9,8 +9,8 @@
             {{/if}}
             <form action ="/question/{{ question.id }}/answer-action" method = "POST">
                 <label>Answer:<br></label>
-                <textarea type="text" placeholder = "Input answer..." maxlength="1500"  name="body"></textarea>
-                <p><input type="submit" value="Submit Answer"></p>            
+                <textarea type="text" placeholder = "Input answer..." maxlength="1500" name="body" id="answer"></textarea>
+                <p><input type="submit" value="Submit Answer" id="submit"></p>
             </form>
         {{/if}}
 
