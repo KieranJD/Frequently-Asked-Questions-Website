@@ -1,6 +1,7 @@
 'use strict'
 
 const Rate = require('../core/models/rate')
+const Answer = require('../core/models/answer')
 beforeAll(async() => {
 	// stuff to do
 })
@@ -78,6 +79,25 @@ describe('averageRate()', () => {
 		const avg = await rate.averageRate(2)
 		// Assert
 		expect(avg).toBe(0.0)
+		done()
+	})
+})
+
+describe('updateAnswerRate()', () => {
+	test('Update the answer\'s average rate', async done => {
+		expect.assertions(1)
+		//Arrange
+		const answer = await new Answer() // DB runs in-memory if no name supplied
+		const request = {
+			body: {body: 'Test'},
+			parameters: {question_id: 1},
+			session: {user: {id: 1}}
+		}
+		// Act
+		await answer.createAnswer(request, '21/11/2019')
+		const update = answer.updateAnswerRate(1, 4)
+		// Assert
+		expect(update).toBeTruthy()
 		done()
 	})
 })
