@@ -1,10 +1,9 @@
 'use strict'
 
-//const User = require('../core/models/user.js')
-
 const { Given, When, Then } = require('cucumber')
 const assert = require('assert')
 const Page = require('./page.js')
+const Question = require('../core/models/question')
 
 let page // this is the page object we use to reference a web page
 
@@ -15,21 +14,44 @@ Given('The browser is open on the home page', async() => {
 	page = await new Page(width, height,'')
 })
 
-Given('The browser is open on the register page', async() => {
-	page = await new Page(width, height,'register')
+Given('The browser is open on the {string} page', async(route) => {
+	page = await new Page(width, height,`${route}`)
 })
 
-Given('The browser is open on the login page', async() => {
-	page = await new Page(width, height,'login')
+When('I login as {string} with password {string}', async(username, password) => {
+	await page.waitForSelector('#login')
+	await page.click('#login') //field represents the id attribute in html
+	await page.waitForSelector('#username')
+	await page.click('#username')
+	await page.keyboard.type(username)
+	await page.click('#password')
+	await page.keyboard.type(password)
+	await page.click('#submit')
 })
 
-/*
-Given('There is an account with useranme {string}, username {string} and password {string}',
-	async(name, username, password) => {
-		const user = await new User() // DB runs in-memory if no name supplied
-		await user.register(name,username,password)
+When('I register as {string} with username {string} and password {string}', async(fullname,username,password) => {
+	await page.waitForSelector('#register')
+	await page.click('#register') //field represents the id attribute in html
+	await page.waitForSelector('#name')
+	await page.click('#name')
+	await page.keyboard.type(fullname)
+	await page.click('#username')
+	await page.keyboard.type(username)
+	await page.click('#password')
+	await page.keyboard.type(password)
+	await page.click('#submit')
 })
-*/
+
+When('I create the question title:{string} body:{string}', async(title,body) => {
+	await page.waitForSelector('#add')
+	await page.click('#add') //field represents the id attribute in html
+	await page.waitForSelector('#title')
+	await page.click('#title')
+	await page.keyboard.type(title)
+	await page.click('#body')
+	await page.keyboard.type(body)
+	await page.click('#submit')
+})
 
 When('I enter {string} in the {string} field', async(value, field) => {
 	await page.waitForSelector(`#${field}`)
@@ -48,43 +70,62 @@ When('I click on the {string} field', async(field) => {
 	await page.click(`#${field}`)
 })
 
-When('I click on the delete link', async() => {
-	await page.click('#delete')
+When('I click on question id {string}', async(id) => {
+	await page.click(`#question${id}`)
 })
 
 Then('take a screenshot called {string} in {string}', async(filename, folder) => {
 	await page.screenshot({ path: `screenshots/${folder}/${filename}.png` })
 })
 
-Then('the first {string} should be {string}', async(element, heading) => {
-	const text = await page.evaluate( (element) => {
-		const dom = document.querySelector(element)
+Then('the page should be the home page logged in as {string}', async(username) => {
+	const title = await page.evaluate( () => {
+		const dom = document.querySelector('title')
 		return dom.innerText
-	}, element)
-	assert.equal(heading, text)
-})
-
-Then('the {string} number {string} should be {string}', async(element, num, heading) => {
-	const items = await page.evaluate( (element, num) => {
-		const dom = document.querySelector(`${element}:nth-child(${num})`)
+	})
+	const h1 = await page.evaluate( () => {
+		const dom = document.querySelector('h1')
 		return dom.innerText
-	}, element, num)
-	assert.equal(items, heading)
-})
-
-Then('count elements', async(element, num, heading) => {
-	const items = await page.evaluate( (element, num) => {
-		const dom = document.querySelectorAll(`${element}:nth-child(${num})`)
-		const arr = Array.from(dom).map(h1 => h1.innerText)
-		return arr
-	}, element, num)
-	assert.equal(items, heading)
-})
-
-Then('the unordered list in header should be {string}', async heading => {
-	const text = await page.evaluate( () => {
+	})
+	const ul = await page.evaluate( () => {
 		const dom = document.querySelector('ul')
 		return dom.innerText
 	})
-	assert.equal(heading, text)
+	assert.equal('Game Hub | Welcome to the GameHub', title)
+	assert.equal('WELCOME TO THE GAMEHUB', h1)
+	assert.equal(`Home  ${username} Add Logout`, ul)
 })
+
+//single argument steps
+Then('the {string} number {string} should be {string}', async(element, num, heading) => {
+	const text = await page.evaluate( (element, num) => {
+		const dom = document.querySelectorAll(element)
+		const arr = Array.from(dom).map(h1 => h1.innerText)
+		return arr[num]
+	}, element, num)
+	assert.equal(text, heading)
+})
+
+//Multiple argument steps
+Then('the {string} number {string} should be', async(element, num, heading) => {
+	const question = await new Question(process.env.DB_NAME)
+	const date = await question.currentDate(new Date())
+	const newHeading = heading.replace('{current date}', date)
+	const text = await page.evaluate( (element, num) => {
+		const dom = document.querySelectorAll(element)
+		const arr = Array.from(dom).map(h1 => h1.innerText)
+		return arr[num]
+	}, element, num)
+	assert.equal(text, newHeading)
+})
+
+Then('the amount of questions shown should be {string}', async(count) => {
+	count = Number(count)
+	const items = await page.evaluate( () => {
+		const dom = document.querySelectorAll('article')
+		const arr = Array.from(dom).map(h1 => h1.innerText)
+		return arr
+	})
+	assert.equal(items.length, count)
+})
+

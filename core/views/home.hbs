@@ -2,12 +2,12 @@
 
     <main>
         <form action="#">
-            <input type="text" placeholder="Search..." name="search" class="search" value="{{query}}">
-            <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="text" placeholder="Search..." name="search" class="search" value="{{query}}" id="searchbar">
+            <button type="submit"><i class="fa fa-search" id="submit"></i></button>
         </form>
 
         {{#each questions}}
-        <a href="/question/{{ id }}/answers">
+        <a href="/question/{{ id }}/answers" id="question{{id}}">
             <article class="question">
                 {{#if solved}}
                 <p>Solved</p>

@@ -141,7 +141,7 @@ module.exports = class User {
 
 	/** @function uploadPicture
 	 * @async
-	 * @param {string} data - the data object of the picture being uploaded.
+	 * @param {object} data - the data object of the picture being uploaded.
 	 * @param {string} mimeType - the mime type for the extenstion of the file, which is image/png.
 	 * @returns {string} The avatarName constant wehich is the path where the image is saved on the server.
 	 * @returns {Error} 'Invalid Filetype, file must be PNG' if the file is of a different file type than png.
@@ -166,8 +166,29 @@ module.exports = class User {
 		}
 	}
 
+
+	/** @function correctAnswer
+	 * @async
+	 * @param {integer} userID - the ID object of the User being updated.
+	 * @returns {true} Once the sql command has been executed.
+	 * @example
+	 *		correctAnswer(1)
+	 */
 	async correctAnswer(userID) {
 		const sql = `UPDATE users SET score = score + 50 WHERE id = ${userID}`
+		await this.db.run(sql)
+		return true
+	}
+
+	/** @function correctAnswer
+	 * @async
+	 * @param {integer} userID - the ID object of the User being updated.
+	 * @returns {true} Once the sql command has been executed.
+	 * @example
+	 *		inappropriateAnswer(1)
+	 */
+	async inappropriateAnswer(userID) {
+		const sql = `UPDATE users SET score = score - 5 WHERE id = ${userID}`
 		await this.db.run(sql)
 		return true
 	}

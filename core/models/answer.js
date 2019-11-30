@@ -4,7 +4,12 @@ const sqlite = require('sqlite-async')
 const table = require('../dbTables')
 
 module.exports = class Answer {
-
+	/**
+	 * Creates a new Question
+	 * @module Answer
+	 * @classdesc this class allows a user to insert an answer, flag an answer as correct or inappropriate,
+	 * and get the user ID of the user who posted the question
+	 */
 	constructor(database = ':memory:') {
 		return (async() => {
 			this.db = await sqlite.open(database)
@@ -13,6 +18,14 @@ module.exports = class Answer {
 		})()
 	}
 
+	/**
+	 * @function createAnswer
+	 * @async
+	 * @param {object} request - contains the andswer title, body and userID.
+	 * @param {string} date - todays date.
+	 * @returns {true} if there are no errors when inserting the answer
+	 * @returns {Error} If the title there is an error with the request data.
+	 */
 	async createAnswer(request, date) {
 		try {
 			if (request.body.body === '') throw new Error('Answer cannot be empty!')
@@ -26,24 +39,63 @@ module.exports = class Answer {
 		}
 	}
 
+	/**
+	 * @function getUserID
+	 * @async
+	 * @param {integer} id - the answer ID.
+	 * @returns {integer} - the user ID
+	 * this function is used to retreive the user ID of the user who posted the answer.
+	 */
 	async getUserID(id) {
 		const sql = `SELECT user_id FROM answers WHERE id = "${id}";`
-		const user = await this.db.all(sql)
-		return user[0].user_id
+		const user = await this.db.get(sql)
+		return user.user_id
 	}
 
+	/**
+	 * @function isCorrect
+	 * @async
+	 * @param {integer} id - the answer ID.
+	 * @returns {true} - when the sql command is executed.
+	 * this function sets the answer to being the correct answer for the question.
+	 * @example
+	 * 		isCorrect(1)
+	 */
 	async isCorrect(id) {
-		console.table(id)
 		const sql = `UPDATE answers SET is_correct = 1 WHERE id = "${id}";`
 		await this.db.all(sql)
 		return true
 	}
 
+	/**
+	 * @function isCorrect
+	 * @async
+	 * @param {integer} id - the answer ID.
+	 * @returns {true} - when the sql command is executed.
+	 * this function sets the answer to being an inappropriate answer for the question.
+	 * @example
+	 * 		isInappropriate(1)
+	 */
+	async isInappropriate(id) {
+		console.log(id)
+		const sql = `UPDATE answers SET is_inappropriate = 1 WHERE id = "${id}";`
+		await this.db.all(sql)
+		return true
+	}
+
+	/**
+	 * @function getAnswersByQuestion
+	 * @async
+	 * @param {integer} id - the question ID.
+	 * @returns {object} - all of the answers to a particular question.
+	 * this function returns all the answers which are related to a certrain question ID
+	 * @example
+	 * 		getAnswersByQuestion(1)
+	 */
 	async getAnswersByQuestion(id) {
 		const sql = `SELECT answers.*, users.name AS user_name FROM answers
 			INNER JOIN users ON users.id = answers.user_id WHERE question_id = "${id}";`
 		const answers = await this.db.all(sql)
-		console.table(answers)
 		return answers
 	}
 

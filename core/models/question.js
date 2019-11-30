@@ -86,6 +86,7 @@ module.exports = class Question {
 			if(request.title === '') throw new Error('Title cannot be left empty')
 			if(request.title.length >= limit) throw new Error('Title cannot be more than 50 characters')
 			if(request.body === '') throw new Error('Question cannot be left empty')
+			console.table(session)
 			const sql = `INSERT INTO questions(title, body, date, user_id) 
 				VALUES("${request.title}", "${request.body}", "${date}", "${session.user.id}");`
 			await this.db.run(sql)
@@ -138,14 +139,17 @@ module.exports = class Question {
 		}
 	}
 
+	/**
+	 * @function solved
+	 * @async
+	 * @param {object} data - the data object of the question being uploaded.
+	 * @returns {true} when the sql command is executed.
+	 * This function copies the file being uploaded to the file path and the thumbnail to the thumb path.
+	 */
 	async solved(data) {
-		try{
-			const sql = `UPDATE questions SET solved = '1' WHERE id = ${data.questionID}`
-			await this.db.run(sql)
-			return true
-		} catch(err) {
-			throw err
-		}
+		const sql = `UPDATE questions SET solved = '1' WHERE id = ${data.questionID}`
+		await this.db.run(sql)
+		return true
 	}
 
 	/**
