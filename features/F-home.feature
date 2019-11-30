@@ -36,13 +36,13 @@ Feature: Open Home page
       And the "article" number "0" should be
 			"""
 			Skyrim Elder Scrolls V
-			2
+			Emma Jones
 			{current date}
 			"""	
       And the "article" number "1" should be
 			"""
 			Elder Scrolls Online
-			1
+			Sam Smith
 			{current date}
 			"""	
     Scenario: search for Call of Duty questions
@@ -57,6 +57,6 @@ Feature: Open Home page
       And the "article" number "0" should be
 			"""
 			Call of Duty
-			1
+			Sam Smith
 			{current date}
 			"""	
