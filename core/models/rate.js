@@ -14,8 +14,9 @@ module.exports = class Rates {
 
 	async rateAnswer(request) {
 		try {
+			if (request.body.rate === '') throw new Error('Rate cannot be empty or a string!')
 			const sql = `INSERT INTO rates(rate, user_id, answer_id)
-			VALUES ("${request.rate}", "${request.session.user.id}", "${request.parameters.answer_id}");`
+			VALUES ("${request.body.rate}", "${request.session.user.id}", "${request.parameters.answer_id}");`
 			this.db.run(sql)
 			return true
 		} catch (err) {
