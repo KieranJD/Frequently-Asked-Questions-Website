@@ -68,12 +68,13 @@ describe('insert()', () => {
 
 describe('getAll()', () => {
 	test('select all from Questions table',async done => {
-		expect.assertions(2)
+		expect.assertions(4)
 		//ARRANGE
 		const question = await new Question()
+		await question.__testData()
 		const body = {title: 'Mario Cart', body: 'How to unlock mirror'}
 		const body1 = {title: 'Super Mario Bros', body: 'How to beat bowser'}
-		const session = {user: {id: 0}}
+		const session = {user: {id: 1}}
 		//ACT
 		await question.insertQuestion(body,session, '10/11/2019')
 		await question.insertQuestion(body1,session,'09/11/2019')
@@ -81,18 +82,21 @@ describe('getAll()', () => {
 		//ASSERT
 		expect(data[0].title).toBe('Mario Cart')
 		expect(data[1].title).toBe('Super Mario Bros')
+		expect(data[0].user_name).toBe('Wallef')
+		expect(data[1].user_name).toBe('Wallef')
 		done()
 	})
 
 	test('retrieve all records LIKE query', async done => {
-		expect.assertions(2)
+		expect.assertions(4)
 		//ARRANGE
 		const question = await new Question()
+		await question.__testData()
 		const query = {search: 'The Legend of Zelda'}
 		const body = {title: 'The Legend of Zelda', body: 'How to beat the first boss'}
 		const body1 = {title: 'The Witcher 3 Wild Hunt', body: 'How to kill a griffin'}
 		const body2 = {title: 'The Legend of Zelda Ocarina of Time', body: 'How to beat the first boss'}
-		const session = {user: {id: 0}}
+		const session = {user: {id: 1}}
 		//ACT
 		await question.insertQuestion(body, session, '01/10/2019')
 		await question.insertQuestion(body1, session,'07/09/2019')
@@ -101,6 +105,8 @@ describe('getAll()', () => {
 		//ASSERT
 		expect(data[0].title).toBe('The Legend of Zelda')
 		expect(data[1].title).toBe('The Legend of Zelda Ocarina of Time')
+		expect(data[0].user_name).toBe('Wallef')
+		expect(data[1].user_name).toBe('Wallef')
 		done()
 	})
 })

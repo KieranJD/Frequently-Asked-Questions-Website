@@ -31,9 +31,11 @@ module.exports = class Question {
 	 *		getAllQuestions('Zelda')
 	 */
 	async getAllQuestions(query) {
-		let sql = 'SELECT * FROM questions;'
+		let sql = `SELECT questions.*, users.name AS user_name FROM questions
+			INNER JOIN users ON users.id = questions.user_id;`
 		if(query !== undefined && query.search !== undefined) {
-			sql = `SELECT * FROM questions WHERE upper(title) LIKE "%${query.search}%";`
+			sql = `SELECT questions.*, users.name AS user_name FROM questions
+				INNER JOIN users ON users.id = questions.user_id WHERE upper(title) LIKE "%${query.search}%";`
 		}
 		const data = await this.db.all(sql)
 		return data
@@ -193,5 +195,15 @@ module.exports = class Question {
 		} catch(err) {
 			throw err
 		}
+	}
+
+	/**
+	 * @function __testData
+	 * @async
+	 * @returns {user} creates a dummy user in the in-memory db in order to run the required unit tests.
+	 */
+	async __testData() {
+		await this.db.run(table.createUsersTable())
+		await this.db.run('INSERT INTO users(name, username, password) VALUES("Wallef", "username", "password");')
 	}
 }
