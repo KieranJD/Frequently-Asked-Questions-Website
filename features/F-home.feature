@@ -32,6 +32,7 @@ Feature: Open Home page
       And the "title" number "0" should be "Game Hub | Welcome to the GameHub"
 	  	And the "h1" number "0" should be "WELCOME TO THE GAMEHUB"
 	  	And the "ul" number "0" should be "Home Login Register"
+      And the amount of questions shown should be "2"
       And the "article" number "0" should be
 			"""
 			Skyrim Elder Scrolls V
@@ -52,6 +53,7 @@ Feature: Open Home page
       And the "title" number "0" should be "Game Hub | Welcome to the GameHub"
 	  	And the "h1" number "0" should be "WELCOME TO THE GAMEHUB"
 	  	And the "ul" number "0" should be "Home Login Register"
+      And the amount of questions shown should be "1"
       And the "article" number "0" should be
 			"""
 			Call of Duty

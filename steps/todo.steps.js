@@ -119,12 +119,13 @@ Then('the {string} number {string} should be', async(element, num, heading) => {
 	assert.equal(text, newHeading)
 })
 
-/*Then('count elements', async(element, num, heading) => {
-	const items = await page.evaluate( (element, num) => {
-		const dom = document.querySelectorAll(`${element}:nth-child(${num})`)
+Then('the amount of questions shown should be {string}', async(count) => {
+	count = Number(count)
+	const items = await page.evaluate( () => {
+		const dom = document.querySelectorAll('article')
 		const arr = Array.from(dom).map(h1 => h1.innerText)
 		return arr
-	}, element, num)
-	assert.equal(items, heading)
-})*/
+	})
+	assert.equal(items.length, count)
+})
 
