@@ -43,10 +43,12 @@ module.exports = class dbTables {
 
 	static createRatesTable() {
 		return `CREATE TABLE IF NOT EXISTS rates (
-			id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-			rate INTEGER NOT NULL,
+			user_id INTEGER NOT NULL,
 			answer_id INTEGER NOT NULL,
-			FOREIGN KEY("answer_id") REFERENCES "answers"("id")
+			rate INTEGER NOT NULL,
+			FOREIGN KEY("user_id") REFERENCES "users"("id"),
+			FOREIGN KEY("answer_id") REFERENCES "answers"("id"),
+			PRIMARY KEY("user_id", "answer_id")
 		);`
 	}
 }

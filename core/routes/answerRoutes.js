@@ -48,8 +48,8 @@ router.post('/question/:question_id/answer-action', async ctx => {
 			question: question, answers: answers}
 		if (ctx.session.authorised === true) {
 			await pushSessionItemsToObject(data, ctx)
-		}
-		await ctx.render('answer', data)
+			if (question.user_id === ctx.session.user.id) data.author = true
+		} await ctx.render('answer', data)
 	}
 })
 
