@@ -63,4 +63,21 @@ describe('averageRate()', () => {
 		expect(avg).toBe(4)
 		done()
 	})
+
+	test('Answer with no rates', async done => {
+		expect.assertions(1)
+		// Arrange
+		const rate = await new Rate()
+		const request = {
+			body: {rate: 5},
+			parameters: {answer_id: 1},
+			session: {user: {id: 1}}
+		}
+		// Act
+		await rate.rateAnswer(request)
+		const avg = await rate.averageRate(2)
+		// Assert
+		expect(avg).toBe(0.0)
+		done()
+	})
 })

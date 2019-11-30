@@ -27,7 +27,8 @@ module.exports = class Rates {
 	async averageRate(answerId) {
 		const sql = `SELECT rate FROM rates WHERE answer_id = ${answerId};`
 		const rates = await this.db.all(sql)
-		const averageRate = rates.reduce((accumulator, current) => accumulator + current.rate, 0) / rates.length
+		let averageRate = rates.reduce((accumulator, current) => accumulator + current.rate, 0) / rates.length
+		isNaN(averageRate) ? averageRate = 0.0 : averageRate
 		return averageRate
 	}
 }
