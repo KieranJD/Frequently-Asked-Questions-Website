@@ -31,11 +31,13 @@
             <p>{{ body }}</p>
             <p>{{ date }}</p>
             <p>{{ user_name }}</p>
-            {{#if is_inappropriate}}
-            {{else}}
-                <form action ="/question/{{ ../question.id }}/answer-flag-action/{{ id }}" method = "POST">
-                    <p><input type="submit" value="Mark As Inappropriate"></p>   
-                </form>
+            {{#if ../auth}}
+                {{#if is_inappropriate}}
+                {{else}}
+                    <form action ="/question/{{ ../question.id }}/answer-flag-action/{{ id }}" method = "POST">
+                        <p><input type="submit" value="Mark As Inappropriate"></p>   
+                    </form>
+                {{/if}}
             {{/if}}
         </article>
         <hr>
