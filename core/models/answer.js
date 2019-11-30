@@ -77,7 +77,6 @@ module.exports = class Answer {
 	 * 		isInappropriate(1)
 	 */
 	async isInappropriate(id) {
-		console.log(id)
 		const sql = `UPDATE answers SET is_inappropriate = 1 WHERE id = "${id}";`
 		await this.db.all(sql)
 		return true
