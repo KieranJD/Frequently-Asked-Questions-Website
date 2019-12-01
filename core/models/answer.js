@@ -98,6 +98,22 @@ module.exports = class Answer {
 		return answers
 	}
 
+	async addStars(answers, bronzeAnswersArray, silverAnswersArray, goldAnswersArray) {
+		answers.forEach(entry => {
+			if(bronzeAnswersArray.includes(entry.id)) {
+				entry.bronze = 'true'
+			}
+			if(silverAnswersArray.includes(entry.id)) {
+				entry.silver = 'true'
+			}
+			if(goldAnswersArray.includes(entry.id)) {
+				entry.gold = 'true'
+			}
+		})
+		return answers
+	}
+
+
 	/**
 	 * @function __testData
 	 * @async
@@ -106,5 +122,64 @@ module.exports = class Answer {
 	async __testData() {
 		await this.db.run(table.createUsersTable())
 		await this.db.run('INSERT INTO users(name, username, password) VALUES("Wallef", "username", "password");')
+	}
+
+	async getAllUserId() {
+		const sql = `SELECT answers.id, users.name AS user_name FROM answers
+			INNER JOIN users ON users.id = answers.user_id;`
+		const data = await this.db.all(sql)
+		return data
+	}
+
+	async bronzeAnswers(star) {
+		console.log(star)
+		const Answers = await this.getAllUserId()
+		const starArray = []
+		const bronzeAnswersArray = []
+		for(let i=0; i < star.bronze.length; i++) {
+			starArray.push(star.bronze[i].name)
+		}
+		for(let x=0; x < starArray.length; x++) {
+			for(let i=0; i < Answers.length; i++) {
+				if (starArray[x] === Answers[i].user_name) bronzeAnswersArray.push(Answers[i].id)
+			}
+		}
+		return bronzeAnswersArray
+	}
+
+	async silverAnswers(star) {
+		const Answers = await this.getAllUserId()
+		const starArray = []
+		const silverAnswersArray = []
+		for(let i=0; i < star.silver.length; i++) {
+			starArray.push(star.silver[i].name)
+		}
+		for(let x=0; x < starArray.length; x++) {
+			for(let i=0; i < Answers.length; i++) {
+				if (starArray[x] === Answers[i].user_name) silverAnswersArray.push(Answers[i].id)
+			}
+		}
+		return silverAnswersArray
+	}
+
+	async goldAnswers(star) {
+		const Answers = await this.getAllUserId()
+		const starArray = []
+		const goldAnswersArray = []
+		for(let i=0; i < star.gold.length; i++) {
+			starArray.push(star.gold[i].name)
+		}
+		for(let x=0; x < starArray.length; x++) {
+			for(let i=0; i < Answers.length; i++) {
+				if (starArray[x] === Answers[i].user_name) goldAnswersArray.push(Answers[i].id)
+			}
+		}
+		return goldAnswersArray
+	}
+
+	async answerStar(bronzeAnswersArray, silverAnswersArray, goldAnswersArray) {
+		bronzeAnswersArray = bronzeAnswersArray.filter( ( del ) => !silverAnswersArray.includes( del ))
+		silverAnswersArray = silverAnswersArray.filter( ( del ) => !goldAnswersArray.includes( del ))
+		return {bronzeAnswersArray, silverAnswersArray, goldAnswersArray}
 	}
 }

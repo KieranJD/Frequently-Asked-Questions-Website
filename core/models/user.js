@@ -193,6 +193,36 @@ module.exports = class User {
 		return true
 	}
 
+	async calcBounds() {
+		const sql = 'SELECT id FROM users ORDER BY id DESC'
+		const total = await this.db.get(sql)
+		const half = 0.5
+		const quater = 0.25
+		const fifth = 0.05
+		const bronzeBound = Math.ceil(total.id*half)
+		const silverBound = Math.ceil(total.id*quater)
+		const goldBound = Math.ceil(total.id*fifth)
+		return {bronzeBound, silverBound, goldBound}
+	}
+
+	async orderByScore() {
+		let userStars = ' '
+		try {
+			const {bronzeBound, silverBound, goldBound} = await this.calcBounds()
+			let sql = `SELECT name FROM users ORDER BY score DESC LIMIT ${bronzeBound}`
+			const BronzeUsers = await this.db.all(sql)
+			sql = `SELECT name FROM users ORDER BY score DESC LIMIT ${silverBound}`
+			const silverUsers = await this.db.all(sql)
+			sql = `SELECT name FROM users ORDER BY score DESC LIMIT ${goldBound}`
+			const goldUsers = await this.db.all(sql)
+			userStars = {bronze: BronzeUsers, silver: silverUsers, gold: goldUsers
+			}
+		} catch (err) {
+			return true
+		}
+		return userStars
+	}
+
 	/** @function mandatoryFieldsCheck
 	 * @async
 	 * @param {string} name - the name of the user registering.
