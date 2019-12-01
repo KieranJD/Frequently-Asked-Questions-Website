@@ -3,7 +3,7 @@
     <main>
         <form action="#">
             <input type="text" placeholder="Search..." name="search" class="search" value="{{query}}" id="searchbar">
-            <button type="submit"><i class="fa fa-search" id="submit"></i></button>
+            <button type="submit" class="search"><i class="fa fa-search" id="submit"></i></button>
         </form>
 
         {{#each questions}}
@@ -13,16 +13,18 @@
                 <p>Solved</p>
                 {{/if}}
                 <h2>{{ title }}</h2>
-                <small class="user">{{ user_name }}</small>
-                {{#if bronze}}
-                    <small id ="bronze" class="fas fa-star"></small>
-                {{/if}}
-                {{#if silver}}
-                    <small id ="silver" class="fas fa-star"></small>
-                {{/if}}
-                {{#if gold}}
-                    <small id ="gold" class="fas fa-star"></small>
-                {{/if}}
+                <small class="user">
+                    {{ user_name }}
+                    {{#if bronze}}
+                        <i id ="bronze" class="fas fa-star star"></i>
+                    {{/if}}
+                    {{#if silver}}
+                        <i id ="silver" class="fas fa-star star"></i>
+                    {{/if}}
+                    {{#if gold}}
+                        <i id ="gold" class="fas fa-star star"></i>
+                    {{/if}}
+                </small>
                 <small class="date">{{ date }}</small>
             </article>
         </a>
