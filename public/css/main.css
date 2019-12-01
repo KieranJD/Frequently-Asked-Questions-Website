@@ -37,6 +37,10 @@ header > nav > ul > li {
     margin-left: 25px;
 }
 
+header > nav > ul > li.username {
+    margin-left: 10px;
+}
+
 header > nav > ul > li > a {
     text-decoration: none;
     color: #FFF;
@@ -44,8 +48,9 @@ header > nav > ul > li > a {
 }
 
 header > nav > ul > li > img.avatar {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
 }
 
 header > h1 {
@@ -76,7 +81,7 @@ main > form > input.search {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-main > form > button {
+main > form > button.search {
     float: left;
     width: 4%;
     padding: 10px;
@@ -130,8 +135,6 @@ main > a > article.question > small.user {
     font-weight: 400;
 }
 
-
-
 main > a > article.question > small.date {
     position: absolute;
     bottom: 20px;
@@ -139,57 +142,17 @@ main > a > article.question > small.date {
     font-weight: 400;
 }
 
-
-main > a > article.question > #bronze {
-    position: absolute;
-    bottom: 22px;
-    left: 45px;
+main > a > article.question > small > i#bronze {
     color:rgb(145, 94, 1);
 }
 
-main > a > article.question > #silver {
-    position: absolute;
-    bottom: 22px;
-    left: 45px;
+main > a > article.question > small > i#silver {
     color:silver;
 }
 
-main > a > article.question > #gold {
-    position: absolute;
-    bottom: 22px;
-    left: 45px;
+main > a > article.question > small > i#gold {
     color:gold;
 }
-
-main > article > #bronze {
-    position: absolute;
-    bottom: 22px;
-    left: 45px;
-    color:rgb(145, 94, 1);
-}
-
-main > article > #silver {
-    position: absolute;
-    bottom: 22px;
-    left: 45px;
-    color:silver;
-}
-
-main > article > #gold {
-    position: absolute;
-    bottom: 22px;
-    left: 45px;
-    color:gold;
-}
-
-
-main > article.question > img.thumb {
-    border: 1px solid #ddd; /* Gray border */
-    border-radius: 4px;  /* Rounded border */
-    padding: 5px; /* Some padding */
-    float: left;
-}
-
 
 footer {
     border-top: solid #119DA4;
@@ -202,4 +165,23 @@ footer > p {
     width: 60%;
     text-align: center;
     padding: 5%;
+}
+
+@media (max-width: 870px) {
+    main > form > input.search {
+        width: 80%;
+        margin: 1%;
+    }
+    
+    main > form > button.search {
+        float: left;
+        width: 10%;
+    }
+}
+
+@media (max-width: 700px) {
+    main > a > article.question {
+        width: 98%;
+        margin: 1%;
+    }
 }
