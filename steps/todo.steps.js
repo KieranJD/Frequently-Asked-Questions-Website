@@ -10,6 +10,9 @@ let page // this is the page object we use to reference a web page
 const width = 800
 const height = 900
 
+//Prevents node.js from thinking the acceptance test has a memeory leak as by deafult listeners are set to 10
+require('events').EventEmitter.defaultMaxListeners = 25
+
 Given('The browser is open on the home page', async() => {
 	page = await new Page(width, height,'')
 })
