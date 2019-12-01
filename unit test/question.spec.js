@@ -79,6 +79,7 @@ describe('getAll()', () => {
 		await question.insertQuestion(body,session, '10/11/2019')
 		await question.insertQuestion(body1,session,'09/11/2019')
 		const data = await question.getAllQuestions()
+		console.table(data)
 		//ASSERT
 		expect(data[0].title).toBe('Mario Cart')
 		expect(data[1].title).toBe('Super Mario Bros')
@@ -234,6 +235,24 @@ describe('solved()', () => {
 		const check = await question.solved(data)
 		//ASSERT
 		expect(check).toBeTruthy()
+		done()
+	})
+})
+
+describe('getAllUserId()', () => {
+	test('get the userId for a question', async done => {
+		expect.assertions(2)
+		//ARRANGE
+		const question = await new Question()
+		await question.__testData()
+		const body = {title: 'Mario Cart', body: 'How to unlock mirror'}
+		const session = {user: {id: 1}}
+		//ACT
+		await question.insertQuestion(body,session, '10/11/2019')
+		const user = await question.getAllUserId()
+		//ASSERT
+		expect(user[0].id).toBe(1)
+		expect(user[0].user_name).toBe('Wallef')
 		done()
 	})
 })

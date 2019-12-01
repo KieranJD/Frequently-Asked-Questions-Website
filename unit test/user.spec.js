@@ -163,6 +163,78 @@ describe('getLoggedUser()', () => {
 	})
 })
 
+describe('calcBounds()', () => {
+	test('calculate the bounds for each star', async done => {
+		expect.assertions(3)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		let body = {name: 'Ben0', username: 'TestAccount0', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben1', username: 'TestAccount1', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben2', username: 'TestAccount2', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben3', username: 'TestAccount3', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben4', username: 'TestAccount4', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben5', username: 'TestAccount5', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		// ACT
+		const {bronzeBound, silverBound, goldBound} = await user.calcBounds()
+		// ASSERT
+		expect(bronzeBound).toBe(3)
+		expect(silverBound).toBe(2)
+		expect(goldBound).toBe(1)
+		done()
+	})
+})
+
+describe('orderByScore()', () => {
+	test('put user into bronze, silver or gold star', async done => {
+		expect.assertions(3)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		let body = {name: 'Ben0', username: 'TestAccount0', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben1', username: 'TestAccount1', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben2', username: 'TestAccount2', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben3', username: 'TestAccount3', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben4', username: 'TestAccount4', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		body = {name: 'Ben5', username: 'TestAccount5', pass: 'test123'}
+		await user.register(body.name,body.username,body.pass)
+		// ACT
+		await user.correctAnswer(1)
+		await user.correctAnswer(1)
+		await user.correctAnswer(1)
+		await user.correctAnswer(2)
+		await user.correctAnswer(2)
+		await user.correctAnswer(3)
+		const check = await user.orderByScore()
+		// ASSERT
+		expect(check.bronze).toEqual([ { name: 'Ben0' }, { name: 'Ben1' }, { name: 'Ben2' } ])
+		expect(check.silver).toEqual([ { name: 'Ben0' }, { name: 'Ben1' }])
+		expect(check.gold).toEqual([ { name: 'Ben0' } ])
+		done()
+	})
+
+	test('no users', async done => {
+		expect.assertions(1)
+		// ARRANGE
+		const user = await new User() // DB runs in-memory if no name supplied
+		// ACT
+		const check = await user.orderByScore()
+		// ASSERT
+		expect(check).toBe(true)
+		done()
+	})
+})
+
+
 describe('uploadPicture()', () => {
 	test('Change Avatar', async done => {
 		expect.assertions(1)

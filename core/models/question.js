@@ -42,6 +42,13 @@ module.exports = class Question {
 		return data
 	}
 
+	async getAllUserId() {
+		const sql = `SELECT questions.id, users.name AS user_name FROM questions
+			INNER JOIN users ON users.id = questions.user_id;`
+		const data = await this.db.all(sql)
+		return data
+	}
+
 	/**
 	 * @function getOneQuestion
 	 * @async

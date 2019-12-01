@@ -16,15 +16,17 @@ const User = require('../models/user')
  */
 router.get('/question/:question_id/answers', async ctx => {
 	let question = await new Question(process.env.DB_NAME)
+	const user = await new User(process.env.DB_NAME)
 	question = await question.getOneQuestion(ctx.params.question_id)
 	const answer = await new Answer(process.env.DB_NAME)
 	const answers = await answer.getAnswersByQuestion(ctx.params.question_id)
-	const data = {
-		title: question.title,
-		content: 'Answers to a question',
-		question: question,
-		answers: answers,
-	}
+	const star = await user.orderByScore()
+	const bronze = await answer.bronzeAnswers(star)
+	const silver = await answer.silverAnswers(star)
+	const gold = await answer.goldAnswers(star)
+	const {bronzeAnswersArray, silverAnswersArray, goldAnswersArray} = await answer.answerStar(bronze, silver, gold)
+	const answersStar = await answer.addStars(answers, bronzeAnswersArray, silverAnswersArray, goldAnswersArray)
+	const data = { title: question.title, content: 'Answers to a question', question: question, answers: answersStar, }
 	if (ctx.session.authorised === true) {
 		await pushSessionItemsToObject(data, ctx)
 		if (question.user_id === ctx.session.user.id) data.author = true
