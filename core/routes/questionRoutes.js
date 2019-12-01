@@ -5,6 +5,7 @@ const Router = require('koa-router')
 const router = new Router()
 const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const Question = require('../models/question')
+const badge = require('../models/badge')
 const User = require('../models/user')
 
 /**
@@ -18,9 +19,9 @@ router.get('/', async ctx => {
 		if (questdata.length > 0) {
 			const star = await user.orderByScore()
 			const {bronze, silver, gold} = await assertStar(star)
-			const {bronzeQuestionArray, silverQuestionArray, goldQuestionArray} = await question.
+			const {bronzeQuestionArray, silverQuestionArray, goldQuestionArray} = await badge.
 				questionStar(bronze, silver, gold)
-			questdata = await question.addStars(questdata, bronzeQuestionArray, silverQuestionArray, goldQuestionArray)
+			questdata = await badge.addStars(questdata, bronzeQuestionArray, silverQuestionArray, goldQuestionArray)
 		} else console.log('No Questions')
 		let data = { title: 'Welcome to the GameHub',
 			content: 'Home page with all the questions', questions: questdata }
@@ -92,9 +93,10 @@ async function authData(ctx , data) {
 
 async function assertStar(star) {
 	const question = await new Question(process.env.DB_NAME)
-	const bronze = await question.bronzeQuestions(star)
-	const silver = await question.silverQuestions(star)
-	const gold = await question.goldQuestions(star)
+	const data = await question.getAllUserId()
+	const bronze = await badge.bronzeQuestions(star, data)
+	const silver = await badge.silverQuestions(star, data)
+	const gold = await badge.goldQuestions(star, data)
 	return {bronze,silver, gold}
 }
 
