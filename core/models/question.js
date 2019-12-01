@@ -42,6 +42,79 @@ module.exports = class Question {
 		return data
 	}
 
+	async addStars(data, bronzeQuestionArray, silverQuestionArray, goldQuestionArray) {
+		console.table('addstars Data', data )
+		data.forEach(entry => {
+			if(bronzeQuestionArray.includes(entry.id)) {
+				entry.bronze = 'true'
+			}
+			if(silverQuestionArray.includes(entry.id)) {
+				entry.silver = 'true'
+			}
+			if(goldQuestionArray.includes(entry.id)) {
+				entry.gold = 'true'
+			}
+		})
+		return data
+	}
+
+	async getAllUserId() {
+		const sql = `SELECT questions.id, users.name AS user_name FROM questions
+			INNER JOIN users ON users.id = questions.user_id;`
+		const data = await this.db.all(sql)
+		return data
+	}
+
+	async bronzeQuestions(star) {
+		const question = await this.getAllUserId()
+		const starArray = []
+		const bronzeQuestionArray = []
+		for(let i=0; i < star.bronze.length; i++) {
+			starArray.push(star.bronze[i].name)
+		}
+		for(let x=0; x < starArray.length; x++) {
+			for(let i=0; i < question.length; i++) {
+				if (starArray[x] === question[i].user_name) bronzeQuestionArray.push(question[i].id)
+			}
+		}
+		return bronzeQuestionArray
+	}
+
+	async silverQuestions(star) {
+		const question = await this.getAllUserId()
+		const starArray = []
+		const silverQuestionArray = []
+		for(let i=0; i < star.silver.length; i++) {
+			starArray.push(star.silver[i].name)
+		}
+		for(let x=0; x < starArray.length; x++) {
+			for(let i=0; i < question.length; i++) {
+				if (starArray[x] === question[i].user_name) silverQuestionArray.push(question[i].id)
+			}
+		}
+		return silverQuestionArray
+	}
+
+	async goldQuestions(star) {
+		const question = await this.getAllUserId()
+		const starArray = []
+		const goldQuestionArray = []
+		for(let i=0; i < star.gold.length; i++) {
+			starArray.push(star.gold[i].name)
+		}
+		for(let x=0; x < starArray.length; x++) {
+			for(let i=0; i < question.length; i++) {
+				if (starArray[x] === question[i].user_name) goldQuestionArray.push(question[i].id)
+			}
+		}
+		return goldQuestionArray
+	}
+
+	async questionStar(bronzeQuestionArray, silverQuestionArray, goldQuestionArray) {
+		bronzeQuestionArray = bronzeQuestionArray.filter( ( del ) => !silverQuestionArray.includes( del ))
+		silverQuestionArray = silverQuestionArray.filter( ( del ) => !goldQuestionArray.includes( del ))
+		return {bronzeQuestionArray, silverQuestionArray, goldQuestionArray}
+	}
 	/**
 	 * @function getOneQuestion
 	 * @async

@@ -14,6 +14,15 @@
                 {{/if}}
                 <h2>{{ title }}</h2>
                 <small class="user">{{ user_name }}</small>
+                {{#if bronze}}
+                    <small id ="bronze" class="fas fa-star"></small>
+                {{/if}}
+                {{#if silver}}
+                    <small id ="silver" class="fas fa-star"></small>
+                {{/if}}
+                {{#if gold}}
+                    <small id ="gold" class="fas fa-star"></small>
+                {{/if}}
                 <small class="date">{{ date }}</small>
             </article>
         </a>

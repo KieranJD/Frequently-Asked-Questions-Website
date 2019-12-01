@@ -130,6 +130,8 @@ main > a > article.question > small.user {
     font-weight: 400;
 }
 
+
+
 main > a > article.question > small.date {
     position: absolute;
     bottom: 20px;
@@ -137,12 +139,57 @@ main > a > article.question > small.date {
     font-weight: 400;
 }
 
+
+main > a > article.question > #bronze {
+    position: absolute;
+    bottom: 22px;
+    left: 45px;
+    color:rgb(145, 94, 1);
+}
+
+main > a > article.question > #silver {
+    position: absolute;
+    bottom: 22px;
+    left: 45px;
+    color:silver;
+}
+
+main > a > article.question > #gold {
+    position: absolute;
+    bottom: 22px;
+    left: 45px;
+    color:gold;
+}
+
+main > article > #bronze {
+    position: absolute;
+    bottom: 22px;
+    left: 45px;
+    color:rgb(145, 94, 1);
+}
+
+main > article > #silver {
+    position: absolute;
+    bottom: 22px;
+    left: 45px;
+    color:silver;
+}
+
+main > article > #gold {
+    position: absolute;
+    bottom: 22px;
+    left: 45px;
+    color:gold;
+}
+
+
 main > article.question > img.thumb {
     border: 1px solid #ddd; /* Gray border */
     border-radius: 4px;  /* Rounded border */
     padding: 5px; /* Some padding */
     float: left;
 }
+
 
 footer {
     border-top: solid #119DA4;

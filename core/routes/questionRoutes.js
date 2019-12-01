@@ -5,6 +5,7 @@ const Router = require('koa-router')
 const router = new Router()
 const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const Question = require('../models/question')
+const User = require('../models/user')
 
 /**
  * @name Home Page
@@ -12,18 +13,18 @@ const Question = require('../models/question')
  */
 router.get('/', async ctx => {
 	try{
-		const question = await new Question(process.env.DB_NAME)
-		const data = {
-			title: 'Welcome to the GameHub',
-			content: 'Home page with all the questions',
-			questions: await question.getAllQuestions(ctx.query)
-		}
-		if (ctx.session.authorised === true) {
-			data.auth = ctx.session.authorised
-			data.username = ctx.session.user.username
-			data.avatarName = ctx.session.user.avatar
-			data.id = ctx.session.user.id
-		}
+		const {question, user} = await createObjects()
+		let questdata = await question.getAllQuestions(ctx.query)
+		if (questdata.length > 0) {
+			const star = await user.orderByScore()
+			const {bronze, silver, gold} = await assertStar(star)
+			const {bronzeQuestionArray, silverQuestionArray, goldQuestionArray} = await question.
+				questionStar(bronze, silver, gold)
+			questdata = await question.addStars(questdata, bronzeQuestionArray, silverQuestionArray, goldQuestionArray)
+		} else console.log('No Questions')
+		let data = { title: 'Welcome to the GameHub',
+			content: 'Home page with all the questions', questions: questdata }
+		if (ctx.session.authorised === true) data = await authData(ctx, data)
 		await ctx.render('home', data)
 	} catch(err) {
 		await ctx.render('error', {message: err.message})
@@ -74,5 +75,27 @@ router.post('/createquestion', koaBody, async ctx => {
 			content: 'Create a question', msg: err.message})
 	}
 })
+
+async function createObjects() {
+	const user = await new User(process.env.DB_NAME)
+	const question = await new Question(process.env.DB_NAME)
+	return { question, user }
+}
+
+async function authData(ctx , data) {
+	data.auth = ctx.session.authorised
+	data.username = ctx.session.user.username
+	data.avatarName = ctx.session.user.avatar
+	data.id = ctx.session.user.id
+	return data
+}
+
+async function assertStar(star) {
+	const question = await new Question(process.env.DB_NAME)
+	const bronze = await question.bronzeQuestions(star)
+	const silver = await question.silverQuestions(star)
+	const gold = await question.goldQuestions(star)
+	return {bronze,silver, gold}
+}
 
 module.exports = router
