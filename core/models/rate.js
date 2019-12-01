@@ -14,10 +14,15 @@ module.exports = class Rates {
 
 	async rateAnswer(request) {
 		try {
+			const minRate = 0
+			const maxRate = 5
 			if (request.body.rate === '') throw new Error('Rate cannot be empty or a string!')
+			if (request.body.rate < minRate || request.body.rate > maxRate) {
+				throw new Error('Rates can only be between 0 and 5')
+			}
 			const sql = `INSERT INTO rates(rate, user_id, answer_id)
 			VALUES ("${request.body.rate}", "${request.session.user.id}", "${request.parameters.answer_id}");`
-			this.db.run(sql)
+			await this.db.run(sql)
 			return true
 		} catch (err) {
 			throw err

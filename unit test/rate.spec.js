@@ -1,7 +1,6 @@
 'use strict'
 
 const Rate = require('../core/models/rate')
-const Answer = require('../core/models/answer')
 beforeAll(async() => {
 	// stuff to do
 })
@@ -27,7 +26,8 @@ describe('Rate()', () => {
 		done()
 	})
 
-	test('Bad data', async done => {
+	test('Empty rate', async done => {
+		expect.assertions(1)
 		// Arrange
 		const rate = await new Rate()
 		const request = {
@@ -38,6 +38,52 @@ describe('Rate()', () => {
 		// Act & Assert
 		await expect(rate.rateAnswer(request)).rejects.toEqual(Error('Rate cannot be empty or a string!'))
 		done()
+	})
+
+	test('Rate out of bounds', async done => {
+		expect.assertions(2)
+		// Arrange
+		const rate = await new Rate()
+		const negativeRate = {
+			body: {rate: '-1'},
+			parameters: {answer_id: 1},
+			session: {user: {id: 1}}
+		}
+		const RatetooHigh = {
+			body: {rate: '6'},
+			parameters: {answer_id: 1},
+			session: {user: {id: 2}}
+		}
+		// Act & Assert
+		await expect(rate.rateAnswer(negativeRate)).rejects.toEqual(Error('Rates can only be between 0 and 5'))
+		await expect(rate.rateAnswer(RatetooHigh)).rejects.toEqual(Error('Rates can only be between 0 and 5'))
+		done()
+	})
+
+	test('User rating twice', async done => {
+		expect.assertions(1)
+		try {
+			// Arrange
+			const rate = await new Rate()
+			const rate1 = {
+				body: {rate: '3'},
+				parameters: {answer_id: 1},
+				session: {user: {id: 1}}
+			}
+			const rate2 = {
+				body: {rate: '4'},
+				parameters: {answer_id: 1},
+				session: {user: {id: 1}}
+			}
+			// Act
+			await rate.rateAnswer(rate1)
+			await rate.rateAnswer(rate2)
+		} catch (err) {
+			// Assert
+			expect(err.message).toBe('SQLITE_CONSTRAINT: UNIQUE constraint failed: rates.user_id, rates.answer_id')
+		} finally {
+			done()
+		}
 	})
 })
 
