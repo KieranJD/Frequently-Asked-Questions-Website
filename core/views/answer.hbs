@@ -48,6 +48,13 @@
                     </form>
                 {{/if}}
             {{/if}}
+            {{#if ../auth}}
+                <form action ="/question/{{ ../question.id }}/rate/{{ id }}" method = "POST">
+                    <input type="text" placeholder="your rate" name="rate">
+                    <p><input type="submit" value="RATE"></p>   
+                </form>
+                <p>Average: {{average_rate}}</p>
+            {{/if}}
         </article>
         <hr>
         {{/each}}

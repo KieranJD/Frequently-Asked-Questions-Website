@@ -12,6 +12,7 @@ const session = require('koa-encrypted-session')
 const answerRoutes = require('./core/routes/answerRoutes')
 const userRoutes = require('./core/routes/userRoutes')
 const questionRoutes = require('./core/routes/questionRoutes')
+const rateRoutes = require('./core/routes/rateRoutes')
 
 const app = new Koa()
 app.keys = ['darkSecret']
@@ -44,6 +45,9 @@ app.use(questionRoutes.allowedMethods())
 
 app.use(userRoutes.routes())
 app.use(userRoutes.allowedMethods())
+
+app.use(rateRoutes.routes())
+app.use(rateRoutes.allowedMethods())
 
 module.exports = app
 
