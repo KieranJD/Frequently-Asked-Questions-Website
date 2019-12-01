@@ -50,8 +50,16 @@
             {{/if}}
             {{#if ../auth}}
                 <form action ="/question/{{ ../question.id }}/rate/{{ id }}" method = "POST">
-                    <input type="text" placeholder="your rate" name="rate">
-                    <p><input type="submit" value="RATE"></p>   
+                    <select placeholder="your rate" name="rate">
+                        <option value="" selected>Rate this answer</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input type="submit" value="RATE">
                 </form>
                 <p>Average: {{average_rate}}</p>
             {{/if}}
