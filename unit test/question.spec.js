@@ -79,7 +79,6 @@ describe('getAll()', () => {
 		await question.insertQuestion(body,session, '10/11/2019')
 		await question.insertQuestion(body1,session,'09/11/2019')
 		const data = await question.getAllQuestions()
-		console.table(data)
 		//ASSERT
 		expect(data[0].title).toBe('Mario Cart')
 		expect(data[1].title).toBe('Super Mario Bros')

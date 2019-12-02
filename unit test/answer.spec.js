@@ -150,12 +150,10 @@ describe('addStars()', () => {
 		await answer.createAnswer(request1, '21/11/2019')
 		await answer.createAnswer(request2, '21/11/2019')
 		const data = await answer.getAnswersByQuestion(3)
-		console.table(data)
 		const bronzeAnswerArray = [1]
 		const silveranswerArray = [2]
 		const goldAnswerArray = [3]
-		const stars = await answer.addStars(data, bronzeAnswerArray, silveranswerArray, goldAnswerArray)
-		console.table(stars)
+		await answer.addStars(data, bronzeAnswerArray, silveranswerArray, goldAnswerArray)
 		//ASSERT
 		expect(data[0].bronze).toBe('true')
 		expect(data[1].silver).toBe('true')

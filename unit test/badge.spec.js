@@ -17,12 +17,10 @@ describe('addStars()', () => {
 		await question.insertQuestion(body1,session,'09/11/2019')
 		await question.insertQuestion(body2,session,'09/11/2019')
 		const data = await question.getAllQuestions()
-		console.table(data)
 		const bronzeQuestionArray = [1]
 		const silverQuestionArray = [2]
 		const goldQuestionArray = [3]
-		const stars = await badge.addStars(data, bronzeQuestionArray, silverQuestionArray, goldQuestionArray)
-		console.table(stars)
+		await badge.addStars(data, bronzeQuestionArray, silverQuestionArray, goldQuestionArray)
 		//ASSERT
 		expect(data[0].bronze).toBe('true')
 		expect(data[1].silver).toBe('true')
@@ -47,7 +45,6 @@ describe('bronzeQuestions()', () => {
 		await question.insertQuestion(body,session, '10/11/2019')
 		const data = await question.getAllUserId()
 		const check = await badge.bronzeQuestions(star, data)
-		console.log(check)
 		//ASSERT
 		expect(check).toStrictEqual([1])
 		done()
