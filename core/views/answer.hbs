@@ -2,10 +2,19 @@
 
     <main>
         <h2>{{ question.body }}</h2>
+        {{#if question.image}}
+            <a href="#question-image">
+                <img src="{{__dirname}}/images/questions/thumb/{{question.id}}/{{question.image}}" alt="Question Image Thumbnail">
+            </a>
+
+            <a href="#" class="lightbox" id="question-image">
+                <img src="{{__dirname}}/images/questions/{{question.id}}/{{question.image}}" alt="Question Image">
+            </a>
+        {{/if}}
 
         {{#if auth}}
             {{#if msg}}
-                <p>{{msg}}</p>
+                <p class="error-message">{{msg}}</p>
             {{/if}}
             <form action ="/question/{{ question.id }}/answer-action" method = "POST">
                 <label>Answer:<br></label>
