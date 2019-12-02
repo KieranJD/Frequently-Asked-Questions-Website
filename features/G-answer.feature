@@ -38,6 +38,17 @@ Feature: Create an answer
 			{current date}
 			
 			Sam Smith
+
+			Rate this answer
+			0
+			1
+			2
+			3
+			4
+			5
+			 
+
+			Average: 0
 			"""
 
     Scenario: create another answer for question when logged in
@@ -56,8 +67,19 @@ Feature: Create an answer
 			Starting area
 			
 			{current date}
-			
+
 			Emma Jones
+
+			Rate this answer
+			0
+			1
+			2
+			3
+			4
+			5
+			 
+
+			Average: 0
 			"""
 
     Scenario: create an answer for question2 when loggin in
@@ -78,5 +100,15 @@ Feature: Create an answer
 			{current date}
 			
 			Sam Smith
-			"""
 
+			Rate this answer
+			0
+			1
+			2
+			3
+			4
+			5
+			 
+
+			Average: 0
+			"""

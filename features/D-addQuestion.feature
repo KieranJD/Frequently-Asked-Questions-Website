@@ -20,7 +20,7 @@ Feature: Create a question
 		And the "article" number "0" should be
 			"""
 			Call of Duty
-			Sam Smith
+			Sam Smith 
 			{current date}
 			"""
 
@@ -61,6 +61,6 @@ Feature: Create a question
 		And the "article" number "3" should be
 			"""
 			Elder Scrolls Online
-			Sam Smith
+			Sam Smith 
 			{current date}
 			"""	

@@ -7,6 +7,7 @@ const Question = require('../core/models/question')
 
 let page // this is the page object we use to reference a web page
 
+//setting the page dimensions
 const width = 800
 const height = 900
 
@@ -22,8 +23,9 @@ Given('The browser is open on the {string} page', async(route) => {
 })
 
 When('I login as {string} with password {string}', async(username, password) => {
+	//field represents the id attribute in html
 	await page.waitForSelector('#login')
-	await page.click('#login') //field represents the id attribute in html
+	await page.click('#login')
 	await page.waitForSelector('#username')
 	await page.click('#username')
 	await page.keyboard.type(username)
@@ -33,8 +35,9 @@ When('I login as {string} with password {string}', async(username, password) => 
 })
 
 When('I register as {string} with username {string} and password {string}', async(fullname,username,password) => {
+	//field represents the id attribute in html
 	await page.waitForSelector('#register')
-	await page.click('#register') //field represents the id attribute in html
+	await page.click('#register')
 	await page.waitForSelector('#name')
 	await page.click('#name')
 	await page.keyboard.type(fullname)
@@ -46,8 +49,9 @@ When('I register as {string} with username {string} and password {string}', asyn
 })
 
 When('I create the question title:{string} body:{string}', async(title,body) => {
+	//field represents the id attribute in html
 	await page.waitForSelector('#add')
-	await page.click('#add') //field represents the id attribute in html
+	await page.click('#add')
 	await page.waitForSelector('#title')
 	await page.click('#title')
 	await page.keyboard.type(title)
@@ -57,14 +61,16 @@ When('I create the question title:{string} body:{string}', async(title,body) => 
 })
 
 When('I enter {string} in the {string} field', async(value, field) => {
+	//field represents the id attribute in html
 	await page.waitForSelector(`#${field}`)
-	await page.click(`#${field}`) //field represents the id attribute in html
+	await page.click(`#${field}`)
 	await page.keyboard.type(value)
 })
 
 When('I enter image {string} in the {string} field', async(filePath, field) => {
+	//field represents the id attribute in html
 	await page.waitForSelector(`#${field}`)
-	await page.click(`#${field}`) //field represents the id attribute in html
+	await page.click(`#${field}`)
 	const input = await page.$('input[type="file"]')
 	await input.uploadFile(filePath)
 })
@@ -94,30 +100,30 @@ Then('the page should be the home page logged in as {string}', async(username) =
 		const dom = document.querySelector('ul')
 		return dom.innerText
 	})
-	assert.equal('Game Hub | Welcome to the GameHub', title)
+	assert.equal('Game Hub | Welcome to the GameHub', title) //Checks if the html is equal to the parameters
 	assert.equal('WELCOME TO THE GAMEHUB', h1)
 	assert.equal(`Home  ${username} Add Logout`, ul)
 })
 
-//single argument steps
+//single string argument steps
 Then('the {string} number {string} should be {string}', async(element, num, heading) => {
 	const text = await page.evaluate( (element, num) => {
 		const dom = document.querySelectorAll(element)
-		const arr = Array.from(dom).map(h1 => h1.innerText)
-		return arr[num]
+		const arr = Array.from(dom).map(h1 => h1.innerText) //Appends all elements to an array
+		return arr[num] // returns the desired element in the array
 	}, element, num)
 	assert.equal(text, heading)
 })
 
-//Multiple argument steps
+//Multiple string argument steps
 Then('the {string} number {string} should be', async(element, num, heading) => {
 	const question = await new Question(process.env.DB_NAME)
-	const date = await question.currentDate(new Date())
+	const date = await question.currentDate(new Date())//Get current date
 	const newHeading = heading.replace('{current date}', date)
 	const text = await page.evaluate( (element, num) => {
 		const dom = document.querySelectorAll(element)
-		const arr = Array.from(dom).map(h1 => h1.innerText)
-		return arr[num]
+		const arr = Array.from(dom).map(h1 => h1.innerText) //Appends all elements to an array
+		return arr[num] // returns the desired element in the array
 	}, element, num)
 	assert.equal(text, newHeading)
 })
