@@ -1,7 +1,6 @@
 'use strict'
 
 async function addStars(data, bronzeQuestionArray, silverQuestionArray, goldQuestionArray) {
-	console.table('addstars Data', data )
 	data.forEach(entry => {
 		if(bronzeQuestionArray.includes(entry.id)) {
 			entry.bronze = 'true'

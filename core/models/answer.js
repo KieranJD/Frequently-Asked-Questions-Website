@@ -132,7 +132,6 @@ module.exports = class Answer {
 	}
 
 	async bronzeAnswers(star) {
-		console.log(star)
 		const Answers = await this.getAllUserId()
 		const starArray = []
 		const bronzeAnswersArray = []
