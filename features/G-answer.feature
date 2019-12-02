@@ -37,16 +37,6 @@ Feature: Create an answer
 			
 			Sam Smith 
 			{current date}
-			Rate this answer
-			0 stars
-			1 star
-			2 stars
-			3 stars
-			4 stars
-			5 stars
-			 
-
-			0★
 			"""
 
     Scenario: create another answer for question when logged in
@@ -66,16 +56,6 @@ Feature: Create an answer
 			
 			Emma Jones
 			{current date}
-			Rate this answer
-			0 stars
-			1 star
-			2 stars
-			3 stars
-			4 stars
-			5 stars
-			 
-
-			0★
 			"""
 
     Scenario: create an answer for question2 when loggin in
@@ -95,14 +75,4 @@ Feature: Create an answer
 			
 			Sam Smith 
 			{current date}
-			Rate this answer
-			0 stars
-			1 star
-			2 stars
-			3 stars
-			4 stars
-			5 stars
-			 
-
-			0★
 			"""
