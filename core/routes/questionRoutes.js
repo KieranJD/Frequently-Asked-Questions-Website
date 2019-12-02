@@ -72,8 +72,8 @@ router.post('/createquestion', koaBody, async ctx => {
 			ctx.redirect('/?msg=question added')
 		}
 	} catch(err) {
-		await ctx.render('createquestion', {title: 'Create a question',
-			content: 'Create a question', msg: err.message})
+		await ctx.render('createquestion', {title: 'Create a question', msg: err.message,
+			username: ctx.session.user.username, avatarName: ctx.session.user.avatar, auth: ctx.session.authorised,})
 	}
 })
 
