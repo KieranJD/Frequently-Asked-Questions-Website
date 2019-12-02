@@ -52,6 +52,16 @@ Feature: Create a question
 			Emma Jones
 			{current date}
 			"""
+	Scenario: show image for question
+		Given The browser is open on the home page
+        When I login as "Vasper123" with password "123"
+		And I click on question id "3"
+		Then take a screenshot called "question-image-answer" in "addQuestion"
+		And the "title" number "0" should be "Game Hub | The Witcher 3: Wild Hunt"
+		And the "h1" number "0" should be "THE WITCHER 3: WILD HUNT"
+		And the "h2" number "0" should be "Best way to get money"
+		And the "ul" number "0" should be "Home  Vasper123 Add Logout"
+	
 	Scenario: create a third question without an image 
 		Given The browser is open on the home page
         When I login as "Vasper123" with password "123"
