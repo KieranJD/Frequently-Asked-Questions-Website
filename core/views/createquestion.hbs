@@ -4,9 +4,9 @@
     <section>
         <h1>Create a Question</h1>
         {{#if msg}}
-            <p>{{msg}}</p>
+            <p class="error-message">{{msg}}</p>
         {{/if}}
-         <form action ="/createquestion" enctype="multipart/form-data" method = "POST">
+         <form action ="/createquestion" enctype="multipart/form-data" method = "POST" class="newquestion">
             <label>Question Title:<br></label>
             <input type="text" placeholder = "Input title..." maxlength="100" name="title" id="title"><br>
             <label>Question:<br></label>

@@ -4,7 +4,7 @@
     <section id="box">
       <h1>Login</h1>
       {{#if msg}}
-      <p class="msg">{{msg}}</p>
+      <p class="error-message">{{msg}}</p>
       {{/if}}
       <form action="/login-action" method="post" class="register-login">
         <p>Username:<br /><input type="text" name="username" placeholder="your username" value="" id="username" autofocus></p>

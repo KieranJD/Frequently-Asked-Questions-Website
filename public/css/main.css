@@ -88,6 +88,15 @@ footer > p {
     padding: 5%;
 }
 
+.error-message {
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 18px;
+    color: #FFF;
+    background-color: #fd4b5a;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
 /********************************************************************************************************************
 *
 * Home Page CSS
@@ -104,6 +113,7 @@ main > form > input.search {
     width: 91.5%;
     margin: 1%;
     border: none;
+    outline: none;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
@@ -409,6 +419,54 @@ main > section > form.register-login > p > input[type=password] {
 }
 
 main > section > form.register-login > p > input[type=submit] {
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    background-color: #001242;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+/********************************************************************************************************************
+*
+* Answers Page CSS
+*
+*********************************************************************************************************************/
+main > section > form.newquestion {
+    padding: 5%;
+    background: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+    margin-bottom: 5%;
+}
+
+main > section > form.newquestion > input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #4bb3fd;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+}
+
+main > section > form.newquestion > textarea {
+    width: 96%;
+    margin: 1%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    padding: 15px;
+    resize: none;
+    height: 50px;
+    border: none;
+    border-bottom: 2px solid #4bb3fd;
+    outline: none;
+}
+
+main > section > form.newquestion > p > input[type=submit] {
     border: none;
     border-radius: 10px;
     color: #FFF;
