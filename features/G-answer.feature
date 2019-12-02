@@ -35,20 +35,18 @@ Feature: Create an answer
 			"""
 			It is located at the starting area after all the teleporters are turned on
 			
+			Sam Smith 
 			{current date}
-			
-			Sam Smith
-
 			Rate this answer
-			0
-			1
-			2
-			3
-			4
-			5
+			0 stars
+			1 star
+			2 stars
+			3 stars
+			4 stars
+			5 stars
 			 
 
-			Average: 0
+			0★
 			"""
 
     Scenario: create another answer for question when logged in
@@ -66,20 +64,18 @@ Feature: Create an answer
 			"""
 			Starting area
 			
-			{current date}
-
 			Emma Jones
-
+			{current date}
 			Rate this answer
-			0
-			1
-			2
-			3
-			4
-			5
+			0 stars
+			1 star
+			2 stars
+			3 stars
+			4 stars
+			5 stars
 			 
 
-			Average: 0
+			0★
 			"""
 
     Scenario: create an answer for question2 when loggin in
@@ -97,18 +93,16 @@ Feature: Create an answer
 			"""
 			Use a daedric bow with daedric arrows
 			
+			Sam Smith 
 			{current date}
-			
-			Sam Smith
-
 			Rate this answer
-			0
-			1
-			2
-			3
-			4
-			5
+			0 stars
+			1 star
+			2 stars
+			3 stars
+			4 stars
+			5 stars
 			 
 
-			Average: 0
+			0★
 			"""

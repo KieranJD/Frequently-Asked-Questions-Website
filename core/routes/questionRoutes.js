@@ -22,7 +22,7 @@ router.get('/', async ctx => {
 			const {bronzeQuestionArray, silverQuestionArray, goldQuestionArray} = await badge.
 				questionStar(bronze, silver, gold)
 			questdata = await badge.addStars(questdata, bronzeQuestionArray, silverQuestionArray, goldQuestionArray)
-		} else console.log('No Questions')
+		}
 		let data = { title: 'Welcome to the GameHub',
 			content: 'Home page with all the questions', questions: questdata }
 		if (ctx.session.authorised === true) data = await authData(ctx, data)
