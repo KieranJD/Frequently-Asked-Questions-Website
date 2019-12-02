@@ -7,6 +7,7 @@ const serve = require('koa-static')
 const koaBody = require('koa-body')
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-encrypted-session')
+const Handlebars = require('handlebars')
 
 // CUSTOM MODULES IMPORTS
 const answerRoutes = require('./core/routes/answerRoutes')
@@ -15,6 +16,7 @@ const questionRoutes = require('./core/routes/questionRoutes')
 const rateRoutes = require('./core/routes/rateRoutes')
 
 const app = new Koa()
+
 app.keys = ['darkSecret']
 
 app.use(serve('public'))
@@ -36,6 +38,15 @@ app.use(views(`${__dirname}/core/views`,
 		map: { hbs: 'handlebars' }
 	})
 )
+
+Handlebars.registerHelper('if_diff', function(a, b, opts) {
+	if (a !== b) {
+		console.log(this)
+		return opts.fn(this)
+	} else {
+		return opts.inverse(this)
+	}
+})
 
 app.use(answerRoutes.routes())
 app.use(answerRoutes.allowedMethods())
