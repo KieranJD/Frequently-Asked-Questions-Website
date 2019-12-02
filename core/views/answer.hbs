@@ -2,10 +2,19 @@
 
     <main>
         <h2>{{ question.body }}</h2>
+        {{#if question.image}}
+            <a href="#question-image">
+                <img src="{{__dirname}}/images/questions/thumb/{{question.id}}/{{question.image}}" alt="Question Image Thumbnail">
+            </a>
+
+            <a href="#" class="lightbox" id="question-image">
+                <img src="{{__dirname}}/images/questions/{{question.id}}/{{question.image}}" alt="Question Image">
+            </a>
+        {{/if}}
 
         {{#if auth}}
             {{#if msg}}
-                <p>{{msg}}</p>
+                <p class="error-message">{{msg}}</p>
             {{/if}}
             <form action ="/question/{{ question.id }}/answer-action" method = "POST">
                 <label>Answer:<br></label>
@@ -15,56 +24,63 @@
         {{/if}}
 
         {{#each answers}}
-            {{#if ../question.solved}}
-            {{else}}
-                {{#if ../author}}
-                    <form action ="/question/{{ ../question.id }}/answer-correct-action" method = "POST">
-                        <input type="hidden" name="ID" value= {{id}} />
-                        <p><input type="submit" value="Mark As Correct"></p>   
-                    </form>         
+        <article class="answers">
+            {{#if is_correct}}
+            <p class="is is-correct">Correct Answer</p>
+            {{/if}}
+
+            {{#if ../author}}
+                {{#if ../question.solved}}
+                {{else}}
+                <form action ="/question/{{ ../question.id }}/answer-correct-action" method = "POST" class="mark-correct">
+                    <input type="hidden" name="ID" value= {{id}} />
+                    <input type="submit" value="Mark As Correct">
+                </form>  
                 {{/if}}
             {{/if}}
-            {{#if is_correct}}
-                <p>Correct Answer</p>
-            {{/if}}
-        <article style="background-color: white;">
-            <p>{{ body }}</p>
-            <p>{{ date }}</p>
-            <p>{{ user_name }}</p>
-            {{#if bronze}}
-                <small id ="bronze" class="fas fa-star"></small>
-            {{/if}}
-            {{#if silver}}
-                <small id ="silver" class="fas fa-star"></small>
-            {{/if}}
-            {{#if gold}}
-                <small id ="gold" class="fas fa-star"></small>
-            {{/if}}
+
             {{#if ../auth}}
                 {{#if is_inappropriate}}
+                <p class="is is-inappropriate">Inappropriate Answer</p>
                 {{else}}
-                    <form action ="/question/{{ ../question.id }}/answer-flag-action/{{ id }}" method = "POST">
-                        <p><input type="submit" value="Mark As Inappropriate"></p>   
-                    </form>
+                <form action ="/question/{{ ../question.id }}/answer-flag-action/{{ id }}" method = "POST" class="mark-inappropriate">
+                    <input type="submit" value="Mark As Inappropriate">
+                </form>
                 {{/if}}
             {{/if}}
+
+            <p class="body">{{ body }}</p>
+
+            <small class="user">
+                {{ user_name }}
+                {{#if bronze}}
+                    <i id ="bronze" class="fas fa-star star"></i>
+                {{/if}}
+                {{#if silver}}
+                    <i id ="silver" class="fas fa-star star"></i>
+                {{/if}}
+                {{#if gold}}
+                    <i id ="gold" class="fas fa-star star"></i>
+                {{/if}}
+            </small>
+            <small class="date">{{ date }}</small>
+
             {{#if ../auth}}
-                <form action ="/question/{{ ../question.id }}/rate/{{ id }}" method = "POST">
+                <form action ="/question/{{ ../question.id }}/rate/{{ id }}" method = "POST" class="rate">
                     <select placeholder="your rate" name="rate">
                         <option value="" selected>Rate this answer</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                        <option value="0">0 stars</option>
+                        <option value="1">1 star</option>
+                        <option value="2">2 stars</option>
+                        <option value="3">3 stars</option>
+                        <option value="4">4 stars</option>
+                        <option value="5">5 stars</option>
                     </select>
                     <input type="submit" value="RATE">
                 </form>
-                <p>Average: {{average_rate}}</p>
+                <p>{{average_rate}}★</p>
             {{/if}}
         </article>
-        <hr>
         {{/each}}
     </main>
     
