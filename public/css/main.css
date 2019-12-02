@@ -364,3 +364,56 @@ main > article.answers > form.rate {
     padding: 0 20px 100px 20px;
     float: left;
 }
+
+/********************************************************************************************************************
+*
+* Register Page CSS
+*
+*********************************************************************************************************************/
+main > section {
+    margin: auto;
+    width: 60%;
+    text-align: center;
+}
+
+main > section > form.register-login {
+    padding: 5%;
+    background: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+    margin-bottom: 5%;
+}
+
+main > section > form.register-login > p > input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #4bb3fd;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+}
+
+main > section > form.register-login > p > input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #4bb3fd;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+}
+
+main > section > form.register-login > p > input[type=submit] {
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    background-color: #001242;
+    padding: 15px 30px;
+    cursor: pointer;
+}
