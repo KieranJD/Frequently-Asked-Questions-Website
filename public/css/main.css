@@ -93,6 +93,10 @@ footer > p {
 * Home Page CSS
 *
 *********************************************************************************************************************/
+main {
+    min-height: 250px;
+}
+
 main > form > input.search {
     padding: 10px;
     font-size: 1rem;
@@ -220,11 +224,35 @@ main > a.lightbox > img {
 }
 
 main > a.lightbox:target {
-	/** Remove default browser outline */
 	outline: none;
-
-	/** Unhide lightbox **/
 	display: block;
+}
+
+main > form > label {
+    margin: 1%;
+}
+
+main > form.textarea > textarea {
+    width: 96%;
+    margin: 1%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    padding: 15px;
+    resize: none;
+    height: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border: none;
+}
+
+main > form.textarea > input[type=submit] {
+    margin: 1%;
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    background-color: #4bb3fd;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
 main > article.answers {
