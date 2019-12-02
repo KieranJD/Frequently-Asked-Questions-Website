@@ -25,7 +25,7 @@ Clicking on the thumbnail should display the full-resolution image.
 The person who posted the original question can flag one of the answers as the correct one.~~
 ~~This correct answer should be flagged on the details page.~~
 ~~On the home page any question that has a correct answer flag should be indicated as 'solved' on the homepage.~~
-Any logged in user can rate any answer that they did not provide on a scale of 1-5 stars.
+~~Any logged in user can rate any answer that they did not provide on a scale of 1-5 stars.~~
 
 Advanced
 
@@ -34,7 +34,7 @@ The advanced functionality covers gamification.
 ~~Every user start off with a contribution score of 0.~~
 ~~Logged in users can flag answers as off topic or inappropriate. This takes 5 points off the poster's score.~~
 ~~Every answer flagged as correct adds 50 points to the posting person's contribution score.~~
-The best users are flagged with a gold, silver or bronze star:
+~~The best users are flagged with a gold, silver or bronze star:
         The top 5% of users are flagged with a gold star.
         The top 25% are flagged as silver.
-        The top 50% are flagged as bronze star users.
+        The top 50% are flagged as bronze star users.~~
