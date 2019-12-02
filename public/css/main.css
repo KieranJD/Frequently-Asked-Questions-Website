@@ -1,3 +1,8 @@
+/********************************************************************************************************************
+*
+* General CSS
+*
+*********************************************************************************************************************/
 body {
     margin: 0;
     padding: 0;
@@ -70,6 +75,24 @@ main {
     overflow: auto;
 }
 
+footer {
+    border-top: solid #119DA4;
+    background: #001242;
+    color: #FFF;
+}
+
+footer > p {
+    margin: auto;
+    width: 60%;
+    text-align: center;
+    padding: 5%;
+}
+
+/********************************************************************************************************************
+*
+* Home Page CSS
+*
+*********************************************************************************************************************/
 main > form > input.search {
     padding: 10px;
     font-size: 1rem;
@@ -154,19 +177,6 @@ main > a > article.question > small > i#gold {
     color:gold;
 }
 
-footer {
-    border-top: solid #119DA4;
-    background: #001242;
-    color: #FFF;
-}
-
-footer > p {
-    margin: auto;
-    width: 60%;
-    text-align: center;
-    padding: 5%;
-}
-
 @media (max-width: 870px) {
     main > form > input.search {
         width: 80%;
@@ -184,4 +194,145 @@ footer > p {
         width: 98%;
         margin: 1%;
     }
+}
+
+/********************************************************************************************************************
+*
+* Answers Page CSS
+*
+*********************************************************************************************************************/
+main > a.lightbox {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+}
+
+main > a.lightbox > img {
+	max-width: 90%;
+	max-height: 80%;
+	margin-top: 2%;
+}
+
+main > a.lightbox:target {
+	/** Remove default browser outline */
+	outline: none;
+
+	/** Unhide lightbox **/
+	display: block;
+}
+
+main > article.answers {
+    background: #FFF;
+    width: 98%;
+    margin: 1%;
+    float: left;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+    min-height: 250px;
+    position: relative;
+    text-decoration: none;
+    color: #000000;
+}
+
+main > article.answers > p.is {
+    margin: 0;
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    color: #FFF;
+}
+
+main > article.answers > p.is-correct {
+    background-color: #55AE3A;
+}
+
+main > article.answers > p.is-inappropriate {
+    background-color: #fd4b5a;
+}
+
+main > article.answers > p.body {
+    padding: 0 20px 20px 20px;
+    float: left;
+    color: #001242;
+    font-weight: 700;
+    width: 97%;
+}
+
+main > article.answers > small.user {
+    position: absolute;
+    bottom: 60px;
+    left: 25px;
+    font-weight: 400;
+}
+
+main > article.answers > small.date {
+    position: absolute;
+    bottom: 60px;
+    right: 25px;
+    font-weight: 400;
+}
+
+main > article.answers > small > i#bronze {
+    color:rgb(145, 94, 1);
+}
+
+main > article.answers > small > i#silver {
+    color:silver;
+}
+
+main > article.answers > small > i#gold {
+    color:gold;
+}
+
+main > article.answers > form.mark-correct {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+}
+
+main > article.answers > form.mark-correct > input[type=submit] {
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    background-color: #55AE3A;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+main > article.answers > form.mark-inappropriate {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+main > article.answers > form.mark-correct > input[type=submit] {
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    background-color: #55AE3A;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+main > article.answers > form.mark-inappropriate > input[type=submit] {
+    border: none;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    background-color: #fd4b5a;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+main > article.answers > form.rate {
+    padding: 0 20px 100px 20px;
+    float: left;
 }
