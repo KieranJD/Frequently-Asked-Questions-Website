@@ -141,7 +141,7 @@ module.exports = class Question {
 		try{
 			await fs.copy(data.path, data.paths.filePath)
 			await fs.copy(data.path, data.paths.thumbPath)
-			const sql = `UPDATE questions SET image = '${data.imageName}' WHERE id = ${data.QuestionId}`
+			const sql = `UPDATE questions SET image = "${data.imageName}" WHERE id = ${data.QuestionId}`
 			await this.db.run(sql)
 		} catch(err) {
 			throw err
