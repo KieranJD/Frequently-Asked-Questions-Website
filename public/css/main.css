@@ -375,6 +375,11 @@ main > article.answers > form.rate {
     float: left;
 }
 
+main > article.answers > p.avg-rate {
+    padding-left: 25px;
+    color: #001242;
+}
+
 /********************************************************************************************************************
 *
 * Register Page CSS
@@ -430,7 +435,7 @@ main > section > form.register-login > p > input[type=submit] {
 
 /********************************************************************************************************************
 *
-* Answers Page CSS
+* Create Question Page CSS
 *
 *********************************************************************************************************************/
 main > section > form.newquestion {

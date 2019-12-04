@@ -37,6 +37,8 @@ Feature: Create an answer
 			
 			Sam Smith 
 			{current date}
+
+			Average: 0★
 			"""
 
     Scenario: create another answer for question when logged in
@@ -56,6 +58,8 @@ Feature: Create an answer
 			
 			Emma Jones
 			{current date}
+
+			Average: 0★
 			"""
 
     Scenario: create an answer for question2 when loggin in
@@ -75,4 +79,6 @@ Feature: Create an answer
 			
 			Sam Smith 
 			{current date}
+
+			Average: 0★
 			"""
