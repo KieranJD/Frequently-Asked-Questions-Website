@@ -81,7 +81,7 @@ npm run jsdoc
 
 ## Built With
 
-- [Koa](https://koajs.com/) - The web framework used)
+- [Koa](https://koajs.com/) - Web framework
 
 ## Authors
 
