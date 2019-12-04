@@ -1,40 +1,92 @@
-# FAQs
+# Frequently Asked Questions
 
-## TODO
+A knowledge-base system about video games where users can post and answer questions.
 
-~~ENCRYPT SESSIONS~~
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Basic
+## Getting started
+### Prerequisites
 
-This will produce a basic yet functional FAQ system.
+You need to have [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm) installed in your machine
 
-~~Without logging in a user can view all the question titles and dates on the homepage.
-Clicking on a question title takes the user to a details page where they can see the question details together with any answers supplied by other users.~~
-~~If a user logs in they can add new questions. This should include:
-        A short title.
-        A detailed description of the problem.
-        An optional photo or screenshot
-If a logged in user views a question details page they will be able to add an answer.~~
+### Installing
 
-Intermediate
+First things first, here's how to clone the repository:
 
-This adds some additional functionality.
+```
+$ git clone https://github.coventry.ac.uk/5001CEM-1920SEPJAN/reisborw.git
+```
 
-~~The optional screenshot should be displayed as a low-resolution thumbnail.
-Clicking on the thumbnail should display the full-resolution image.
-The person who posted the original question can flag one of the answers as the correct one.~~
-~~This correct answer should be flagged on the details page.~~
-~~On the home page any question that has a correct answer flag should be indicated as 'solved' on the homepage.~~
-~~Any logged in user can rate any answer that they did not provide on a scale of 1-5 stars.~~
+After cloning the repository, run the following command in order to install all of the project's dependencies:
 
-Advanced
+```
+$ npm install
+```
 
-The advanced functionality covers gamification.
+After that, make sure you create a `.env` file. This will be where you set your environment variables, such as the port you want the project to run.
 
-~~Every user start off with a contribution score of 0.~~
-~~Logged in users can flag answers as off topic or inappropriate. This takes 5 points off the poster's score.~~
-~~Every answer flagged as correct adds 50 points to the posting person's contribution score.~~
-~~The best users are flagged with a gold, silver or bronze star:
-        The top 5% of users are flagged with a gold star.
-        The top 25% are flagged as silver.
-        The top 50% are flagged as bronze star users.~~
+For now, all you need to get the project working are two variables, `DB_NAME` and `SERVER_PORT`. For example:
+
+```
+SERVER_PORT=8080
+DB_NAME=faq.db
+```
+
+Once these steps are taken, you're ready to run the program. Both of the following commands are acceptable:
+
+```
+$ node index.js
+```
+
+or
+
+```
+npm run start
+```
+
+## Running the tests
+
+In this project you can run some different tests. These are:
+
+### Unit tests
+
+These tests will make sure every function in the project are working and throwing the appropriate errors when wrong data is provided. In order to achieve that, simply run:
+
+```
+$ npm run test
+```
+
+If you would like to see how long each individual test takes to run, simply run:
+
+```
+$ npm run test-verbose
+```
+
+### Acceptance tests
+
+We also provide acceptance tests. These tests serve as a tool to make sure everything is also working in terms of UI. The following command will run these tests:
+
+```
+$ npm run cucumber
+```
+
+## JSDocs
+
+We provide an easy way of creating and seeing documentation. By running the following command a new folder, `docs` will be generated. In that folder, you will be able to see all the available documentation for the project:
+
+```
+$ npm run jsdoc
+```
+
+## Built With
+
+* [Koa](https://koajs.com/) - The web framework used) 
+
+## Authors
+
+* [**Avelino Tomas**](https://github.coventry.ac.uk/tomasa)
+* [**Ben Townsend**](https://github.coventry.ac.uk/townse41)
+* [**Kieran Dhir**](https://github.coventry.ac.uk/dhirk)
+* [**Mihai Ene**](https://github.coventry.ac.uk/enem2)
+* [**Olalekan Busari**](https://github.coventry.ac.uk/busario2)
+* [**Wallef Borges**](https://github.coventry.ac.uk/reisborw)
