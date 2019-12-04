@@ -41,7 +41,6 @@ app.use(views(`${__dirname}/core/views`,
 
 Handlebars.registerHelper('if_diff', function(a, b, opts) {
 	if (a !== b) {
-		console.log(this)
 		return opts.fn(this)
 	} else {
 		return opts.inverse(this)

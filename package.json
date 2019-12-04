@@ -14,7 +14,8 @@
     "test": "jest --coverage --detectOpenHandles",
     "test-verbose": "jest --coverage --detectOpenHandles --verbose",
     "unit": "node_modules/.bin/jest --coverage --runInBand tests/unit/",
-    "cucumber": "cucumberTest.sh"
+    "cucumber": "cucumberTest.sh",
+    "seed": "node core/seeder/seeder.js"
   },
   "jest": {
     "projects": [
